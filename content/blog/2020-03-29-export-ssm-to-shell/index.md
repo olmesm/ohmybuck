@@ -5,7 +5,7 @@ date: 2020-03-29
 tags: ["shell", "ssm", "aws", "devops"]
 ---
 
-This gets any credentials set in AWS SSM and exports it to the running shell.
+This gets any params set in AWS SSM and exports it to the running shell.
 
 ```bash
 #!/bin/bash
