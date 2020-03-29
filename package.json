@@ -36,11 +36,13 @@
     "typography-theme-wordpress-2016": "^0.16.19"
   },
   "devDependencies": {
+    "gh-pages": "^2.2.0",
     "prettier": "^1.19.1"
   },
   "homepage": "https://github.com/olmesm/oh-my-buck#readme",
   "keywords": [
-    "gatsby", "blog"
+    "gatsby",
+    "blog"
   ],
   "license": "MIT",
   "main": "n/a",
@@ -54,6 +56,7 @@
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "start": "npm run develop",
     "serve": "gatsby serve",
+    "deploy": "npm run build && gh-pages -d public -m \"[ci skip]\"",
     "clean": "gatsby clean"
   }
 }
