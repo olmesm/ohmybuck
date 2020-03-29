@@ -56,7 +56,7 @@
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "start": "npm run develop",
     "serve": "gatsby serve",
-    "deploy": "npm run build && gh-pages -d public -m \"[ci skip]\"",
+    "deploy": "npm run build && gh-pages -d public -m \"[skip ci] Update site\"",
     "clean": "gatsby clean"
   }
 }

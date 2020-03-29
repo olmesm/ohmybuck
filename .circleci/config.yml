@@ -55,8 +55,11 @@ jobs:
     steps:
       - checkout
       - <<: *restore_cache
-      - run: git config user.email "circle.ci@not-a-git.user"
-      - run: git config user.name "CircleCI"
+      - run: git config user.email "ci-build@ohmybuck.com"
+      - run: git config user.name "ci-build"
+      - add_ssh_keys:
+          fingerprints:
+            - "d4:89:c8:ec:80:cf:e0:b7:4e:71:16:46:45:c5:2a:db"
       - run: npm run deploy
 
 workflows:
