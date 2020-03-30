@@ -42,14 +42,6 @@ jobs:
       - <<: *install_node_modules
       - <<: *save_cache
 
-  lint:
-    executor: node
-    steps:
-      - checkout
-      - <<: *restore_cache
-      - run:
-          name: Run ESLint
-          command: npm run eslint:check
   deploy-gh:
     executor: node
     steps:
@@ -72,9 +64,6 @@ workflows:
               ignore:
                 - gh-pages
                 - master
-      - lint:
-          requires:
-            - install
 
   build:
     jobs:
@@ -83,10 +72,6 @@ workflows:
             branches:
               only:
                 - master
-      - lint:
-          requires:
-            - install
       - deploy-gh:
           requires:
-            - lint
             - install
