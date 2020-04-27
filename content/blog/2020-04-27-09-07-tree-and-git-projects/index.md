@@ -1,7 +1,7 @@
 ---
 title: Tree And Git Projects
 description: Tree And Git Projects
-date: 2020-04-27-09-07
+date: 2020-04-27 09:07
 tags: ["git", "tree"]
 ---
 

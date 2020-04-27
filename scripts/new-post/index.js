@@ -6,6 +6,7 @@ const kebabCase = require("lodash.kebabcase")
 
 const root = process.cwd()
 
+const frontMatterSafeDate = date => date.replace(/-(\d\d)-(\d\d)$/, " $1:$2")
 const exitSuccessfully = message => {
   console.log(message || "Done!")
   process.exit(0)
@@ -53,7 +54,7 @@ const outputPath = path.join(outputDir, "index.md")
 const main = () => {
   try {
     const outputFile = pupa(template, {
-      date: DATE,
+      date: frontMatterSafeDate(DATE),
       title: startCase(title),
       description: startCase(title),
     })

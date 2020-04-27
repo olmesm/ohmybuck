@@ -1,7 +1,7 @@
 ---
 title: Node Current Directory
 description: Node Current Directory
-date: 2020-04-27-09-02
+date: 2020-04-27 09:02
 tags: ["node"]
 ---
 
