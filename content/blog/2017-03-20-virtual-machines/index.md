@@ -11,10 +11,10 @@ Being able to deploy a machine quickly also allows you argue the typical "it mus
 
 I would recommend VMWare on Windows and Virtualbox on Linux/OSX.
 
-| OS | VM App |
-|---|---|
+| OS      | VM App                                                                                                                          |
+| ------- | ------------------------------------------------------------------------------------------------------------------------------- |
 | Windows | [VMWare Workstation Player](https://my.vmware.com/en/web/vmware/free#desktop_end_user_computing/vmware_workstation_player/12_0) |
-| OSX | `brew cask install virtualbox` |
+| OSX     | `brew cask install virtualbox`                                                                                                  |
 
 ### Create a Virtual Machine
 
@@ -22,12 +22,12 @@ It's generally pretty straight forward:
 
 1. Download an ISO of your VM OS eg: [Ubuntu](https://www.ubuntu.com/download/alternative-downloads)
 1. Open your virtualisation software - VMWare or Virtualbox.
-    - Linux/Mac: can install via [homebrew](https://brew.sh) with `brew cask install virtualbox`
+   - Linux/Mac: can install via [homebrew](https://brew.sh) with `brew cask install virtualbox`
 1. Generally I usually set up the following:
-    - Ram about 50% of the host machine.
-    - CPU about 50% of the host machine.
-    - CPU cores, 2 if a 64 bit ISO, 1 if 32 bit.
-    - 10 gigs for the virtual hard drive.
+   - Ram about 50% of the host machine.
+   - CPU about 50% of the host machine.
+   - CPU cores, 2 if a 64 bit ISO, 1 if 32 bit.
+   - 10 gigs for the virtual hard drive.
 1. Follow the remaining prompts and select your downloaded ISO.
 
 ### Internet Issues

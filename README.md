@@ -16,10 +16,13 @@ Gatsby site for my blog/notes at [ohmybuck.com](//ohmybuck.com)
 nvm use
 
 # Install dependencies
-npm i
+npm install
 
 # Start dev server
 npm start
+
+# Create a new post called "Why You Should Be Reading This"
+npm run new-post why you should be reading this
 
 # Deploy
 git push
