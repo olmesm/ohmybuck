@@ -11,7 +11,7 @@ Gatsby site for my blog/notes at [ohmybuck.com](//ohmybuck.com)
 
 ## Developing
 
-```sh
+```bash
 # Setup the correct node engine with nvm
 nvm use
 

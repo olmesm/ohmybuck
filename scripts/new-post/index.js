@@ -4,8 +4,10 @@ const path = require("path")
 const startCase = require("lodash.startcase")
 const kebabCase = require("lodash.kebabcase")
 
+const root = process.cwd()
+
 const exitSuccessfully = message => {
-  console.log(message || "done!")
+  console.log(message || "Done!")
   process.exit(0)
 }
 
@@ -40,9 +42,7 @@ Please specify a post name, eg "node scripts/new-post my post name"
 const title = userInput.join(" ")
 
 const outputDir = path.join(
-  __dirname,
-  "..",
-  "..",
+  root,
   "content",
   "blog",
   `${DATE}-${kebabCase(title)}`
