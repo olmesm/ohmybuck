@@ -37,7 +37,8 @@
   },
   "devDependencies": {
     "gh-pages": "^2.2.0",
-    "prettier": "^1.19.1"
+    "prettier": "^1.19.1",
+    "pupa": "^2.0.1"
   },
   "homepage": "https://github.com/olmesm/oh-my-buck#readme",
   "keywords": [
