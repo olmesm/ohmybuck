@@ -6,7 +6,6 @@ const kebabCase = require("lodash.kebabcase")
 
 const root = process.cwd()
 
-const frontMatterSafeDate = date => date.replace(/-(\d\d)-(\d\d)$/, " $1:$2")
 const exitSuccessfully = message => {
   console.log(message || "Done!")
   process.exit(0)
@@ -17,44 +16,56 @@ const exitError = message => {
   process.exit(1)
 }
 
-const now = new Date()
+const generateDateString = () => {
+  const now = new Date()
 
-const DATE = [
-  now.getFullYear(),
-  ("0" + (now.getMonth() + 1)).slice(-2),
-  ("0" + now.getDate()).slice(-2),
-  ("0" + now.getHours()).slice(-2),
-  ("0" + now.getMinutes()).slice(-2),
-].join("-")
-
-const template = fs.readFileSync(path.join(__dirname, "post.md.tpl"), "utf8")
-
-const [_, __, ...userInput] = process.argv
-
-if (userInput.length === 0) {
-  exitError(
-    `
-
-Please specify a post name, eg "node scripts/new-post my post name"
-`
-  )
+  return [
+    now.getFullYear(),
+    ("0" + (now.getMonth() + 1)).slice(-2),
+    ("0" + now.getDate()).slice(-2),
+    ("0" + now.getHours()).slice(-2),
+    ("0" + now.getMinutes()).slice(-2),
+  ].join("-")
 }
 
-const title = userInput.join(" ")
+const getUserInput = () => {
+  const [_, __, ...userInput] = process.argv
+
+  if (userInput.length === 0) {
+    exitError(
+      `
+
+      Please specify a post name, eg "node scripts/new-post my post name"
+      `
+    )
+  }
+
+  return userInput.join(" ")
+}
+
+const frontMatterSafeDate = date => date.replace(/-(\d\d)-(\d\d)$/, " $1:$2")
+
+const dateString = generateDateString()
+const title = getUserInput()
 
 const outputDir = path.join(
   root,
   "content",
   "blog",
-  `${DATE}-${kebabCase(title)}`
+  `${dateString}-${kebabCase(title)}`
 )
 
 const outputPath = path.join(outputDir, "index.md")
 
 const main = () => {
   try {
+    const template = fs.readFileSync(
+      path.join(__dirname, "post.md.tpl"),
+      "utf8"
+    )
+
     const outputFile = pupa(template, {
-      date: frontMatterSafeDate(DATE),
+      date: frontMatterSafeDate(dateString),
       title: startCase(title),
       description: startCase(title),
     })
