@@ -5,7 +5,7 @@ date: 2020-05-23 14:48
 tags: ["shell", "env", "devops"]
 ---
 
-Ideally used as part of a pre-commit hook. This ensures your project's `.env.example` file is up to date with your local `.env` file.
+Ideally used as part of a pre-commit hook. This ensures your project's `.env.example` file contains the same vars as your local `.env` file.
 
 ````bash
 #! /usr/bin/env sh
