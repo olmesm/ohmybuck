@@ -14,21 +14,21 @@ VAR_SSM_PREFIX="$2"
 OVERWRITE="$3"
 
 # To use:
-#   sh export-to-ssm.sh.sh <VAR_ENV_FILE> <SSM_PREFIX>
+#   sh ./export-to-ssm.sh <VAR_ENV_FILE> <SSM_PREFIX>
 
 # EXAMPLE
-#   sh ./export-to-ssm.sh.sh .env.example /application/project/environment/
+#   sh ./export-to-ssm.sh .env.example /application/project/environment/
 
 if [ -z "$VAR_ENV_FILE" ]; then
   echo "It appears you did not specify a file with the list of variables to fetch"
-  echo ". ./export-to-ssm.sh.sh .env.example /application/project/environment/"
+  echo "sh ./export-to-ssm.sh .env.example /application/project/environment/"
 
   exit 1
 fi
 
 if [ -z "$VAR_SSM_PREFIX" ]; then
   echo "It appears you did not specify an SSM prefix"
-  echo ". ./export-to-ssm.sh.sh .env.example /application/project/environment/"
+  echo "sh ./export-to-ssm.sh .env.example /application/project/environment/"
 
   exit 1
 fi
