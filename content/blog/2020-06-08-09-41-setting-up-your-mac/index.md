@@ -11,7 +11,7 @@ An opinionated guide to mac setup.
 1. Install git, ZSH, and shell completions
 
    ```bash
-   brew install wget zsh zsh-completions git vim && brew cask install java iterm2
+   brew install wget zsh zsh-completions git vim && brew cask install iterm2
    ```
 
 1. Install [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh)
@@ -49,10 +49,12 @@ An opinionated guide to mac setup.
 
 1. Install runtimes as required
 
-   - [nvm](https://github.com/nvm-sh/nvm)
-   - [rvm](https://rvm.io/)
-   - [tfenv](https://github.com/tfutils/tfenv)
-   - [pipenv](https://github.com/pypa/pipenv)
+   - Java: [sdkman](https://sdkman.io/install)
+   - Node: [nvm](https://github.com/nvm-sh/nvm)
+   - Python: [pipenv](https://github.com/pypa/pipenv)
+   - Ruby: [rvm](https://rvm.io/)
+   - Rust: [Rustup](https://www.rust-lang.org/tools/install)
+   - Terraform: [tfenv](https://github.com/tfutils/tfenv)
 
 1. Install recommended packages (feel free to delete as required)
 
