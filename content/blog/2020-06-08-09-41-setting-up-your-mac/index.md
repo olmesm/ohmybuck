@@ -104,4 +104,8 @@ An opinionated guide to mac setup.
 
 1. Install [Lastpass in the browser](https://lastpass.com/misc_download2.php)
 
-1. Setup [Authy](https://authy.com/) on your mobile device for MFA - do not install this on your laptop.
+1. Setup [Authy](https://apps.apple.com/us/app/authy/id494168017) on your mobile device for MFA - do not install this on your laptop.
+
+1. Setup [Latpass](https://apps.apple.com/gb/app/lastpass-password-manager/id324613447) on your mobile device.
+
+1. Setup [Slack](https://apps.apple.com/gb/app/slack/id618783545) on your mobile device.
