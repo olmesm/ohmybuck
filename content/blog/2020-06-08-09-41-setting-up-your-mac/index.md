@@ -74,7 +74,8 @@ An opinionated guide to mac setup.
     transmission \
     virtualbox \
     visual-studio-code \
-    vlc
+    vlc \
+    whatsapp
    ```
 
 1. Create a `projects` and `personal` directory
