@@ -77,6 +77,20 @@ An opinionated guide to mac setup.
     vlc
    ```
 
+1. Create a `projects` and `personal` directory
+
+   ```bash
+   mkdir ~/projects ~/personal
+   ```
+
+1. Add `projects` and `personal` to your favourites
+
+   ```bash
+   open ~
+   ```
+
+   - Drag and drop the `projects` and `personal` directories into the left hand favourites pane of the finder window.
+
 1. Install [Woven](https://woven.com/)
 
 1. Install [Magnet](https://apps.apple.com/gb/app/magnet/id441258766)
