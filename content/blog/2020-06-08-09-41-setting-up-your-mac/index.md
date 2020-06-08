@@ -23,7 +23,7 @@ An opinionated guide to mac setup.
 1. Install and apply keybindings for iterm
 
    ```bash
-   mkdir iterm-keybindings && curl https://raw.githubusercontent.com/olmesm/setup-mac/master/iterm-keybindings/com.googlecode.iterm2.plist --output ~/iterm-keybindings/com.googlecode.iterm2.plist
+   mkdir iterm-settings && curl -s https://raw.githubusercontent.com/olmesm/setup-mac/master/iterm-keybindings/com.googlecode.iterm2.plist | sed -e 's|%%HOME%%|'"${HOME}"'|g' > ~/iterm-settings/com.googlecode.iterm2.plist
    ```
 
    - Open iTerm2
