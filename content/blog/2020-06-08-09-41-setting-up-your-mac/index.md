@@ -63,7 +63,6 @@ An opinionated guide to mac setup.
     cyberduck \
     docker \
     firefox \
-    google-chrome \
     itsycal \
     keybase \
     libreoffice \
@@ -75,7 +74,8 @@ An opinionated guide to mac setup.
     virtualbox \
     visual-studio-code \
     vlc \
-    whatsapp
+    whatsapp \
+    google-chrome
    ```
 
 1. Create a `projects` and `personal` directory
