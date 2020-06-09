@@ -5,7 +5,7 @@ date: 2020-06-08 09:41
 tags: ["mac", "development"]
 ---
 
-An opinionated guide to mac setup.
+My somewhat opinionated guide to mac setup with a focus on enhancing existing/normal workflows. Tooling and setup has a focus on ease of setup and keeping an experience that isn't too far from OS defaults.
 
 1. [Install homebrew](https://brew.sh/)
 1. Install git, ZSH, and shell completions
@@ -80,11 +80,20 @@ An opinionated guide to mac setup.
     google-chrome
    ```
 
+   Note you'll need to [approve most of the above apps from unidentified developers](https://support.apple.com/en-gb/guide/mac-help/mh40616/mac)
+
 1. Create a `projects` and `personal` directory
 
    ```bash
-   mkdir ~/projects ~/personal
+   mkdir \
+    -p ~/projects/prototypes \
+    ~/personal
    ```
+
+   | Directory | Description                                                       | Structure                                 |
+   | --------- | ----------------------------------------------------------------- | ----------------------------------------- |
+   | projects  | Client work and prototypes                                        | projects/&lt;client&gt;/&lt;code-repo&gt; |
+   | personal  | Personal and non-company work. Ethically OK to take when leaving. | personal/&lt;code-repo&gt;                |
 
 1. Add `projects` and `personal` to your favourites
 
@@ -94,11 +103,11 @@ An opinionated guide to mac setup.
 
    - Drag and drop the `projects` and `personal` directories into the left hand favourites pane of the finder window.
 
-1. Install [Woven](https://woven.com/)
+1. For managing multiple calendars, install [Woven](https://woven.com/)
 
-1. Install [Magnet](https://apps.apple.com/gb/app/magnet/id441258766)
+1. For ubuntu-like window snapping, install [Magnet](https://apps.apple.com/gb/app/magnet/id441258766)
 
-1. Setup itsycal (depends on `brew cask install itsycal` as above)
+1. For a quickly accessible calandar and clock, setup itsycal (depends on `brew cask install itsycal` as above)
 
    - Open itsycal
    - Open Preferences or "⌘" + ","
@@ -109,6 +118,8 @@ An opinionated guide to mac setup.
 
 1. Setup [Authy](https://apps.apple.com/us/app/authy/id494168017) on your mobile device for MFA - do not install this on your laptop.
 
-1. Setup [Latpass](https://apps.apple.com/gb/app/lastpass-password-manager/id324613447) on your mobile device.
+1. Setup [Lastpass](https://apps.apple.com/gb/app/lastpass-password-manager/id324613447) on your mobile device.
+
+1. Setup [Woven](https://apps.apple.com/us/app/woven-calendar/id1439635218) on your mobile device.
 
 1. Setup [Slack](https://apps.apple.com/gb/app/slack/id618783545) on your mobile device.
