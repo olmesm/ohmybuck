@@ -64,3 +64,18 @@ fi
 
 exit 0
 ````
+
+Using this script in a node ([gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default)) project with husky pre-commit hooks
+
+```bash
+touch .env .env.example
+npm install -D husky
+
+echo '{
+    "hooks": {
+      "pre-commit": "sh scripts/check-env.sh && npm run format",
+      "post-commit": "git update-index --again"
+  }
+}
+' > .huskyrc
+```
