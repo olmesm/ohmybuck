@@ -1,7 +1,7 @@
 const pupa = require("pupa")
 const fs = require("fs")
 const path = require("path")
-const startCase = require("lodash.startcase")
+const caseTitle = require("title")
 const kebabCase = require("lodash.kebabcase")
 
 const root = process.cwd()
@@ -66,8 +66,8 @@ const main = () => {
 
     const outputFile = pupa(template, {
       date: frontMatterSafeDate(dateString),
-      title: startCase(title),
-      description: startCase(title),
+      title: caseTitle(title),
+      description: caseTitle(title),
     })
 
     fs.mkdirSync(outputDir, { recursive: true })
