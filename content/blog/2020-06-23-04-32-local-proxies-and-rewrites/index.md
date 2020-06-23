@@ -14,31 +14,25 @@ Tooling for running local proxy services and url rewrites.
 
 ## Tools
 
-- [switchhosts](#switchhosts)
+- [Switch Hosts]
+
+  SwitchHosts! is an App for hosts management & switching.
+
 - [Caddy Server]
+
+  Caddy is a powerful, enterprise-ready, open source web server with automatic HTTPS. It takes care of TLS certificate renewals, OCSP stapling, static file serving, reverse proxying, Kubernetes ingress, and more.
+
 - [switchboard]
+
+  Simple mDNS-based reverse proxy for personal infrastructure.
+
 - [nginxproxymanager]
+
+  A pre-built docker image that enables you to easily forward to your websites running at home or otherwise, including free SSL, without having to know too much about Nginx or Letsencrypt.
+
 - [NGINXConfig]
 
-### [Switch Hosts]
-
-SwitchHosts! is an App for hosts management & switching.
-
-### [Caddy Server]
-
-Caddy is a powerful, enterprise-ready, open source web server with automatic HTTPS. It takes care of TLS certificate renewals, OCSP stapling, static file serving, reverse proxying, Kubernetes ingress, and more.
-
-### [switchboard]
-
-Simple mDNS-based reverse proxy for personal infrastructure.
-
-### [nginxproxymanager]
-
-A pre-built docker image that enables you to easily forward to your websites running at home or otherwise, including free SSL, without having to know too much about Nginx or Letsencrypt.
-
-### [NGINXConfig]
-
-The easiest way to configure a performant, secure, and stable NGINX server.
+  The easiest way to configure a performant, secure, and stable NGINX server.
 
 <!-- MARKDOWN REFERENCES -->
 
