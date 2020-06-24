@@ -66,9 +66,9 @@ pages:
   script:
     - npm install # Install all dependencies
     - npm run build --prod # Build for prod
-    - mv public _public # CRA and gitlab pages both use the public folder. Only do this in a build pipeline.
+    - mv public _public # CRA and gitlab pages both use the public folder. This is only for the build pipeline.
     - mv build public # Move build files to public dir for Gitlab Pages
-    - cp public/index.html public/404.html # Not necessary, but helps with https://medium.com/@pshrmn/demystifying-single-page-applications-3068d0555d46
+    - cp public/index.html public/404.html # Helps with https://medium.com/@pshrmn/demystifying-single-page-applications-3068d0555d46
   artifacts:
     paths:
       - public # The built files for Gitlab Pages to serve
@@ -89,7 +89,7 @@ git add .
 git commit -m 'first commit!'
 
 # Push up to gitlab
-git push --set-upstream git@gitlab.com:YOUR_GITLAB_USERNAME/$(git rev-parse --show-toplevel | xargs basename).git $(git rev-parse --abbrev-ref HEAD)
+git push --set-upstream git@gitlab.com:<YOUR_GITLAB_USERNAME>/$(git rev-parse --show-toplevel | xargs basename).git $(git rev-parse --abbrev-ref HEAD)
 ```
 
 Now visit <https://gitlab.com/YOUR_GITLAB_USERNAME/my-awesome-app/pipelines>
