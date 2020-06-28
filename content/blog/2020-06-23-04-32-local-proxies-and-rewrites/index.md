@@ -7,12 +7,16 @@ tags: ["devops", "dns", "docker", "mac", "development"]
 
 Tooling for running local proxy services and url rewrites.
 
+I've put together a repo for reverse proxying a domain to a local machine. Used for local testing of DNS resolving, and routing. Particularly useful for CMS migration projects.
+
+[See the Local-Reverse-Proxy repo here](https://github.com/olmesm/Local-Reverse-Proxy)
+
 ## Use Cases
 
 - multiple services on multiple ports, behind a single domain
 - testing route-by-route service migrations with legacy service fallback
 
-## Tools
+## Related/Other Tools
 
 - [Switch Hosts]
 
