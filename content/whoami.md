@@ -11,6 +11,6 @@ _Steve Jobs_
 
 The purpose of this blog is to log notes and ideas I use or share often. Ideally simple, pragmatic, and concise.
 
-I am a full stack developer - experienced in infrastructure through to accessibility. I have over half a decade experience in developing systems for industrial, fintech, and retail application. For the past 4 years I have been living in London, working with talented teams to deliver web apps for large enterprises.
+I am a full stack developer - experienced in infrastructure through to accessibility. I have over half a decade experience in developing systems for industrial, fintech, and retail application. For the past 5 years I have been living in London, working with talented teams to deliver web apps for large enterprises.
 
 My interests include web technologies, good design practices, optimising productivity, and rapid prototyping of projects.

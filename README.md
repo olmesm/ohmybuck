@@ -6,7 +6,7 @@ Gatsby site for my blog/notes at [ohmybuck.com](//ohmybuck.com)
 
 - Gatsby
 - Github Pages
-- Circleci
+- Github Actions
 - Cloudflare
 
 ## Developing
@@ -26,5 +26,5 @@ npm run new-post why you should be reading this
 
 # Deploy
 git push
-# Circleci should handle the rest
+# Github Actions handles the rest
 ```
