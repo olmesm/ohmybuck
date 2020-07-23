@@ -5,6 +5,10 @@ date: 2020-07-23 11:39
 tags: ["git", "github pages"]
 ---
 
+Rough script to handle the same functionality as [gh-pages-deploy](https://www.npmjs.com/package/gh-pages-deploy), but extends the functionality by deploying to a repo thats not the same as the origin.
+
+Rather use [gh-pages-deploy](https://www.npmjs.com/package/gh-pages-deploy) if you don't need the above functionality.
+
 ```bash
 #!/usr/bin/env bash
 
