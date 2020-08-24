@@ -37,6 +37,12 @@ My somewhat opinionated guide to mac setup with a focus on enhancing existing/no
    chsh -s /bin/zsh
    ```
 
+1. Change permissions for zsh directory
+
+   ```bash
+   sudo chmod -R g-w,o-w /usr/local/share/zsh
+   ```
+
 1. Change oh-my-zsh to include full path
 
    ```bash
