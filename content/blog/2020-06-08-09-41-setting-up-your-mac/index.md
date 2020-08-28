@@ -62,6 +62,10 @@ My somewhat opinionated guide to mac setup with a focus on enhancing existing/no
    - Rust: [Rustup](https://www.rust-lang.org/tools/install)
    - Terraform: [tfenv](https://github.com/tfutils/tfenv)
 
+1. Integrate runtimes with your shell for easy engine management.
+
+- nvm: https://github.com/nvm-sh/nvm#calling-nvm-use-automatically-in-a-directory-with-a-nvmrc-file
+
 1. Install recommended packages (feel free to delete as required)
 
    ```bash
