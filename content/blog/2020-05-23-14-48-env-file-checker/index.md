@@ -16,6 +16,9 @@ VAR_ENV_FILE=${1:-".env"}
 VAR_ENV_EXAMPLE_FILE=${2:-".env.example"}
 IS_STRICT=true
 
+# Set file separator
+IFS=$'\n'
+
 # To use:
 #   sh scripts/check-env.sh [<VAR_ENV_FILE> <VAR_ENV_EXAMPLE_FILE>]
 
