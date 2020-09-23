@@ -5,7 +5,7 @@ date: 2020-09-23 07:26
 tags: [Node, javascript, devops]
 ---
 
-You’re sometimes asked to install node packages globally, but this is dangerous and leads to unlisted project dependencies and over--save-devocumentation.
+You’re sometimes asked to install node packages globally, but this is dangerous and leads to unlisted project dependencies and over-documentation.
 
 If the project requires the package, it should be listed as a dependency. With respect to node, in your `devDependencies`.
 
