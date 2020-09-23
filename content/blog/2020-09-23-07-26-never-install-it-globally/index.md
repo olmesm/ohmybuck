@@ -5,7 +5,7 @@ date: 2020-09-23 07:26
 tags: [Node, javascript, devops]
 ---
 
-You’re sometimes asked to install node packages globally, but this is dangerous and leads to unlisted project dependencies and over-documentation.
+You’re sometimes asked to install node packages globally, but this is dangerous and leads to unlisted project dependencies and over--save-devocumentation.
 
 If the project requires the package, it should be listed as a dependency. With respect to node, in your `devDependencies`.
 
@@ -31,7 +31,12 @@ npx gatsby-cli <command>
 Use yarn
 
 ```bash
-yarn add -D gatsby-cli && yarn gatsby-cli <command>
+# The only package we can/should install globally
+npm install -g yarn
+```
+
+```bash
+yarn add --save-dev gatsby-cli && yarn gatsby-cli <command>
 ```
 
 **Notes:**
@@ -45,7 +50,7 @@ yarn add -D gatsby-cli && yarn gatsby-cli <command>
 Use the node binary directly.
 
 ```bash
-npm i -D gatsby-cli && $(npm bin)/gatsby <command>
+npm install --save-dev gatsby-cli && $(npm bin)/gatsby <command>
 ```
 
 **Notes:**
@@ -59,7 +64,7 @@ npm i -D gatsby-cli && $(npm bin)/gatsby <command>
 Add the package as a script.
 
 ```bash
-npm i -D gatsby-cli
+npm install --save-dev gatsby-cli
 #   add to your package.json {"scripts": { "gatsby": "gatsby-cli" }}
 #   subsequently
 npm run gatsby <command>
@@ -68,4 +73,4 @@ npm run gatsby <command>
 **Notes:**
 
 - requires the package as a dependency
-- Some scripts will require a `--` to ensure the arguments are passed into the shell.
+- Some scripts will require a `--` to ensure the arguments are passed into the shell. eg `npm run gatsby -- new project`
