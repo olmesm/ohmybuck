@@ -16,15 +16,15 @@ I wasn't sure so, instead of Googling, I wrote out a quick program to find out.
 The first thing we need to do is be able to differentiate instances within JavaScript.
 
 ```javascript
-var a = {};
-var b = a;
-a === b;   // #=> true
+var a = {}
+var b = a
+a === b // #=> true
 
-a          // #=> {}
-a === {};  // #=> false
+a // #=> {}
+a === {} // #=> false
 
-b          // #=> {}
-b === {};  // #=> false
+b // #=> {}
+b === {} // #=> false
 ```
 
 This makes sense. We assigned `a` and `b` to the same object when we defined them.
@@ -38,15 +38,15 @@ Ruby `{}.object_id` and Python `id({})` both return the id's of the object - how
 In the same format as above - replacing the `{}`'s yields a program we can look at and immediately understand without having to think about it.
 
 ```javascript
-var a = Math.random();
-var b = a;
-a === b;              // #=> true
+var a = Math.random()
+var b = a
+a === b // #=> true
 
-a                     // #=> 0.270583847725012
-a === Math.random();  // #=> false
+a // #=> 0.270583847725012
+a === Math.random() // #=> false
 
-b                     // #=> 0.270583847725012
-b === Math.random();  // #=> false
+b // #=> 0.270583847725012
+b === Math.random() // #=> false
 ```
 
 We can use the above to generate clues about the behaviour of Node.
@@ -55,19 +55,19 @@ We can use the above to generate clues about the behaviour of Node.
 
 1. Multiple Instances
 
-    IF node creates a new instance of the module every time we require it
+   IF node creates a new instance of the module every time we require it
 
-    THEN we would see `Math.random()` generate a new number every time.
+   THEN we would see `Math.random()` generate a new number every time.
 
-    ANY `console.log`'s in the module would appear as many times as the file is required.
+   ANY `console.log`'s in the module would appear as many times as the file is required.
 
 1. Single Instance
 
-    IF node creates a single instance of the module and passes it into where we require it
+   IF node creates a single instance of the module and passes it into where we require it
 
-    THEN we would see `Math.random()` generate only one number.
+   THEN we would see `Math.random()` generate only one number.
 
-    ANY `console.log`'s in the module would also only appear once.
+   ANY `console.log`'s in the module would also only appear once.
 
 ## Testing
 
@@ -85,43 +85,43 @@ Write out the testing code.
 `random-number.js`
 
 ```javascript
-var randomNumber = Math.random();
+var randomNumber = Math.random()
 
-console.log(randomNumber, ' => Random Number in Random');
+console.log(randomNumber, " => Random Number in Random")
 
-module.exports = randomNumber;
+module.exports = randomNumber
 ```
 
 `instance-1.js`
 
 ```javascript
-var randomNumber = require('./random-number');
+var randomNumber = require("./random-number")
 
-console.log(randomNumber, ' => Random Number in Instance 1');
+console.log(randomNumber, " => Random Number in Instance 1")
 
-module.exports = randomNumber;
+module.exports = randomNumber
 ```
 
 `instance-2.js`
 
 ```javascript
-var randomNumber = require('./random-number');
+var randomNumber = require("./random-number")
 
-console.log(randomNumber, ' => Random Number in Instance 2');
+console.log(randomNumber, " => Random Number in Instance 2")
 
-module.exports = randomNumber;
+module.exports = randomNumber
 ```
 
 `index.js`
 
 ```javascript
-var randomNumber = require('./random-number');
-var instance1 = require('./instance-1');
-var instance2 = require('./instance-2');
+var randomNumber = require("./random-number")
+var instance1 = require("./instance-1")
+var instance2 = require("./instance-2")
 
-console.log(randomNumber, ' => Random Number');
-console.log(instance1, ' => Instance 1');
-console.log(instance2, ' => Instance 2');
+console.log(randomNumber, " => Random Number")
+console.log(instance1, " => Instance 1")
+console.log(instance2, " => Instance 2")
 ```
 
 Execute with `node .`
@@ -145,11 +145,11 @@ Let's create the alternative scenario.
 
 ```javascript
 function randomNumber() {
-  console.log(randomNumber, ' => Random Number in Random');
-  return Math.random();
+  console.log(randomNumber, " => Random Number in Random")
+  return Math.random()
 }
 
-module.exports = randomNumber;
+module.exports = randomNumber
 ```
 
 `randomNumber` is now a function that is passed around. We will now need to execute it whenever we call it.
@@ -159,7 +159,7 @@ We can execute it immediately when we require it - `require('...')()`
 `index.js`, `instance-1.js`, and `instance-2.js`;
 
 ```javascript
-var randomNumber = require('./random-number')();
+var randomNumber = require("./random-number")()
 ```
 
 Execute with `node .`
@@ -180,11 +180,11 @@ Execute with `node .`
 You may be thinking we could probably have gotten away with just
 
 ```javascript
-var randomNumber = Math.random; // NOTE: no execution ()'s
+var randomNumber = Math.random // NOTE: no execution ()'s
 
-console.log(randomNumber, ' => Random Number in Random');
+console.log(randomNumber, " => Random Number in Random")
 
-module.exports = randomNumber;
+module.exports = randomNumber
 ```
 
 However the above wouldn't meet all conditions.
@@ -196,14 +196,14 @@ This may seem minor, however if the `console.log` was replaced with something th
 For example
 
 ```javascript
-var runOnce = Math.random();
+var runOnce = Math.random()
 
 function randomNumber() {
-  console.log(runOnce, ' => Did it change?');
-  return Math.random();
+  console.log(runOnce, " => Did it change?")
+  return Math.random()
 }
 
-module.exports = randomNumber;
+module.exports = randomNumber
 ```
 
 ```bash
@@ -218,12 +218,12 @@ No change. If we encapsulate `runOnce` within the function we see a different re
 
 ```javascript
 function randomNumber() {
-  var runOnce = Math.random();
-  console.log(runOnce, ' => Did it change?');
-  return Math.random();
+  var runOnce = Math.random()
+  console.log(runOnce, " => Did it change?")
+  return Math.random()
 }
 
-module.exports = randomNumber;
+module.exports = randomNumber
 ```
 
 ```bash

@@ -12,13 +12,13 @@ We've achieved this in the past by extracting the configuration to a `environmen
 An example script template.
 
 ```js
-const stringify = require('json-stringify-pretty-compact');
+const stringify = require("json-stringify-pretty-compact")
 
 module.exports = configObject => {
-  const safeJsonConfig = stringify(configObject).replace(/</g,'\\u003c'); // Sanitise the JSON
+  const safeJsonConfig = stringify(configObject).replace(/</g, "\\u003c") // Sanitise the JSON
 
-  return `;(function(window) {\nwindow.__ENV__ = ${safeJsonConfig};\n})(this);`;
-};
+  return `;(function(window) {\nwindow.__ENV__ = ${safeJsonConfig};\n})(this);`
+}
 ```
 
 Loading the `config.js` script before the body tag ensures the variables are available for when the app loads.
@@ -45,6 +45,6 @@ Prior to deploying to the environment one would run a deploy script which would 
 
 <!-- Markdown References -->
 
-[Angular example]: https://github.com/ImmutableWebApps/ng-immutable-example
-[Immutable Web App]: https://immutablewebapps.org/
-[React example]: https://github.com/ImmutableWebApps/react-immutable-example
+[angular example]: https://github.com/ImmutableWebApps/ng-immutable-example
+[immutable web app]: https://immutablewebapps.org/
+[react example]: https://github.com/ImmutableWebApps/react-immutable-example

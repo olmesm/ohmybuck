@@ -2,7 +2,7 @@
 title: "Testing Web Apps the right way"
 description: "Description"
 date: 2018-08-12
-tags: ["tdd","jest","react"]
+tags: ["tdd", "jest", "react"]
 draft: true
 ---
 

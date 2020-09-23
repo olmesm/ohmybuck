@@ -80,15 +80,17 @@ fi
 exit 0
 ````
 
-Using this script in a node ([gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default)) project with husky pre-commit hooks
+## Quick Setup
+
+Assumes node and script location `scripts/check-branch-name.sh`
 
 ```bash
 echo "
 ####################
-# `.env.example` is a list of required env vars for working in the project.
+# \`.env.example\` is a list of required env vars for working in the project.
 #
 # Normally a variable is set to a value for use in the application.
-# However in a `.env.example` you should either
+# However in a \`.env.example\` you should either
 #     - set a non-secret value (safe for publishing or publicly accessible)
 #     - comment on how to obtain the required key
 #
@@ -100,11 +102,15 @@ ENVIRONMENT_VARIABLE=VALUE
 
 touch .env
 
-npm install -D husky
+npm install -D husky npm-run-all prettier@exact
+
+sed -i '' "s|\"scripts\": {|\"scripts\": {\"format-prettier\": \"prettier --write \\\\\"**/*.{ts,tsx,js,jsx,json,md,html,css,scss,less,sass}\\\\\"\",|" package.json
+
+npx prettier --write package.json --ignore-path /dev/null
 
 echo '{
     "hooks": {
-      "pre-commit": "sh scripts/check-env.sh && npm run format",
+      "pre-commit": "sh scripts/check-env.sh && npm-run-all format*",
       "post-commit": "git update-index --again"
   }
 }

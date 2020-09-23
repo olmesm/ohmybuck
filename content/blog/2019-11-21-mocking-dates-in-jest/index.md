@@ -6,9 +6,9 @@ tags: ["mocking dates", "jest", "javascript"]
 ---
 
 ```js
-new Date(Date.now());
+new Date(Date.now())
 
-const dateSpy = jest.spy(Date, "now");
+const dateSpy = jest.spy(Date, "now")
 ```
 
 Credit to [Hugo's post](https://codewithhugo.com/mocking-the-current-date-in-jest-tests/)

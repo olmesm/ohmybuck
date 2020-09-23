@@ -23,5 +23,5 @@ _Steve Jobs, BusinessWeek, May 25, 1998_
 
 <!-- References -->
 
-[12 Principles Behind the Agile Manifesto]: https://www.agilealliance.org/agile101/12-principles-behind-the-agile-manifesto/
-["Agile Methods The Good, the Hype and the Ugly," Bertrand Meyer]: https://www.youtube.com/watch?v=ffkIQrq-m34
+[12 principles behind the agile manifesto]: https://www.agilealliance.org/agile101/12-principles-behind-the-agile-manifesto/
+["agile methods the good, the hype and the ugly," bertrand meyer]: https://www.youtube.com/watch?v=ffkIQrq-m34

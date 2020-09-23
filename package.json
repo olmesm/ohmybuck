@@ -37,6 +37,7 @@
   },
   "devDependencies": {
     "gatsby-cli": "^2.12.51",
+    "husky": "^4.3.0",
     "prettier": "*",
     "pupa": "*",
     "title": "*"
