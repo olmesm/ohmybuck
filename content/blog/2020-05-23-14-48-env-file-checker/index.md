@@ -32,7 +32,7 @@ IFS=$'\n'
 # !.env.example
 # ```
 
-if [ -z "$VAR_ENV_FILE" ]; then
+if [ ! -f "$VAR_ENV_FILE" ]; then
   echo "Failed to find \`$VAR_ENV_FILE\`"
   echo "Please create it or specify a different file"
   echo "sh ./scripts/check-env.sh [$VAR_ENV_FILE $VAR_ENV_EXAMPLE_FILE]"
@@ -40,7 +40,7 @@ if [ -z "$VAR_ENV_FILE" ]; then
   exit 1
 fi
 
-if [ -z "$VAR_ENV_EXAMPLE_FILE" ]; then
+if [ ! -f "$VAR_ENV_EXAMPLE_FILE" ]; then
   echo "Failed to find \`$VAR_ENV_EXAMPLE_FILE\`"
   echo "Please create it or specify a different file"
   echo "sh ./scripts/check-env.sh [$VAR_ENV_FILE $VAR_ENV_EXAMPLE_FILE]"
@@ -82,7 +82,7 @@ exit 0
 
 ## Quick Setup
 
-Assumes node and script location `scripts/check-branch-name.sh`
+Assumes node and script location `scripts/check-env.sh`
 
 ```bash
 echo "
@@ -102,7 +102,7 @@ ENVIRONMENT_VARIABLE=VALUE
 
 touch .env
 
-npm install -D husky npm-run-all prettier@exact
+npm install -D husky npm-run-all prettier
 
 sed -i '' "s|\"scripts\": {|\"scripts\": {\"format-prettier\": \"prettier --write \\\\\"**/*.{ts,tsx,js,jsx,json,md,html,css,scss,less,sass}\\\\\"\",|" package.json
 
