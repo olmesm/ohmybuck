@@ -7,11 +7,12 @@ tags: ["mac", "development"]
 
 My somewhat opinionated guide to mac setup with a focus on enhancing existing/normal workflows. Tooling and setup has a focus on ease of setup and keeping an experience that isn't too far from OS defaults.
 
-1. [Install homebrew](https://brew.sh/)
+1. [Install homebrew](https://brew.sh/) - make sure to follow any additional instructions in the console.
 1. Install git, ZSH, and shell completions
 
    ```bash
-   brew install wget zsh zsh-completions git vim && brew cask install iterm2
+   brew install wget zsh zsh-completions git vim \
+     && brew install --cask iterm2
    ```
 
 1. Install [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh)
@@ -31,17 +32,17 @@ My somewhat opinionated guide to mac setup with a focus on enhancing existing/no
    - Preferences > Load preferences from a custom folder or URL
    - Check and set to ~/iterm-settings
 
-1. Change default login shell for user
+<!-- 1. Change default login shell for user
 
    ```bash
    chsh -s /bin/zsh
-   ```
+   ``` -->
 
-1. Change permissions for zsh directory
+<!-- 1. Change permissions for zsh directory
 
    ```bash
    sudo chmod -R g-w,o-w /usr/local/share/zsh
-   ```
+   ``` -->
 
 1. Change oh-my-zsh to include full path
 
@@ -53,41 +54,29 @@ My somewhat opinionated guide to mac setup with a focus on enhancing existing/no
    find ~/.zshrc -type f -exec sed -i '' -e 's|ZSH_THEME="robbyrussell"|ZSH_THEME="ollyrussell"|g' {} \;
    ```
 
-1. Install runtimes as required
-
-   - Java: [sdkman](https://sdkman.io/install)
-   - Node: [nvm](https://github.com/nvm-sh/nvm)
-   - Python: [pipenv](https://github.com/pypa/pipenv)
-   - Ruby: [rvm](https://rvm.io/)
-   - Rust: [Rustup](https://www.rust-lang.org/tools/install)
-   - Terraform: [tfenv](https://github.com/tfutils/tfenv)
-
-1. Integrate runtimes with your shell for easy engine management.
-
-- nvm: https://github.com/nvm-sh/nvm#calling-nvm-use-automatically-in-a-directory-with-a-nvmrc-file
+1. Install [asdf](https://asdf-vm.com/#/core-manage-asdf) for runtime management. Make sure to install this via the git instructions.
 
 1. Install recommended packages (feel free to delete as required)
 
    ```bash
-   brew cask install \
+   brew install --cask \
     boostnote \
     chromium \
     cyberduck \
     docker \
     firefox \
+    google-chrome
     itsycal \
-    keybase \
     libreoffice \
     ngrok \
     opera \
     postman \
+    rectangle \
     slack \
     transmission \
-    virtualbox \
     visual-studio-code \
     vlc \
     whatsapp \
-    google-chrome
    ```
 
    Note you'll need to [approve most of the above apps from unidentified developers](https://support.apple.com/en-gb/guide/mac-help/mh40616/mac)
@@ -115,14 +104,12 @@ My somewhat opinionated guide to mac setup with a focus on enhancing existing/no
 
 1. For managing multiple calendars, install [Woven](https://woven.com/)
 
-1. For ubuntu-like window snapping, install [Magnet](https://apps.apple.com/gb/app/magnet/id441258766)
-
 1. For a quickly accessible calandar and clock, setup itsycal (depends on `brew cask install itsycal` as above)
 
    - Open itsycal
    - Open Preferences or "⌘" + ","
    - General > Launch at login
-   - Preferences > Appearance > `h:mma E d MMM`
+   - Preferences > Appearance > `E d MMM`
 
 1. Install [Lastpass in the browser](https://lastpass.com/misc_download2.php)
 
