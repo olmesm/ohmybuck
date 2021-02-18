@@ -32,18 +32,6 @@ My somewhat opinionated guide to mac setup with a focus on enhancing existing/no
    - Preferences > Load preferences from a custom folder or URL
    - Check and set to ~/iterm-settings
 
-<!-- 1. Change default login shell for user
-
-   ```bash
-   chsh -s /bin/zsh
-   ``` -->
-
-<!-- 1. Change permissions for zsh directory
-
-   ```bash
-   sudo chmod -R g-w,o-w /usr/local/share/zsh
-   ``` -->
-
 1. Change oh-my-zsh to include full path
 
    ```bash
