@@ -8,10 +8,10 @@ tags: ["mac", "development"]
 My somewhat opinionated guide to mac setup with a focus on enhancing existing/normal workflows. Tooling and setup has a focus on ease of setup and keeping an experience that isn't too far from OS defaults.
 
 1. [Install homebrew](https://brew.sh/) - make sure to follow any additional instructions in the console.
-1. Install git, ZSH, and shell completions
+1. Install git, ZSH tools, and shell completions
 
    ```bash
-   brew install wget zsh zsh-completions git vim \
+   brew install wget zsh-completions git vim \
      && brew install --cask iterm2
    ```
 
