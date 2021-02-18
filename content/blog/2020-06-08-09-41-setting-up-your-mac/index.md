@@ -15,6 +15,12 @@ My somewhat opinionated guide to mac setup with a focus on enhancing existing/no
      && brew install --cask iterm2
    ```
 
+1. Change permissions for zsh directory
+
+   ```bash
+   sudo chmod -R g-w,o-w /usr/local/share/zsh
+   ```
+
 1. Install [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh)
 
    ```bash
@@ -32,7 +38,7 @@ My somewhat opinionated guide to mac setup with a focus on enhancing existing/no
    - Preferences > Load preferences from a custom folder or URL
    - Check and set to ~/iterm-settings
 
-1. Change oh-my-zsh to include full path
+1) Change oh-my-zsh to include full path
 
    ```bash
    ZSH_THEME=~/.oh-my-zsh/themes/ollyrussell.zsh-theme
@@ -42,9 +48,9 @@ My somewhat opinionated guide to mac setup with a focus on enhancing existing/no
    find ~/.zshrc -type f -exec sed -i '' -e 's|ZSH_THEME="robbyrussell"|ZSH_THEME="ollyrussell"|g' {} \;
    ```
 
-1. Install [asdf](https://asdf-vm.com/#/core-manage-asdf) for runtime management. Make sure to install this via the git instructions.
+1) Install [asdf](https://asdf-vm.com/#/core-manage-asdf) for runtime management. Make sure to install this via the git instructions.
 
-1. Install recommended packages (feel free to delete as required)
+1) Install recommended packages (feel free to delete as required)
 
    ```bash
    brew install --cask \
@@ -69,7 +75,7 @@ My somewhat opinionated guide to mac setup with a focus on enhancing existing/no
 
    Note you'll need to [approve most of the above apps from unidentified developers](https://support.apple.com/en-gb/guide/mac-help/mh40616/mac)
 
-1. Create a `projects` and `personal` directory
+1) Create a `projects` and `personal` directory
 
    ```bash
    mkdir \
@@ -82,7 +88,7 @@ My somewhat opinionated guide to mac setup with a focus on enhancing existing/no
    | projects  | Client work and prototypes                                        | projects/&lt;client&gt;/&lt;code-repo&gt; |
    | personal  | Personal and non-company work. Ethically OK to take when leaving. | personal/&lt;code-repo&gt;                |
 
-1. Add `projects` and `personal` to your favourites
+1) Add `projects` and `personal` to your favourites
 
    ```bash
    open ~
@@ -90,21 +96,21 @@ My somewhat opinionated guide to mac setup with a focus on enhancing existing/no
 
    - Drag and drop the `projects` and `personal` directories into the left hand favourites pane of the finder window.
 
-1. For managing multiple calendars, install [Woven](https://woven.com/)
+1) For managing multiple calendars, install [Woven](https://woven.com/)
 
-1. For a quickly accessible calandar and clock, setup itsycal (depends on `brew cask install itsycal` as above)
+1) For a quickly accessible calandar and clock, setup itsycal (depends on `brew cask install itsycal` as above)
 
    - Open itsycal
    - Open Preferences or "⌘" + ","
    - General > Launch at login
    - Preferences > Appearance > `E d MMM`
 
-1. Install [Lastpass in the browser](https://lastpass.com/misc_download2.php)
+1) Install [Lastpass in the browser](https://lastpass.com/misc_download2.php)
 
-1. Setup [Authy](https://apps.apple.com/us/app/authy/id494168017) on your mobile device for MFA - do not install this on your laptop.
+1) Setup [Authy](https://apps.apple.com/us/app/authy/id494168017) on your mobile device for MFA - do not install this on your laptop.
 
-1. Setup [Lastpass](https://apps.apple.com/gb/app/lastpass-password-manager/id324613447) on your mobile device.
+1) Setup [Lastpass](https://apps.apple.com/gb/app/lastpass-password-manager/id324613447) on your mobile device.
 
-1. Setup [Woven](https://apps.apple.com/us/app/woven-calendar/id1439635218) on your mobile device.
+1) Setup [Woven](https://apps.apple.com/us/app/woven-calendar/id1439635218) on your mobile device.
 
-1. Setup [Slack](https://apps.apple.com/gb/app/slack/id618783545) on your mobile device.
+1) Setup [Slack](https://apps.apple.com/gb/app/slack/id618783545) on your mobile device.
