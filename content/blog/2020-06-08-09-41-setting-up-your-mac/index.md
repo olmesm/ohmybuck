@@ -7,6 +7,13 @@ tags: ["mac", "development"]
 
 My somewhat opinionated guide to mac setup with a focus on enhancing existing/normal workflows. Tooling and setup has a focus on ease of setup and keeping an experience that isn't too far from OS defaults.
 
+## Concepts
+
+- Create an environment which is not bound to any runtime (use asdf)
+- Use mac defaults as much as possible
+- Rely on package managers as much as possible (homebrew and asdf)
+- Easy, quick, and replicatable setup
+
 1. [Install homebrew](https://brew.sh/) - make sure to follow any additional instructions in the console.
 1. Install git, ZSH tools, and shell completions
 
@@ -14,6 +21,15 @@ My somewhat opinionated guide to mac setup with a focus on enhancing existing/no
    brew install wget zsh-completions git vim \
      && brew install --cask iterm2
    ```
+
+1. Setup git
+
+    ```bash
+    git config --global user.name "... ..."
+    git config --global user.email "...@..."
+    git config --global pull.rebase false
+    git config --global init.defaultBranch main
+    ```
 
 1. Change permissions for zsh directory
 
@@ -48,7 +64,12 @@ My somewhat opinionated guide to mac setup with a focus on enhancing existing/no
    find ~/.zshrc -type f -exec sed -i '' -e 's|ZSH_THEME="robbyrussell"|ZSH_THEME="ollyrussell"|g' {} \;
    ```
 
-1) Install [asdf](https://asdf-vm.com/#/core-manage-asdf) for runtime management. Make sure to install this via the git instructions.
+1) Install [asdf](https://asdf-vm.com/#/core-manage-asdf) for runtime management.
+
+  ```bash
+  git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.0
+  find ~/.zshrc -type f -exec sed -i '' -e 's|plugins=(|plugins=(asdf |g' {} \;
+  ```
 
 1) Install recommended packages (feel free to delete as required)
 
