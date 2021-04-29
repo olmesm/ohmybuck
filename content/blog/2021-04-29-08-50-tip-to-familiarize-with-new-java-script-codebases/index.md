@@ -1,8 +1,8 @@
 ---
 title: Tip to Familiarize with New JavaScript Codebases
-description: Tip to Familiarize with New JavaScript Codebases
+description: A brief summary of Kevin Peters post on measuring complexity in JS & TS codebases
 date: 2021-04-29 08:50
-tags: [TODO]
+tags: [javascript, analysis, complexity, software engineering]
 ---
 
 Please read the origninal post on <https://www.kevinpeters.net/the-fastest-way-to-understand-new-code-bases>.
