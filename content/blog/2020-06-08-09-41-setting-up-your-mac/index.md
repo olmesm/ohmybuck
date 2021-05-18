@@ -5,7 +5,7 @@ date: 2020-06-08 09:41
 tags: ["mac", "development"]
 ---
 
-My somewhat opinionated guide to mac setup with a focus on enhancing existing/normal workflows. Tooling and setup has a focus on ease of setup and keeping an experience that isn't too far from OS defaults.
+My "opinionated" guide to mac setup with a focus on enhancing existing/normal workflows. Tooling and setup has a focus on ease of setup and keeping an experience that isn't too far from OS defaults.
 
 ## Concepts
 
@@ -14,7 +14,14 @@ My somewhat opinionated guide to mac setup with a focus on enhancing existing/no
 - Rely on package managers as much as possible (homebrew and asdf)
 - Easy, quick, and replicatable setup
 
-1. [Install homebrew](https://brew.sh/) - make sure to follow any additional instructions in the console.
+1. Install Homebrew
+
+   [From Homebrew](https://brew.sh/) - make sure to follow any additional instructions in the console.
+
+   ```bash
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+   ```
+
 1. Install git, ZSH tools, and shell completions
 
    ```bash
@@ -24,12 +31,12 @@ My somewhat opinionated guide to mac setup with a focus on enhancing existing/no
 
 1. Setup git
 
-    ```bash
-    git config --global user.name "... ..."
-    git config --global user.email "...@..."
-    git config --global pull.rebase false
-    git config --global init.defaultBranch main
-    ```
+   ```bash
+   git config --global user.name "... ..."
+   git config --global user.email "...@..."
+   git config --global pull.rebase false
+   git config --global init.defaultBranch main
+   ```
 
 1. Change permissions for zsh directory
 
@@ -66,37 +73,72 @@ My somewhat opinionated guide to mac setup with a focus on enhancing existing/no
 
 1) Install [asdf](https://asdf-vm.com/#/core-manage-asdf) for runtime management.
 
-  ```bash
-  git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.0
-  find ~/.zshrc -type f -exec sed -i '' -e 's|plugins=(|plugins=(asdf |g' {} \;
-  ```
+   ```bash
+   git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.0
+   find ~/.zshrc -type f -exec sed -i '' -e 's|plugins=(|plugins=(asdf |g' {} \;
+   ```
+
+1) Setup node with asdf
+
+   ```bash
+   brew install gnupg
+   asdf plugin-add nodejs
+
+   echo "
+   # Disable asdf nodejs signature check
+    NODEJS_CHECK_SIGNATURES=no\n" >> ~/.zshrc
+   echo "legacy_version_file = yes" > ~/.asdfrc
+   echo "yarn" > ~/.default-npm-packages
+
+   asdf install nodejs latest
+   ```
 
 1) Install recommended packages (feel free to delete as required)
 
+   | Application        | brew info link                                   |
+   | ------------------ | ------------------------------------------------ |
+   | Boostnote          | https://formulae.brew.sh/cask/boostnote          |
+   | Chromium           | https://formulae.brew.sh/cask/chromium           |
+   | Cyberduck          | https://formulae.brew.sh/cask/cyberduck          |
+   | Docker             | https://formulae.brew.sh/cask/docker             |
+   | Firefox            | https://formulae.brew.sh/cask/firefox            |
+   | Google Chrome      | https://formulae.brew.sh/cask/google-chrome      |
+   | Itsycal            | https://formulae.brew.sh/cask/itsycal            |
+   | Libreoffice        | https://formulae.brew.sh/cask/libreoffice        |
+   | Ngrok              | https://formulae.brew.sh/cask/ngrok              |
+   | Opera              | https://formulae.brew.sh/cask/opera              |
+   | Postman            | https://formulae.brew.sh/cask/postman            |
+   | Rectangle          | https://formulae.brew.sh/cask/rectangle          |
+   | Slack              | https://formulae.brew.sh/cask/slack              |
+   | Transmission       | https://formulae.brew.sh/cask/transmission       |
+   | Visual Studio Code | https://formulae.brew.sh/cask/visual-studio-code |
+   | Vlc                | https://formulae.brew.sh/cask/vlc                |
+   | Whatsapp           | https://formulae.brew.sh/cask/whatsapp           |
+
    ```bash
    brew install --cask \
-    boostnote \
-    chromium \
-    cyberduck \
-    docker \
-    firefox \
-    google-chrome
-    itsycal \
-    libreoffice \
-    ngrok \
-    opera \
-    postman \
-    rectangle \
-    slack \
-    transmission \
-    visual-studio-code \
-    vlc \
-    whatsapp \
+   boostnote \
+   chromium \
+   cyberduck \
+   docker \
+   firefox \
+   google-chrome \
+   itsycal \
+   libreoffice \
+   ngrok \
+   opera \
+   postman \
+   rectangle \
+   slack \
+   transmission \
+   visual-studio-code \
+   vlc \
+   whatsapp
    ```
 
    Note you'll need to [approve most of the above apps from unidentified developers](https://support.apple.com/en-gb/guide/mac-help/mh40616/mac)
 
-1) Create a `projects` and `personal` directory
+1. Create a `projects` and `personal` directory
 
    ```bash
    mkdir \
@@ -109,7 +151,7 @@ My somewhat opinionated guide to mac setup with a focus on enhancing existing/no
    | projects  | Client work and prototypes                                        | projects/&lt;client&gt;/&lt;code-repo&gt; |
    | personal  | Personal and non-company work. Ethically OK to take when leaving. | personal/&lt;code-repo&gt;                |
 
-1) Add `projects` and `personal` to your favourites
+1. Add `projects` and `personal` to your favourites
 
    ```bash
    open ~
@@ -117,21 +159,21 @@ My somewhat opinionated guide to mac setup with a focus on enhancing existing/no
 
    - Drag and drop the `projects` and `personal` directories into the left hand favourites pane of the finder window.
 
-1) For managing multiple calendars, install [Woven](https://woven.com/)
+1. For managing multiple calendars, install [Woven](https://woven.com/)
 
-1) For a quickly accessible calandar and clock, setup itsycal (depends on `brew cask install itsycal` as above)
+1. For a quickly accessible calandar and clock, setup itsycal (depends on `brew cask install itsycal` as above)
 
    - Open itsycal
    - Open Preferences or "⌘" + ","
    - General > Launch at login
    - Preferences > Appearance > `E d MMM`
 
-1) Install [Lastpass in the browser](https://lastpass.com/misc_download2.php)
+1. Install [Lastpass in the browser](https://lastpass.com/misc_download2.php)
 
-1) Setup [Authy](https://apps.apple.com/us/app/authy/id494168017) on your mobile device for MFA - do not install this on your laptop.
+1. Setup [Authy](https://apps.apple.com/us/app/authy/id494168017) on your mobile device for MFA - do not install this on your laptop.
 
-1) Setup [Lastpass](https://apps.apple.com/gb/app/lastpass-password-manager/id324613447) on your mobile device.
+1. Setup [Lastpass](https://apps.apple.com/gb/app/lastpass-password-manager/id324613447) on your mobile device.
 
-1) Setup [Woven](https://apps.apple.com/us/app/woven-calendar/id1439635218) on your mobile device.
+1. Setup [Woven](https://apps.apple.com/us/app/woven-calendar/id1439635218) on your mobile device.
 
-1) Setup [Slack](https://apps.apple.com/gb/app/slack/id618783545) on your mobile device.
+1. Setup [Slack](https://apps.apple.com/gb/app/slack/id618783545) on your mobile device.
