@@ -103,6 +103,7 @@ My "opinionated" guide to mac setup with a focus on enhancing existing/normal wo
    | Docker             | https://formulae.brew.sh/cask/docker             |
    | Firefox            | https://formulae.brew.sh/cask/firefox            |
    | Google Chrome      | https://formulae.brew.sh/cask/google-chrome      |
+   | Intellij Idea      | https://formulae.brew.sh/cask/intellij-idea      |
    | Itsycal            | https://formulae.brew.sh/cask/itsycal            |
    | Libreoffice        | https://formulae.brew.sh/cask/libreoffice        |
    | Ngrok              | https://formulae.brew.sh/cask/ngrok              |
@@ -112,7 +113,7 @@ My "opinionated" guide to mac setup with a focus on enhancing existing/normal wo
    | Slack              | https://formulae.brew.sh/cask/slack              |
    | Transmission       | https://formulae.brew.sh/cask/transmission       |
    | Visual Studio Code | https://formulae.brew.sh/cask/visual-studio-code |
-   | Vlc                | https://formulae.brew.sh/cask/vlc                |
+   | VLC                | https://formulae.brew.sh/cask/vlc                |
    | Whatsapp           | https://formulae.brew.sh/cask/whatsapp           |
 
    ```bash
@@ -123,6 +124,7 @@ My "opinionated" guide to mac setup with a focus on enhancing existing/normal wo
    docker \
    firefox \
    google-chrome \
+   intellij-idea \
    itsycal \
    libreoffice \
    ngrok \
@@ -146,10 +148,10 @@ My "opinionated" guide to mac setup with a focus on enhancing existing/normal wo
     ~/personal
    ```
 
-   | Directory | Description                                                       | Structure                                 |
-   | --------- | ----------------------------------------------------------------- | ----------------------------------------- |
-   | projects  | Client work and prototypes                                        | projects/&lt;client&gt;/&lt;code-repo&gt; |
-   | personal  | Personal and non-company work. Ethically OK to take when leaving. | personal/&lt;code-repo&gt;                |
+   | Directory | Description                    | Structure                                 |
+   | --------- | ------------------------------ | ----------------------------------------- |
+   | projects  | Client work and prototypes     | projects/&lt;client&gt;/&lt;code-repo&gt; |
+   | personal  | Personal and non-company work. | personal/&lt;code-repo&gt;                |
 
 1. Add `projects` and `personal` to your favourites
 
@@ -158,8 +160,6 @@ My "opinionated" guide to mac setup with a focus on enhancing existing/normal wo
    ```
 
    - Drag and drop the `projects` and `personal` directories into the left hand favourites pane of the finder window.
-
-1. For managing multiple calendars, install [Woven](https://woven.com/)
 
 1. For a quickly accessible calandar and clock, setup itsycal (depends on `brew cask install itsycal` as above)
 
@@ -173,7 +173,5 @@ My "opinionated" guide to mac setup with a focus on enhancing existing/normal wo
 1. Setup [Authy](https://apps.apple.com/us/app/authy/id494168017) on your mobile device for MFA - do not install this on your laptop.
 
 1. Setup [Lastpass](https://apps.apple.com/gb/app/lastpass-password-manager/id324613447) on your mobile device.
-
-1. Setup [Woven](https://apps.apple.com/us/app/woven-calendar/id1439635218) on your mobile device.
 
 1. Setup [Slack](https://apps.apple.com/gb/app/slack/id618783545) on your mobile device.

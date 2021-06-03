@@ -80,6 +80,15 @@ fi
 exit 0
 ````
 
+## Setup
+
+Development dependencies are packages that you only need when developing your application. Development dependencies are useful, but are not mission critical: the application will still run without them.
+
+Git hook tooling should be committed to your project to ensure consistent automation on all development machines.
+
+- [For Python setup](https://pre-commit.com/#installation)
+- [See below for node specific](#quick-setup)
+
 ## Quick Setup
 
 Assumes node and script location `scripts/check-env.sh`
