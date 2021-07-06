@@ -41,7 +41,7 @@ My "opinionated" guide to mac setup with a focus on enhancing existing/normal wo
 1. Change permissions for zsh directory
 
    ```bash
-   sudo chmod -R g-w,o-w /usr/local/share/zsh
+   sudo chmod -R g-w,o-w /usr/local/share/zsh 2>/dev/null
    ```
 
 1. Install [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh)
@@ -161,7 +161,7 @@ My "opinionated" guide to mac setup with a focus on enhancing existing/normal wo
 
    - Drag and drop the `projects` and `personal` directories into the left hand favourites pane of the finder window.
 
-1. For a quickly accessible calandar and clock, setup itsycal (depends on `brew cask install itsycal` as above)
+1. For a quickly accessible calandar and clock, setup itsycal (depends on `itsycal` being installed as above)
 
    - Open itsycal
    - Open Preferences or "⌘" + ","
