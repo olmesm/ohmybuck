@@ -132,6 +132,7 @@ My "opinionated" guide to mac setup with a focus on enhancing existing/normal wo
    postman \
    rectangle \
    slack \
+   switchhosts \
    transmission \
    visual-studio-code \
    vlc \
