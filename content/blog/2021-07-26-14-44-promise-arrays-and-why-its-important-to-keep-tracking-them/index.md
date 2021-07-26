@@ -2,7 +2,7 @@
 title: Promise Arrays and Why It’s Important to Keep Tracking Them
 description: Promise Arrays and Why It’s Important to Keep Tracking Them
 date: 2021-07-26 14:44
-tags: [promises, js]
+tags: [promises, js, javascript]
 ---
 
 I was battling to explain how difficult error handling can be when inside a promise array - here’s a fun example for either a tech test or workshop.
