@@ -50,6 +50,8 @@ My "opinionated" guide to mac setup with a focus on enhancing existing/normal wo
    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
    ```
 
+1. Close all all terminals and open iterm
+
 1. Install and apply keybindings for iterm
 
    ```bash
