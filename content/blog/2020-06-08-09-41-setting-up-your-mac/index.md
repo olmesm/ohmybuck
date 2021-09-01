@@ -38,13 +38,6 @@ My "opinionated" guide to mac setup with a focus on enhancing existing/normal wo
      && brew install --cask iterm2
    ```
 
-
-1. Change permissions for zsh directory
-
-   ```bash
-   sudo chmod -R g-w,o-w /usr/local/share/zsh 2>/dev/null
-   ```
-
 1. Install [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh)
 
    ```bash
@@ -77,8 +70,9 @@ My "opinionated" guide to mac setup with a focus on enhancing existing/normal wo
 1) Install [asdf](https://asdf-vm.com/#/core-manage-asdf) for runtime management.
 
    ```bash
-   git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.0
+   git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.1
    find ~/.zshrc -type f -exec sed -i '' -e 's|plugins=(|plugins=(asdf |g' {} \;
+   . ~/.zshrc
    ```
 
 1) Setup node with asdf
