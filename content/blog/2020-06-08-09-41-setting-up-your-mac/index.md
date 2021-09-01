@@ -14,6 +14,15 @@ My "opinionated" guide to mac setup with a focus on enhancing existing/normal wo
 - Rely on package managers as much as possible (homebrew and asdf)
 - Easy, quick, and replicatable setup
 
+1. Setup git
+
+   ```bash
+   git config --global user.name "... ..."
+   git config --global user.email "...@..."
+   git config --global pull.rebase false
+   git config --global init.defaultBranch main
+   ```
+
 1. Install Homebrew
 
    [From Homebrew](https://brew.sh/) - make sure to follow any additional instructions in the console.
@@ -29,14 +38,6 @@ My "opinionated" guide to mac setup with a focus on enhancing existing/normal wo
      && brew install --cask iterm2
    ```
 
-1. Setup git
-
-   ```bash
-   git config --global user.name "... ..."
-   git config --global user.email "...@..."
-   git config --global pull.rebase false
-   git config --global init.defaultBranch main
-   ```
 
 1. Change permissions for zsh directory
 
