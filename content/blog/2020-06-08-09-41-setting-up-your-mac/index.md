@@ -24,6 +24,13 @@ My "opinionated" guide to mac setup with a focus on enhancing existing/normal wo
    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
    ```
 
+1. Add to profile
+
+    ```bash
+    echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+    ```
+
 1. Install git, ZSH tools, and shell completions
 
    ```bash
@@ -53,7 +60,11 @@ My "opinionated" guide to mac setup with a focus on enhancing existing/normal wo
    - Open iTerm2
    - Open iTerm2 > Preferences or "⌘" + ","
    - Profiles > Terminal > Scrollback Lines: 10,000
+    ![](/2020-06-08-09-41-setting-up-your-mac/screenshot_2022_02_21_at_11_13_49.png)
+
    - Profiles > Keys > Key Mappings > Presets > Natural Text Editing > "Remove"
+    ![](/2020-06-08-09-41-setting-up-your-mac/screenshot_2022_02_21_at_11_14_04.png)
+
 
 1) Change oh-my-zsh to include full path
 
@@ -159,6 +170,8 @@ My "opinionated" guide to mac setup with a focus on enhancing existing/normal wo
    - Preferences > Appearance > `E d MMM`
    - Hide icon
    - Hide the system date
+    ![](/2020-06-08-09-41-setting-up-your-mac/screenshot_2022_02_21_at_11_39_25.png)
+
 
 1. Install [Lastpass in the browser](https://lastpass.com/misc_download2.php)
 
