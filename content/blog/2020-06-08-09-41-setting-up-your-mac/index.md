@@ -158,6 +158,7 @@ My "opinionated" guide to mac setup with a focus on enhancing existing/normal wo
    - General > Launch at login
    - Preferences > Appearance > `E d MMM`
    - Hide icon
+   - Hide the system date
 
 1. Install [Lastpass in the browser](https://lastpass.com/misc_download2.php)
 
