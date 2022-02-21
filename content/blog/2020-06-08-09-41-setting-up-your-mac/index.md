@@ -14,6 +14,8 @@ My "opinionated" guide to mac setup with a focus on enhancing existing/normal wo
 - Rely on package managers as much as possible (homebrew and asdf)
 - Easy, quick, and replicatable setup
 
+---
+
 1. Install Homebrew
 
    [From Homebrew](https://brew.sh/) - make sure to follow any additional instructions in the console.
@@ -46,16 +48,12 @@ My "opinionated" guide to mac setup with a focus on enhancing existing/normal wo
 
 1. Close all all terminals and open iterm
 
-1. Install and apply keybindings for iterm
-
-   ```bash
-   mkdir iterm-settings && curl -s https://raw.githubusercontent.com/olmesm/setup-mac/master/iterm-keybindings/com.googlecode.iterm2.plist | sed -e 's|%%HOME%%|'"${HOME}"'|g' > ~/iterm-settings/com.googlecode.iterm2.plist
-   ```
+1. Apply keybindings for iterm and increase window memory
 
    - Open iTerm2
    - Open iTerm2 > Preferences or "⌘" + ","
-   - Preferences > Load preferences from a custom folder or URL
-   - Check and set to ~/iterm-settings
+   - Profiles > Terminal > Scrollback Lines: 10,000
+   - Profiles > Keys > Key Mappings > Presets > Natural Text Editing > "Remove"
 
 1) Change oh-my-zsh to include full path
 
@@ -67,19 +65,13 @@ My "opinionated" guide to mac setup with a focus on enhancing existing/normal wo
    find ~/.zshrc -type f -exec sed -i '' -e 's|ZSH_THEME="robbyrussell"|ZSH_THEME="ollyrussell"|g' {} \;
    ```
 
-1) Install [asdf](https://asdf-vm.com/#/core-manage-asdf) for runtime management.
+1) Setup node with [asdf](https://asdf-vm.com/#/core-manage-asdf) for runtime management.
 
    ```bash
-   git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.1
-   find ~/.zshrc -type f -exec sed -i '' -e 's|plugins=(|plugins=(asdf |g' {} \;
-   . ~/.zshrc
-   ```
-
-1) Setup node with asdf
-
-   ```bash
-   brew install gnupg
-   asdf plugin-add nodejs
+   brew install gnupg asdf
+   find ~/.zshrc -type f -exec sed -i '' -e 's|plugins=(|plugins=(asdf |g' {} \; # Add asdf-vm shell completions
+   . ~/.zshrc # Source the new additions
+   asdf plugin-add nodejs # Add nodejs
 
    echo "
    # Disable asdf nodejs signature check
@@ -95,46 +87,45 @@ My "opinionated" guide to mac setup with a focus on enhancing existing/normal wo
 
    | Application        | brew info link                                   |
    | ------------------ | ------------------------------------------------ |
-   | Boostnote          | https://formulae.brew.sh/cask/boostnote          |
-   | Chromium           | https://formulae.brew.sh/cask/chromium           |
-   | Cyberduck          | https://formulae.brew.sh/cask/cyberduck          |
-   | Docker             | https://formulae.brew.sh/cask/docker             |
-   | Firefox            | https://formulae.brew.sh/cask/firefox            |
-   | Google Chrome      | https://formulae.brew.sh/cask/google-chrome      |
-   | Intellij Idea      | https://formulae.brew.sh/cask/intellij-idea      |
-   | Itsycal            | https://formulae.brew.sh/cask/itsycal            |
-   | Libreoffice        | https://formulae.brew.sh/cask/libreoffice        |
-   | Ngrok              | https://formulae.brew.sh/cask/ngrok              |
-   | Opera              | https://formulae.brew.sh/cask/opera              |
-   | Postman            | https://formulae.brew.sh/cask/postman            |
-   | Rectangle          | https://formulae.brew.sh/cask/rectangle          |
-   | Slack              | https://formulae.brew.sh/cask/slack              |
-   | Transmission       | https://formulae.brew.sh/cask/transmission       |
+   | Boostnote | https://formulae.brew.sh/cask/boostnote |
+   | Chromium | https://formulae.brew.sh/cask/chromium |
+   | Cyberduck | https://formulae.brew.sh/cask/cyberduck |
+   | Docker | https://formulae.brew.sh/cask/docker |
+   | Firefox | https://formulae.brew.sh/cask/firefox |
+   | Google-chrome | https://formulae.brew.sh/cask/google-chrome |
+   | Itsycal | https://formulae.brew.sh/cask/itsycal |
+   | Libreoffice | https://formulae.brew.sh/cask/libreoffice |
+   | Ngrok | https://formulae.brew.sh/cask/ngrok |
+   | Obsidian | https://formulae.brew.sh/cask/obsidian |
+   | Opera | https://formulae.brew.sh/cask/opera |
+   | Postwoman | https://formulae.brew.sh/cask/postwoman |
+   | Rectangle | https://formulae.brew.sh/cask/rectangle |
+   | Slack | https://formulae.brew.sh/cask/slack |
+   | Switchhosts | https://formulae.brew.sh/cask/switchhosts |
+   | Transmission | https://formulae.brew.sh/cask/transmission |
    | Visual Studio Code | https://formulae.brew.sh/cask/visual-studio-code |
-   | VLC                | https://formulae.brew.sh/cask/vlc                |
-   | Whatsapp           | https://formulae.brew.sh/cask/whatsapp           |
+   | VLC | https://formulae.brew.sh/cask/vlc |
 
    ```bash
-   brew install --cask \
-   boostnote \
-   chromium \
-   cyberduck \
-   docker \
-   firefox \
-   google-chrome \
-   intellij-idea \
-   itsycal \
-   libreoffice \
-   ngrok \
-   opera \
-   postman \
-   rectangle \
-   slack \
-   switchhosts \
-   transmission \
-   visual-studio-code \
-   vlc \
-   whatsapp
+    brew install --cask \
+      boostnote \
+      chromium \
+      cyberduck \
+      docker \
+      firefox \
+      google-chrome \
+      itsycal \
+      libreoffice \
+      ngrok \
+      obsidian \
+      opera \
+      postwoman \
+      rectangle \
+      slack \
+      switchhosts \
+      transmission \
+      visual-studio-code \
+      vlc
    ```
 
    Note you'll need to [approve most of the above apps from unidentified developers](https://support.apple.com/en-gb/guide/mac-help/mh40616/mac)
@@ -160,12 +151,13 @@ My "opinionated" guide to mac setup with a focus on enhancing existing/normal wo
 
    - Drag and drop the `projects` and `personal` directories into the left hand favourites pane of the finder window.
 
-1. For a quickly accessible calandar and clock, setup itsycal (depends on `itsycal` being installed as above)
+1. For a quickly accessible calendar and clock, setup itsycal (depends on `itsycal` being installed as above)
 
    - Open itsycal
    - Open Preferences or "⌘" + ","
    - General > Launch at login
    - Preferences > Appearance > `E d MMM`
+   - Hide icon
 
 1. Install [Lastpass in the browser](https://lastpass.com/misc_download2.php)
 
