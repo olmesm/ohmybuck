@@ -109,7 +109,7 @@ My "opinionated" guide to mac setup with a focus on enhancing existing/normal wo
    | Ngrok | https://formulae.brew.sh/cask/ngrok |
    | Obsidian | https://formulae.brew.sh/cask/obsidian |
    | Opera | https://formulae.brew.sh/cask/opera |
-   | Postwoman | https://formulae.brew.sh/cask/postwoman |
+   | Postman | https://formulae.brew.sh/cask/postman |
    | Rectangle | https://formulae.brew.sh/cask/rectangle |
    | Slack | https://formulae.brew.sh/cask/slack |
    | Switchhosts | https://formulae.brew.sh/cask/switchhosts |
