@@ -5,10 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>${TITLE} | ${SITE}</title>
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css"
-    />
+    <link rel="stylesheet" href="/pico.min.css" />
     <link rel="stylesheet" href="/prismjs.css" />
   </head>
   <body>
@@ -33,6 +30,8 @@
       async
       src="https://www.googletagmanager.com/gtag/js?id=UA-170424217-1"
     ></script>
+    <script async src="/prismjs.js"></script>
+
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
@@ -42,6 +41,5 @@
 
       gtag("config", "UA-170424217-1");
     </script>
-    <script src="/prismjs.js"></script>
   </body>
 </html>
