@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "new-post": "node scripts/new-post",
-    "dev": "nodemon -w content -w src -e js,md,html --exec 'rm -rf build && cp -r static build & node src/index.js && npx serve build'"
+    "build": "cp -r static build && node src/index.js",
+    "dev": "nodemon -w content -w src -e js,md,html --exec 'rm -rf build && npm run build && npx serve build'"
   },
   "keywords": [],
   "author": "",
