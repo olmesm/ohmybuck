@@ -1,0 +1,20 @@
+{
+  "name": "ohmybuck",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "nodemon -w content -w src -e js,md,html --exec 'rm -rf build && cp -r static build & node src/index.js && npx serve build'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "gray-matter": "^4.0.3",
+    "marked": "^4.0.12",
+    "lodash": "*",
+    "serve": "*",
+    "nodemon": "*"
+  },
+  "dependencies": {}
+}

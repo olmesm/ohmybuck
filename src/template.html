@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>${TITLE} | ${SITE}</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css"
+    />
+    <link rel="stylesheet" href="/prismjs.css" />
+  </head>
+  <body>
+    <nav class="container">
+      <ul>
+        <li>
+          <a href="${SITE_LINK}" style="color: var(--h1-color)">${SITE}</a>
+        </li>
+      </ul>
+      <ul>
+        <li><a href="/">home</a></li>
+        <li><a href="/whoami">whoami</a></li>
+      </ul>
+    </nav>
+
+    <main class="container">
+      <h1>${TITLE}</h1>
+      ${BODY}
+    </main>
+
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-170424217-1"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        window.dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "UA-170424217-1");
+    </script>
+    <script src="/prismjs.js"></script>
+  </body>
+</html>
