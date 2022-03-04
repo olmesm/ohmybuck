@@ -47,6 +47,15 @@ My "opinionated" guide to mac setup with a focus on enhancing existing/normal wo
    git config --global init.defaultBranch main
    ```
 
+1. Setup Rosetta
+
+   ```bash
+   if [[ `sysctl -n machdep.cpu.brand_string` == 'Apple M1' ]]; then
+   # Mac M1's different arch workaround.
+     softwareupdate --install-rosetta
+   fi
+   ```
+
 1. Install [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh)
 
    ```bash
