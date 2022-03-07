@@ -5,20 +5,53 @@ date: 2020-06-08 09:41
 tags: ["mac", "development"]
 ---
 
-My "opinionated" guide to mac setup with a focus on enhancing existing/normal workflows. Tooling and setup has a focus on ease of setup and keeping an experience that isn't too far from OS defaults.
+My opinionated guide to mac setup with a focus on enhancing existing/normal workflows. Tooling and setup has a focus on ease of setup and keeping an experience that isn't too far from OS defaults.
 
-## Concepts
+## What this means
 
-- Create an environment which is not bound to any runtime (use asdf)
-- Use mac defaults as much as possible
-- Rely on package managers as much as possible (homebrew and asdf)
-- Easy, quick, and replicatable setup
+- **Do not** install Google Chrome or Slack via website installers.
+- **Do not** install databases via homebrew or website installers.
+- **Do not** install Node.js via homebrew or website installers.
+- **Do not** install Python via homebrew or website installers.
+- **Do** create an environment which is not bound to any runtime (using asdf).
+- **Do** use mac defaults as much as possible.
+- **Do** rely on package managers as much as possible (using homebrew and asdf).
+- **Do** easy, quick, and replicatable setup.
+
+We need to have repeatable systems and ensure we can replicate the system of a client.
+
+Using tools like [Homebrew] for desktop and terminal applications, and [asdf] for managing runtimes, we can easily replicate any system.
+
+**As a general rule of thumb, if available in [asdf] and [homebrew] prefer to install package from [asdf]**
+
+## [asdf]
+
+From the website:
+
+> Manage multiple runtime versions with a single CLI tool. Use a `.tool-versions` file to manage all your tools, runtimes and their versions in a single, sharable place.
+
+Please take a look at the following that can be managed by [asdf]:
+
+- [Available plugins](https://github.com/asdf-vm/asdf-plugins#plugin-list)
+
+## [Homebrew]
+
+From the website:
+
+> Homebrew installs the stuff you need that Apple (or your Linux system) didn’t. Homebrew installs packages to their own directory and then symlinks their files into your user directory.
+
+> “To install, drag this icon…” no more. Homebrew Cask installs macOS apps, fonts and plugins and other non-open source software.
+
+Please take a look at the following that can be managed by [Homebrew]:
+
+- [Available Casks](https://formulae.brew.sh/cask/)
+- [Available Formulaes](https://formulae.brew.sh/formula/)
 
 ---
 
 1. Install Homebrew
 
-   [From Homebrew](https://brew.sh/) - make sure to follow any additional instructions in the console.
+   From [Homebrew] - make sure to follow any additional instructions in the console.
 
    ```bash
    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -84,7 +117,7 @@ My "opinionated" guide to mac setup with a focus on enhancing existing/normal wo
    find ~/.zshrc -type f -exec sed -i '' -e 's|ZSH_THEME="robbyrussell"|ZSH_THEME="ollyrussell"|g' {} \;
    ```
 
-1) Setup node with [asdf](https://asdf-vm.com/#/core-manage-asdf) for runtime management.
+1) Setup node with [asdf] for runtime management.
 
    ```bash
    brew install gnupg asdf
@@ -187,3 +220,8 @@ My "opinionated" guide to mac setup with a focus on enhancing existing/normal wo
 1. Setup [Lastpass](https://apps.apple.com/gb/app/lastpass-password-manager/id324613447) on your mobile device.
 
 1. Setup [Slack](https://apps.apple.com/gb/app/slack/id618783545) on your mobile device.
+
+<!-- MARKDOWN REFS -->
+
+[asdf]: https://asdf-vm.com
+[homebrew]: https://brew.sh
