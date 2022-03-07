@@ -7,8 +7,6 @@ tags: ["mac", "development"]
 
 My opinionated guide to mac setup with a focus on enhancing existing/normal workflows. Tooling and setup has a focus on ease of setup and keeping an experience that isn't too far from OS defaults.
 
-This could be scripted, but has been left as a set of manual tasks so that engineers can look and understand what they're doing.
-
 ## What this means
 
 - **Do not** install Google Chrome or Slack via website installers.
@@ -25,14 +23,14 @@ Using tools like [Homebrew] for desktop and terminal applications, and [asdf] fo
 
 **As a general rule of thumb, if available in [asdf] and [homebrew] prefer to install package from [asdf]**. Database engines should be run locally via Docker.
 
-## [asdf]
+### [asdf]
 
 > Manage multiple runtime versions with a single CLI tool, extendable via plugins - docs at asdf-vm.com. asdf is a CLI tool that can manage multiple language runtime versions on a per-project basis. It is like gvm, nvm, rbenv & pyenv (and more) all in one! Simply install your language's plugin!
 
 - [Available plugins](https://github.com/asdf-vm/asdf-plugins#plugin-list)
 - [Why use asdf?](https://github.com/asdf-vm/asdf#why-use-asdf)
 
-## [Homebrew]
+### [Homebrew]
 
 > Homebrew is the easiest and most flexible way to install the UNIX tools Apple didn’t include with macOS. It can also install software not packaged for your Linux distribution to your home directory without requiring sudo.
 
@@ -41,6 +39,8 @@ Using tools like [Homebrew] for desktop and terminal applications, and [asdf] fo
 - [Homebrew Documentation](https://docs.brew.sh/Manpage)
 
 ---
+
+This could potentially be scripted, but has been left as a set of manual tasks so that engineers can look and understand what they're doing.
 
 1. Install Homebrew
 
