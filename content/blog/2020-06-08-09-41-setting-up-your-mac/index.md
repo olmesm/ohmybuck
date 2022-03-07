@@ -27,26 +27,18 @@ Using tools like [Homebrew] for desktop and terminal applications, and [asdf] fo
 
 ## [asdf]
 
-From the website:
-
-> Manage multiple runtime versions with a single CLI tool. Use a `.tool-versions` file to manage all your tools, runtimes and their versions in a single, sharable place.
-
-Please take a look at the following that can be managed by [asdf]:
+> Manage multiple runtime versions with a single CLI tool, extendable via plugins - docs at asdf-vm.com. asdf is a CLI tool that can manage multiple language runtime versions on a per-project basis. It is like gvm, nvm, rbenv & pyenv (and more) all in one! Simply install your language's plugin!
 
 - [Available plugins](https://github.com/asdf-vm/asdf-plugins#plugin-list)
+- [Why use asdf?](https://github.com/asdf-vm/asdf#why-use-asdf)
 
 ## [Homebrew]
 
-From the website:
-
-> Homebrew installs the stuff you need that Apple (or your Linux system) didn’t. Homebrew installs packages to their own directory and then symlinks their files into your user directory.
-
-> “To install, drag this icon…” no more. Homebrew Cask installs macOS apps, fonts and plugins and other non-open source software.
-
-Please take a look at the following that can be managed by [Homebrew]:
+> Homebrew is the easiest and most flexible way to install the UNIX tools Apple didn’t include with macOS. It can also install software not packaged for your Linux distribution to your home directory without requiring sudo.
 
 - [Available Casks](https://formulae.brew.sh/cask/)
 - [Available Formulaes](https://formulae.brew.sh/formula/)
+- [Homebrew Documentation](https://docs.brew.sh/Manpage)
 
 ---
 
