@@ -7,22 +7,23 @@ tags: ["mac", "development"]
 
 My opinionated guide to mac setup with a focus on enhancing existing/normal workflows. Tooling and setup has a focus on ease of setup and keeping an experience that isn't too far from OS defaults.
 
+This could be scripted, but has been left as a set of manual tasks so that engineers can look and understand what they're doing.
+
 ## What this means
 
 - **Do not** install Google Chrome or Slack via website installers.
 - **Do not** install databases via homebrew or website installers.
-- **Do not** install Node.js via homebrew or website installers.
-- **Do not** install Python via homebrew or website installers.
-- **Do** create an environment which is not bound to any runtime (using asdf).
-- **Do** use mac defaults as much as possible.
+- **Do not** install Node.js, Python, Ruby, Terraform, Postgres, etc via homebrew or website installers.
 - **Do** rely on package managers as much as possible (using homebrew and asdf).
-- **Do** easy, quick, and replicatable setup.
+- **Do** create an environment which is not bound to any runtime (using asdf).
+- **Do** create an easy, quick, and replicatable setup.
+- **Do** use mac defaults as much as possible.
 
 We need to have repeatable systems and ensure we can replicate the system of a client.
 
 Using tools like [Homebrew] for desktop and terminal applications, and [asdf] for managing runtimes, we can easily replicate any system.
 
-**As a general rule of thumb, if available in [asdf] and [homebrew] prefer to install package from [asdf]**
+**As a general rule of thumb, if available in [asdf] and [homebrew] prefer to install package from [asdf]**. Database engines should be run locally via Docker.
 
 ## [asdf]
 
@@ -73,6 +74,8 @@ Please take a look at the following that can be managed by [Homebrew]:
 
 1. Setup git
 
+   It is fine to use your personal github, but use your company email and [link it to your account](https://github.com/settings/emails).
+
    ```bash
    git config --global user.name "... ..."
    git config --global user.email "...@..."
@@ -81,6 +84,8 @@ Please take a look at the following that can be managed by [Homebrew]:
    ```
 
 1. Setup Rosetta
+
+   This is for compatibility of existing x86 applications with the M1 chipset.
 
    ```bash
    if [[ `sysctl -n machdep.cpu.brand_string` == 'Apple M1' ]]; then
@@ -91,11 +96,15 @@ Please take a look at the following that can be managed by [Homebrew]:
 
 1. Install [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh)
 
+   Allows installing plugins for zsh terminals such as type completion.
+
    ```bash
    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
    ```
 
 1. Close all all terminals and open iterm
+
+   [Iterm is more feature rich](https://iterm2.com/features.html) than the standard mac terminal app.
 
 1. Apply keybindings for iterm and increase window memory
 
@@ -108,6 +117,8 @@ Please take a look at the following that can be managed by [Homebrew]:
      ![](/images/screenshot_2022_02_21_at_11_14_04.png)
 
 1) Change oh-my-zsh to include full path
+
+   Default oh-my-zsh would show the directory `/usr/my-name/projects/client/app` path as `app`. The below will backup the default themeand then setup to show the path as `~/projects/client/app`.
 
    ```bash
    ZSH_THEME=~/.oh-my-zsh/themes/ollyrussell.zsh-theme
@@ -184,16 +195,22 @@ Please take a look at the following that can be managed by [Homebrew]:
 
 1. Create a `projects` and `personal` directory
 
+   This allows us to pair and reason about each others systems easily.
+
    ```bash
    mkdir \
     -p ~/projects/prototypes \
     ~/personal
    ```
 
-   | Directory | Description                    | Structure                                 |
-   | --------- | ------------------------------ | ----------------------------------------- |
-   | projects  | Client work and prototypes     | projects/&lt;client&gt;/&lt;code-repo&gt; |
-   | personal  | Personal and non-company work. | personal/&lt;code-repo&gt;                |
+   | Directory | Description                    | Structure                                                          |
+   | --------- | ------------------------------ | ------------------------------------------------------------------ |
+   | projects  | Client work and prototypes     | projects/&lt;github organisation/client name&gt;/&lt;code-repo&gt; |
+   | personal  | Personal and non-company work. | personal/&lt;code-repo&gt;                                         |
+
+   The repo [radically-digital/prismic-circleci-webhook](https://github.com/radically-digital/prismic-circleci-webhook) would be `~/projects/radically-digital/prismic-circleci-webhook` in all employee systems.
+
+   The repo [olmesm/ohmybuck](https://github.com/olmesm/ohmybuck) would be `~/personal/ohmybuck` in my system.
 
 1. Add `projects` and `personal` to your favourites
 
