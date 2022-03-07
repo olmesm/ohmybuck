@@ -10,7 +10,7 @@ My opinionated guide to mac setup with a focus on enhancing existing/normal work
 ## What this means
 
 - **Do not** install Google Chrome or Slack via website installers.
-- **Do not** install databases via homebrew or website installers.
+- **Do not** install database engines via homebrew or website installers.
 - **Do not** install Node.js, Python, Ruby, Terraform, Postgres, etc via homebrew or website installers.
 - **Do** rely on package managers as much as possible (using homebrew and asdf).
 - **Do** create an environment which is not bound to any runtime (using asdf).
