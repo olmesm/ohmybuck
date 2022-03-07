@@ -5,7 +5,7 @@ date: 2020-06-08 09:41
 tags: ["mac", "development"]
 ---
 
-My opinionated guide to mac setup with a focus on enhancing existing/normal workflows. Tooling and setup has a focus on ease of setup and keeping an experience that isn't too far from OS defaults.
+A guide to mac setup with a focus on enhancing existing/normal workflows. Tooling and setup has a focus on ease of setup and keeping an experience that isn't too far from OS defaults. This could potentially be scripted, but has been left as a set of manual tasks so that engineers can pick, choose, and understand what they're doing.
 
 ## What this means
 
@@ -17,11 +17,9 @@ My opinionated guide to mac setup with a focus on enhancing existing/normal work
 - **Do** create an easy, quick, and replicatable setup.
 - **Do** use mac defaults as much as possible.
 
-We need to have repeatable systems and ensure we can replicate the system of a client.
+Professional engineers need to ensure a consistent system for development and running applications. Running systems often use containers for ensuring consistency, but for local development containers and virtualisation isn't always a desired or efficient option.
 
-Using tools like [Homebrew] for desktop and terminal applications, and [asdf] for managing runtimes, we can easily replicate any system.
-
-**As a general rule of thumb, if available in [asdf] and [homebrew] prefer to install package from [asdf]**. Database engines should be run locally via Docker.
+Tools like [Homebrew] for desktop and terminal applications and [asdf] for managing runtimes, enables professionals this consistency and reproducibility.
 
 ### [asdf]
 
@@ -38,9 +36,9 @@ Using tools like [Homebrew] for desktop and terminal applications, and [asdf] fo
 - [Available Formulaes](https://formulae.brew.sh/formula/)
 - [Homebrew Documentation](https://docs.brew.sh/Manpage)
 
----
+**As a general rule of thumb, if available in [asdf] and [homebrew] prefer to install package from [asdf]**. Database engines should be run locally via Docker.
 
-This could potentially be scripted, but has been left as a set of manual tasks so that engineers can look and understand what they're doing.
+---
 
 1. Install Homebrew
 
