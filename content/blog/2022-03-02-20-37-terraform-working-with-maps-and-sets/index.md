@@ -1,11 +1,11 @@
 ---
-title: Terraform Map Set snippet
+title: Terraform working with Maps and Sets
 description: Snippet showing map and set functions
 date: 2022-03-02 20:37
 tags: [devops, terraform, snippet]
 ---
 
-Note: This is just sample code and doesn't actually work due to "Elastic IPs are not supported for load balancers with type 'application'"
+This is just sample code and doesn't actually work due to "Elastic IPs are not supported for load balancers with type 'application'"
 
 ```hcl
 locals {

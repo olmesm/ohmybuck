@@ -31,8 +31,18 @@ const processFrontMatter = (file) => {
   };
 };
 
+const DEFAULT_TEMPLATE_DATA = {
+  SITE: "ohmybuck",
+  SITE_LINK: "/",
+  DATE: "",
+};
+
 const onlyFiles = (ext) => (f) => f.endsWith(ext);
-const html = template(fs.readFileSync("./src/template.html", "utf-8"));
+const html = (templateData) =>
+  template(fs.readFileSync("./src/template.html", "utf-8"))({
+    ...DEFAULT_TEMPLATE_DATA,
+    ...templateData,
+  });
 const noDraftPosts = (f) => !f.data.draft;
 
 const dateOptions = { year: "numeric", month: "long", day: "numeric" };
@@ -53,9 +63,8 @@ const writePost = (f) => {
       .replace("content", "build")
       .replace(/md$/, "html"),
     html({
-      SITE: "ohmybuck",
-      SITE_LINK: "/",
       TITLE: f.data.title,
+      DATE: `<small>${formatDate(f.data.date)}</small><hr><br>`,
       BODY: f.content,
     })
   );
@@ -68,8 +77,6 @@ writePost(processFrontMatter("content/whoami.md"));
 write(
   "build/index.html",
   html({
-    SITE: "ohmybuck",
-    SITE_LINK: "/",
     TITLE: "home",
     BODY:
       "<ul>" +
