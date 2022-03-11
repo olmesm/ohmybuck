@@ -40,6 +40,7 @@ Tools like [Homebrew] for desktop and terminal applications and [asdf] for manag
 
 ---
 
+1. Open the terminal app.
 1. Install Homebrew
 
    From [Homebrew] - make sure to follow any additional instructions in the console.
