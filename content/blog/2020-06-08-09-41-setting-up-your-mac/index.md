@@ -79,7 +79,7 @@ Tools like [Homebrew] for desktop and terminal applications and [asdf] for manag
    This is for compatibility of existing x86 applications with the M1 chipset.
 
    ```bash
-   if [[ `sysctl -n machdep.cpu.brand_string` == 'Apple M1' ]]; then
+   if [[ `sysctl -n machdep.cpu.brand_string` == *'Apple M1'* ]]; then
    # Mac M1's different arch workaround.
      softwareupdate --install-rosetta
    fi
