@@ -7,9 +7,9 @@ tags: [help]
 
 The following is a good guideline in asking and escalating your issue. Please consider all the steps before directly going to the last point.
 
-**Most importantly - if you find the answer, make sure to update the relevant threads and places. This promotes knowledge sharing and - no matter how silly it seems - helps people in the future. If it’s a recurring problem or others have faced the same struggle, consider writing either a company or personal blog post and sharing it.**
+> When you find the answer, make sure to update the relevant threads and places you've asked. This promotes knowledge sharing and - no matter how silly it seems - will help somebody in the future. If it’s a recurring problem, others _have_ faced the same struggle. Consider writing either a company or personal blog post and sharing it.
 
-If you feel you aren’t getting the support you need from your team or line manager, make sure to bring this up and escalate accordingly.
+If you feel you aren’t getting the support you need from your team (or line manager), escalate accordingly.
 
 1. Can you phrase the issue? https://stackoverflow.com/help/how-to-ask
 1. Have you gone down a rabbithole? https://en.wikipedia.org/wiki/Five_whys
