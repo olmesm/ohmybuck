@@ -7,6 +7,8 @@ tags: [dns migrations]
 
 Read through this post fully before getting started. Plan 2 days minimum to complete all the steps with the least amount of risk and stress.
 
+DNS Migrations can be stressful for mulitple services and although careful planning and preparation can mitigate mosts risks, issues do occur and should be planned for.
+
 ## Pre-Migration Testing
 
 #### Tools
