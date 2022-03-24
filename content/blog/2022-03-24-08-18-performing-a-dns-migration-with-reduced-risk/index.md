@@ -69,7 +69,7 @@ Read through this post fully before getting started. Plan 2 days minimum to comp
    sudo killall -HUP mDNSResponder && echo "done"
    ```
 
-1. Talk through the steps and the plan. Acknowledge any previously failed attempts, the fixes that have been implemented, and the next steps.
+1. Talk through the steps and the plan. Invite all relevant parties and stakeholders, but set the precedent its for transparency and that not to add pressure. Acknowledge any previously failed attempts, the fixes that have been implemented, and the next steps.
 1. Create a backup of the values you plan to change and store then in a shared location. Consider doing an export via the existing provider. Be aware nameserver transfers will require more records to be moved.
 1. Update the DNS values in the DNS hosting provider.
 1. [Flush Public Cache](https://developers.google.com/speed/public-dns/cache).
