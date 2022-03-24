@@ -45,7 +45,7 @@ Read through this post fully before getting started. Plan 2 days minimum to comp
 
 1. Look at analytics and advise the client when the best time would be. Plan to experience downtime and you may need to inform users. [Prefer early mornings](https://shortcut.com/blog/dont-deploy-on-frida-3-other-unwritten-rules-of-software-engineering) or [early in the week](https://medium.com/openclassrooms-product-design-and-engineering/do-not-deploy-on-friday-92b1b46ebfe6). This is a gateway to the clients system and regardless of planning, changes will carry risk.
 1. Plan a brief session with the product owner, ideally two technical members who will be performing the DNS migration, and invite the client/stakeholder for transparency.
-1. Get access to the production DNS host or inform the client that a team member with access will to attend the briefing call.
+1. Get access to the production DNS host or inform the client that a team member with access will need to attend the briefing call.
 1. [Reduce the DNS TTL](https://answers.netlify.com/t/support-guide-minimal-downtime-for-a-live-site-dns-migration/141) for minimal downtime.
 1. Schedule 3 sessions with the client for the migration day. At least 30mins each, and at least 2hrs apart. The sessions will be for rollout (±5mins) & testing (±10mins - adjust as needed), and if any issues, rollback (±5mins). The planned gaps are for debugging and making appropriate changes to code and systems before the next attempt.
 1. Discuss and agree with the client the bug triaging process. See this [triaging table](/2022-03-22-14-06-github-issue-template#triaging-table) as a starting point.
