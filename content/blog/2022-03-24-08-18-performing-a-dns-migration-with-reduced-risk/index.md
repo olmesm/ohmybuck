@@ -5,6 +5,8 @@ date: 2022-03-24 08:18
 tags: [dns migrations]
 ---
 
+Read through this post fully before getting started. Plan 2 days minimum to complete all the steps with the least amount of risk and stress.
+
 ## Pre-Migration Testing
 
 #### Tools
@@ -31,6 +33,11 @@ tags: [dns migrations]
 
 1. Append to your hosts file using either [Switchhosts](https://swh.app/) or [manually](https://pagely.com/kb/en/edit-hosts-file-wordpress/)
 1. [Flush local DNS cache](https://phoenixnap.com/kb/how-to-flush-dns-cache).
+
+   ```bash
+   sudo killall -HUP mDNSResponder && echo "done"
+   ```
+
 1. Test the site with your browser. If this doesnt work as expected continue with the next step to debug.
 1. Test API(s) with [hoppscotch.io](https://hoppscotch.io)/postman (Start building up a collection of the endpoints for testing if you havent already). Debugging may need to a [host header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Host) added to the request.
 
@@ -57,18 +64,23 @@ tags: [dns migrations]
 
 1. Ensure all host files have been restored from prior testing.
 1. [Flush local DNS cache](https://phoenixnap.com/kb/how-to-flush-dns-cache).
+
+   ```bash
+   sudo killall -HUP mDNSResponder && echo "done"
+   ```
+
 1. Talk through the steps and the plan. Acknowledge any previously failed attempts, the fixes that have been implemented, and the next steps.
 1. Create a backup of the values you plan to change and store then in a shared location. Consider doing an export via the existing provider. Be aware nameserver transfers will require more records to be moved.
 1. Update the DNS values in the DNS hosting provider.
 1. [Flush Public Cache](https://developers.google.com/speed/public-dns/cache).
 1. Open the page via VPN in an Opera incognito window.
-1. Ensure there are no **unexpected** SSL issues.
+1. Ensure there are no [unexpected SSL issues](https://www.netlify.com/blog/2021/04/06/migrating-dns-for-a-production-site-we-made-you-a-site-migration-checklist/).
 1. Test the routes and APIs previously noted. Run any Hoppscotch collections, e2e test suites, or a smoke tests.
 1. If there are any issues note them down. Proceed to gather as much information as possible. Aim to test the whole system - consider other paths around the failiures to see if there are other areas overlooked. ie homepage may not work but API's do.
 1. Assess if the errors experienced are critical, as per [triage table](/2022-03-22-14-06-github-issue-template#triaging-table).
 1. Move to [Rollback Process](#rollback-process) if needed.
 1. Use [dnschecker](https://dnschecker.org/) to check if propogation has finished.
-1. Write out a and send a report with the results, steps followed, errors experienced, and next steps.
+1. Write out and send a report with the results, steps followed, errors experienced, and next steps.
 1. If successful, increase the [DNS TTL](https://answers.netlify.com/t/support-guide-minimal-downtime-for-a-live-site-dns-migration/141).
 
 ## Rollback Process
@@ -83,11 +95,11 @@ As per [rollout process](#rollout-process).
 1. Update the DNS values in the DNS hosting provider to the original values.
 1. [Flush Public Cache](https://developers.google.com/speed/public-dns/cache).
 1. Open the page via VPN in an Opera incognito window.
-1. Ensure there are no **unexpected** SSL issues.
+1. Ensure there are no [unexpected SSL issues](https://www.netlify.com/blog/2021/04/06/migrating-dns-for-a-production-site-we-made-you-a-site-migration-checklist/).
 1. Test the routes and APIs previously noted. Run any Hoppscotch collections, e2e test suites, or a smoke tests.
 1. [Flush Public Cache](https://developers.google.com/speed/public-dns/cache).
 1. Use [dnschecker](https://dnschecker.org/) to check if propogation has finished.
-1. Write out a and send a report with the results, steps followed, errors experienced, and next steps.
+1. Write out and send a report with the results, steps followed, errors experienced, and next steps.
 
 ## Further Info and Tools
 
