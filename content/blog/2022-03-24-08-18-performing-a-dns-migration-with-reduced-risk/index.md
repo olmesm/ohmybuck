@@ -101,12 +101,15 @@ As per [rollout process](#rollout-process).
 1. Use [dnschecker](https://dnschecker.org/) to check if propogation has finished.
 1. Write out and send a report with the results, steps followed, errors experienced, and next steps.
 
-## Further Info and Tools
+## Further Info
 
 - [What is a Nameserver](https://kinsta.com/knowledgebase/what-is-a-nameserver/)
+- [Netlify site migration checklist](https://www.netlify.com/blog/2021/04/06/migrating-dns-for-a-production-site-we-made-you-a-site-migration-checklist/)
+
+## Further Tools
+
 - [Cloudflare DNS](https://www.cloudflare.com/en-gb/dns/)
 - [Traceroute](https://www.fortinet.com/resources/cyberglossary/traceroutes) for figuring out the routing hops data has to go through.
 - [Google Admin Toolbox - Dig](https://toolbox.googleapps.com/apps/dig/) for DNS lookup by querying name servers.
 - [dig](https://www.hostinger.co.uk/tutorials/how-to-use-the-dig-command-in-linux/) as above, but locally run.
 - [Nginx for host rewrite](https://www.nginx.com/blog/creating-nginx-rewrite-rules/)
-- [Netlify site migration checklist](https://www.netlify.com/blog/2021/04/06/migrating-dns-for-a-production-site-we-made-you-a-site-migration-checklist/)
