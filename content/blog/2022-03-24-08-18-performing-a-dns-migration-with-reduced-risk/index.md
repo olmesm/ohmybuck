@@ -11,10 +11,10 @@ Read through this post fully before getting started. Plan 2 days minimum to comp
 
 #### Tools
 
-- [Switchhosts](https://swh.app/)
-- [ping](https://linux.die.net/man/8/ping) (already installed)
 - Any browser
-- [hoppscotch.io](https://hoppscotch.io)/postman
+- [Switchhosts](https://swh.app/) for easy and consistent hosts file management
+- [ping](https://linux.die.net/man/8/ping) (already installed)
+- [hoppscotch.io](https://hoppscotch.io) / postman
 
 #### Steps
 
@@ -39,7 +39,7 @@ Read through this post fully before getting started. Plan 2 days minimum to comp
    ```
 
 1. Test the site with your browser. If this doesnt work as expected continue with the next step to debug.
-1. Test API(s) with [hoppscotch.io](https://hoppscotch.io)/postman (Start building up a collection of the endpoints for testing if you havent already). Debugging may need to a [host header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Host) added to the request.
+1. Test API(s) with [hoppscotch.io](https://hoppscotch.io) / postman (Start building up a collection of the endpoints for testing if you havent already). Debugging may need to a [host header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Host) added to the request.
 
 ## Pre-Day Planning
 
@@ -57,8 +57,8 @@ Read through this post fully before getting started. Plan 2 days minimum to comp
 - Read the DNS host documentation and think through the steps.
 - [dnschecker](https://dnschecker.org/)
 - [Flush Cache](https://developers.google.com/speed/public-dns/cache)
-- [Opera Browser](https://www.opera.com/features/free-vpn) or an equivalent VPN
-- [hoppscotch.io](https://hoppscotch.io)/postman
+- [Opera Browser](https://www.opera.com/features/free-vpn) or an equivalent browser and VPN
+- [hoppscotch.io](https://hoppscotch.io) / postman
 
 #### Steps
 
