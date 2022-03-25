@@ -11,12 +11,15 @@ DNS Migrations can be stressful for mulitple services and although careful plann
 
 ## Pre-Migration Testing
 
+This is to reduce the errors in the DNS migration. Test as much as possible locally.
+
 #### Tools
 
 - Any browser
 - [Switchhosts](https://swh.app/) for easy and consistent hosts file management
 - [ping](https://linux.die.net/man/8/ping) (already installed)
 - [hoppscotch.io](https://hoppscotch.io) / postman
+- [curl](https://curl.se/docs/manpage.html)
 
 #### Steps
 
@@ -42,6 +45,12 @@ DNS Migrations can be stressful for mulitple services and although careful plann
 
 1. Test the site with your browser. If this doesnt work as expected continue with the next step to debug.
 1. Test API(s) with [hoppscotch.io](https://hoppscotch.io) / postman (Start building up a collection of the endpoints for testing if you havent already). Debugging may need to a [host header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Host) added to the request.
+1. Check the SSL certificate being issued covers the expected domain. ie if our final domain is example.com, the SSL certificate needs to specify that (not a default AWS domain)
+
+   ```bash
+   # From Stackoverflow https://stackoverflow.com/a/34812039
+   curl --insecure -vvI https://www.example.com 2>&1 | awk 'BEGIN { cert=0 } /^\* SSL connection/ { cert=1 } /^\*/ { if (cert) print }'
+   ```
 
 ## Pre-Day Planning
 
