@@ -1,6 +1,6 @@
 ---
-title: Learn Terraform
-description: Learn Terraform
+title: IaC Beginnings
+description: Learn Terraform, Terragrunt and AWS
 date: 2022-03-25 09:44
 tags: [terraform, terragrunt, asdf, devops, infrastructure]
 ---
