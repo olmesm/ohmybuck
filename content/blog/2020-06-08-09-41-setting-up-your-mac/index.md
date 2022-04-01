@@ -153,6 +153,8 @@ Tools like [Homebrew] for desktop and terminal applications and [asdf] for manag
    asdf global nodejs $(asdf list nodejs | grep -e "\d.*" | tail -1)
    ```
 
+   If you're on an M1 - take a look at this guide for [working with older versions of node](/2022-04-01-10-28-asdf-nodejs-binaries-m1)
+
 1) Install recommended packages (feel free to delete as required)
 
    | Application        | brew info link                                   |
