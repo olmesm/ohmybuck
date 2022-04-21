@@ -25,7 +25,7 @@ asdf install nodejs <node-version>
 
 ## Build from Source
 
-Takes around 10mins but more reliable. Should also give better performance as there is no emulation occuring via rosetta.
+This takes around 10mins but should be more reliable. As there is no emulation occurring via rosetta, it should be more performant.
 
 ```sh
 #!/usr/bin/env zsh
