@@ -23,7 +23,7 @@ Professional engineers need to ensure a consistent system for development and ru
 >
 > It’s likely you’ll have to work on different projects which use different versions of tools. For example you might be working on a Terraform 0.11 project today and a Terraform 0.13 project tomorrow. To make things worse, that Terraform 0.11 project might need Terragrunt 0.21, while the Terraform 0.13 project might need Terragrunt 0.26 (contrived example, I know).
 >
-> There are a few ways to handle this. You could version the tools themselves (e.g. terraform0.11). You can set up symlinks and have a script which flips them around. You can have a env file in each project you source. You could also use something like direnv.
+> There are a few ways to handle this. You could version the tools themselves (e.g. terraform0.11.. You can set up symlinks and have a script which flips them around. You can have a env file in each project you source. You could also use something like direnv.
 >
 > There are tools like tfenv which set up Terraform on a per directory basis which can partially solve this. There are also tools like rbenv and pyenv which solve for Ruby and Python respectively. One problem is they all require separate set up and configuration, which can get old. Some don’t even have automatic switching mechanisms, and require more tools.
 >
@@ -69,7 +69,7 @@ Tools like [Homebrew] for desktop and terminal applications and [asdf] for manag
 
    ```bash
    echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
-   eval "$(/opt/homebrew/bin/brew shellenv)"
+   eval "$(/opt/homebrew/bin/brew shellenv)" || echo "Still OK if the brew --version works. If not, restart the your terminal"
    ```
 
 1. Install git, ZSH tools, and shell completions
@@ -123,7 +123,7 @@ Tools like [Homebrew] for desktop and terminal applications and [asdf] for manag
    - Profiles > Keys > Key Mappings > Presets > Natural Text Editing > "Remove"
      ![](/images/screenshot_2022_02_21_at_11_14_04.png)
 
-1) Change oh-my-zsh to include full path
+1. Change oh-my-zsh to include full path
 
    Default oh-my-zsh would show the directory `/usr/my-name/projects/client/app` path as `app`. The below will backup the default themeand then setup to show the path as `~/projects/client/app`.
 
@@ -135,7 +135,7 @@ Tools like [Homebrew] for desktop and terminal applications and [asdf] for manag
    find ~/.zshrc -type f -exec sed -i '' -e 's|ZSH_THEME="robbyrussell"|ZSH_THEME="ollyrussell"|g' {} \;
    ```
 
-1) Setup node with [asdf] for runtime management.
+1. Setup node with [asdf] for runtime management.
 
    ```bash
    brew install gnupg asdf
@@ -150,12 +150,12 @@ Tools like [Homebrew] for desktop and terminal applications and [asdf] for manag
    echo "yarn" > ~/.default-npm-packages
 
    asdf install nodejs lts
-   asdf global nodejs $(asdf list nodejs | grep -e "\d.*" | tail -1)
+   asdf global nodejs $(asdf list nodejs | grep -e "\d.*" | tail -1.
    ```
 
-   If you're on an M1 - take a look at this guide for [working with older versions of node](/2022-04-01-10-28-asdf-nodejs-binaries-m1)
+   If you're on an M1 - take a look at this guide for [working with older versions of node](/2022-04-01-10-28-asdf-nodejs-binaries-m1.
 
-1) Install recommended packages (feel free to delete as required)
+1. Install recommended packages (feel free to delete as required)
 
    | Application        | brew info link                                   |
    | ------------------ | ------------------------------------------------ |
