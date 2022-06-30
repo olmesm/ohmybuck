@@ -135,7 +135,7 @@ Tools like [Homebrew] for desktop and terminal applications and [asdf] for manag
    find ~/.zshrc -type f -exec sed -i '' -e 's|ZSH_THEME="robbyrussell"|ZSH_THEME="ollyrussell"|g' {} \;
    ```
 
-1. Setup node with [asdf] for runtime management.
+1. Setup nodejs with [asdf] for runtime management. Also setup [yarn](https://yarnpkg.com/), [ipsum](https://www.npmjs.com/package/ipsum-cli) and [ni](https://github.com/antfu/ni) to auto-install alongside new node installations.
 
    ```bash
    brew install gnupg asdf
@@ -147,10 +147,14 @@ Tools like [Homebrew] for desktop and terminal applications and [asdf] for manag
    # Disable asdf nodejs signature check
     NODEJS_CHECK_SIGNATURES=no\n" >> ~/.zshrc
    echo "legacy_version_file = yes" > ~/.asdfrc
-   echo "yarn" > ~/.default-npm-packages
+   echo "
+   yarn
+   ipsum-cli
+   @antfu/ni
+   " > ~/.default-npm-packages
 
    asdf install nodejs lts
-   asdf global nodejs $(asdf list nodejs | grep -e "\d.*" | tail -1.
+   asdf global nodejs $(asdf list nodejs | grep -e "\d.*" | tail -1)
    ```
 
    If you're on an M1 - take a look at this guide for [working with older versions of node](/2022-04-01-10-28-asdf-nodejs-binaries-m1.
@@ -159,7 +163,6 @@ Tools like [Homebrew] for desktop and terminal applications and [asdf] for manag
 
    | Application        | brew info link                                   |
    | ------------------ | ------------------------------------------------ |
-   | Boostnote          | https://formulae.brew.sh/cask/boostnote          |
    | Chromium           | https://formulae.brew.sh/cask/chromium           |
    | Cyberduck          | https://formulae.brew.sh/cask/cyberduck          |
    | Docker             | https://formulae.brew.sh/cask/docker             |
@@ -180,7 +183,6 @@ Tools like [Homebrew] for desktop and terminal applications and [asdf] for manag
 
    ```bash
     brew install --cask \
-      boostnote \
       chromium \
       cyberduck \
       docker \
