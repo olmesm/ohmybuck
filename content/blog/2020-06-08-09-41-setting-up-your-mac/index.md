@@ -143,15 +143,9 @@ Tools like [Homebrew] for desktop and terminal applications and [asdf] for manag
    . ~/.zshrc # Source the new additions
    asdf plugin-add nodejs # Add nodejs
 
-   echo "
-   # Disable asdf nodejs signature check
-    NODEJS_CHECK_SIGNATURES=no\n" >> ~/.zshrc
+   echo "\n# Disable asdf nodejs signature check\nNODEJS_CHECK_SIGNATURES=no\n" >> ~/.zshrc
    echo "legacy_version_file = yes" > ~/.asdfrc
-   echo "
-   yarn
-   ipsum-cli
-   @antfu/ni
-   " > ~/.default-npm-packages
+   echo "yarn\nipsum-cli\n@antfu/ni\n" > ~/.default-npm-packages
 
    asdf install nodejs lts
    asdf global nodejs $(asdf list nodejs | grep -e "\d.*" | tail -1)
