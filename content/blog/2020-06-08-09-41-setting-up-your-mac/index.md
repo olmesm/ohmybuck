@@ -167,7 +167,7 @@ Tools like [Homebrew] for desktop and terminal applications and [asdf] for manag
    | Ngrok              | https://formulae.brew.sh/cask/ngrok              |
    | Obsidian           | https://formulae.brew.sh/cask/obsidian           |
    | Opera              | https://formulae.brew.sh/cask/opera              |
-   | Postman            | https://formulae.brew.sh/cask/postman            |
+   | insomnia           | https://formulae.brew.sh/cask/insomnia           |
    | Rectangle          | https://formulae.brew.sh/cask/rectangle          |
    | Slack              | https://formulae.brew.sh/cask/slack              |
    | Switchhosts        | https://formulae.brew.sh/cask/switchhosts        |
@@ -187,7 +187,7 @@ Tools like [Homebrew] for desktop and terminal applications and [asdf] for manag
       ngrok \
       obsidian \
       opera \
-      postman \
+      insomnia \
       rectangle \
       slack \
       switchhosts \
