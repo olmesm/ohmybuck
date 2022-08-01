@@ -90,6 +90,12 @@ Tools like [Homebrew] for desktop and terminal applications and [asdf] for manag
    git config --global init.defaultBranch main
    ```
 
+1. Git alias' are setup by default with zsh, but this is a handy graph display of commits _you may_ want to setup
+
+   ```bash
+   echo "alias git-graph=\"git log --oneline --graph --decorate\"" >> ~/.zshrc
+   ```
+
 1. Setup Rosetta
 
    This is for compatibility of existing x86 applications with the M1 chipset.
