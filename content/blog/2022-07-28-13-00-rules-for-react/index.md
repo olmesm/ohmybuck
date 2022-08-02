@@ -3,20 +3,23 @@ title: Rules for React
 description: Rules for React
 date: 2022-07-28 13:00
 tags: [react, typescript]
-draft: true
 ---
 
-Heavily inspired by the brilliant [Tao of React](https://alexkondov.com/tao-of-react/), modified to include typescript examples, references to other documentation, and different patterns.
+Heavily inspired by the brilliant [Tao of React](https://alexkondov.com/tao-of-react/), modified to include typescript examples, references to other documentation, and reasoned patterns.
+
+[Setting up a new project? Jump here](#new-react-project)
 
 ## Components
 
-### DRY is the enemy
+### ~~DRY~~ AHA (Avoid Hasty Abstractions)
 
-https://kentcdodds.com/blog/aha-programming
+> duplication is far cheaper than the wrong abstraction
+
+Summed up by [Kent Dodds' - AHA Programming 💡](https://kentcdodds.com/blog/aha-programming) and [Sandy Metz's - The Wrong Abstraction](https://sandimetz.com/blog/2016/1/20/the-wrong-abstraction) articles, don't create any abstractions until you've seen the code implemented a few times.
 
 ### Favor Functional Components
 
-<!-- TODO ESLINT -->
+- [eslint-plugin-react-prefer-function-component](https://www.npmjs.com/package/eslint-plugin-react-prefer-function-component)
 
 Favor functional components - they have a simpler syntax. No lifecycle methods, constructors or boilerplate. You can express the same logic with less characters without losing readability.
 
@@ -65,17 +68,22 @@ function Counter() {
 
 ### Write Consistent Components
 
-<!-- TODO ESLINT -->
+- [eslint-no-use-before-define](https://eslint.org/docs/latest/rules/no-use-before-define)
+- [eslint-max-lines-per-function](https://eslint.org/docs/latest/rules/max-lines-per-function)
+- [eslint-max-depth](https://eslint.org/docs/latest/rules/max-depth)
+- [eslint-no-else-return](https://eslint.org/docs/latest/rules/no-else-return)
 
-Stick to the same style for your components. Put helper functions in the same place, export the same way and follow the same naming patterns.
+Stick to the same style for your components. Put utility functions in the same place, export the same way and follow the same naming patterns.
 
 There isn’t a real benefit of one approach over the other.
 
 No matter if you’re exporting at the bottom of the file or directly in the definition of the component, pick one and stick to it.
 
+Consider limiting your function length (250 for React is advised), and banning the use of else's in favour of the [early return pattern AKA the bouncer pattern](https://rikschennink.nl/thoughts/the-bouncer-pattern/).
+
 ### Prefer named exporting of components
 
-<!-- TODO ESLINT -->
+- [eslint-no-default-export](https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-default-export.md)
 
 Always name your components. It helps when you’re reading an error stack trace and using the React Dev Tools.
 
@@ -123,9 +131,11 @@ import { FormContact as Contact } from "./form-contact";
 
 Nextjs pushes for a default export on the page but also pushes for naming your functions.
 
-### Organize Helper Functions
+### Organize Utility Functions
 
-Helper functions that don’t need to hold a closure over the components should be moved outside. The ideal place is before the component definition so the file can be readable from top to bottom.
+- See [Maintain a utility function directory](#maintain-a-utility-function-directory)
+
+Utility functions that don’t need to hold a closure over the components should be moved outside. The ideal place is before the component definition so the file can be readable from top to bottom.
 
 That reduces the noise in the component and leaves inside only those that need to be there.
 
@@ -139,7 +149,7 @@ function Component({ date }) {
   return <div>Date is {parseDate(date)}</div>
 }
 
-// 👍 Place the helper functions before the component
+// 👍 Place the utility functions before the component
 function parseDate(date) {
   ...
 }
@@ -149,12 +159,12 @@ function Component({ date }) {
 }
 ```
 
-You want to keep the least amount of helper functions inside the definition. Move as many as possible outside and pass the values from state as arguments.
+You want to keep the least amount of utility functions inside the definition. Move as many as possible outside and pass the values from state as arguments.
 
 Composing your logic out of pure functions that rely only on input makes it easier to track bugs and extend.
 
 ```jsx
-// 👎 Helper functions shouldn't read from the component's state
+// 👎 Utility functions shouldn't read from the component's state
 export function Component() {
   const [value, setValue] = useState("");
 
@@ -211,13 +221,10 @@ export function Component() {
 }
 ```
 
-### Maintain Helper function directory
-
-<!-- TODO -->
-
 ### Don't Hardcode Markup
 
-<!-- TODO CONSTS AS SNAKE CASE -->
+- [Google Javascript naming conventions](https://google.github.io/styleguide/jsguide.html#naming)
+- [Clean Code Typescript](/2022-07-29-10-59-clean-code-typescript)
 
 Don’t hardcode markup for navigation, filters or lists. Use a configuration object and loop through the items instead.
 
@@ -287,7 +294,7 @@ function Filters({ onFilterClick }) {
 
 ### Component Length
 
-<!-- TODO ESLINT -->
+- See [Write Consistent Components](#write-consistent-components)
 
 A React component is just a function that gets props and returns markup. They adhere to the same software design principles.
 
@@ -362,7 +369,32 @@ function Component({ value, onChange }) {
 
 ### Use Typescript
 
-<!-- TODO TS PROPS -->
+Typescript is ideal for working with React components. It does compile time prop checking on components and will suit 90% of ways of working. If you require runtime type checking however, consider `InferPropTypes` from [@types/prop-types](https://www.npmjs.com/package/@types/prop-types).
+
+An example of implementation:
+
+```tsx
+// Adapted from https://blog.logrocket.com/comparing-typescript-and-proptypes-in-react-applications
+import React from "react";
+import PropTypes, { InferProps } from "prop-types";
+
+const BlogCardPropTypes = {
+  title: PropTypes.string.isRequired,
+  createdAt: PropTypes.instanceOf(Date),
+  authorName: PropTypes.string.isRequired,
+};
+
+type BlogCardTypes = InferProps<typeof BlogCardPropTypes>;
+export const BlogCard: React.FC<BlogCardTypes> = ({
+  authorName,
+  createdAt,
+  title,
+}) => {
+  return <span>Blog Card</span>;
+};
+
+BlogCard.propTypes = BlogCardPropTypes;
+```
 
 ### Number of Props
 
@@ -376,9 +408,9 @@ Note: The more props a component takes, the more reasons to rerender.
 
 ### Pass Objects Instead of Primitives
 
-One way to limit the amount of props is to pass an object instead of primitive values. Rather than passing down the user name, email and settings one by one you can group them together. This also reduces the changes that need to be done if the user gets an extra field for example.
+- See [Use Typescript](#use-typescript)
 
-<!-- TODO TS -->
+One way to limit the amount of props is to pass an object instead of primitive values. Rather than passing down the user name, email and settings one by one you can group them together. This also reduces the changes that need to be done if the user gets an extra field for example.
 
 Using TypeScript makes this even easier.
 
@@ -397,11 +429,13 @@ Using TypeScript makes this even easier.
 
 ### Conditional Rendering
 
+- See [Write Consistent Components](#write-consistent-components)
+
 In some situations using short circuit operators for conditional rendering may backfire and you may end up with an unwanted `0` in your UI. To avoid this default to using ternary operators. The only caveat is that they’re more verbose.
 
 The short-circuit operator reduces the amount of code which is always nice. Ternaries are more verbose but there is no chance to get it wrong. Plus, adding the alternative condition is less of a change.
 
-<!-- TODO EARLY RETURN -->
+Prefer returing a react fragment (`<React.Fragment />` or `<></>`) over `null` to take advantage of typescripts type inference.
 
 ```jsx
 // 👎 Try to avoid short-circuit operators
@@ -411,19 +445,64 @@ function Component() {
   return <div>{count && <h1>Messages: {count}</h1>}</div>;
 }
 
-// 👍 Use a ternary instead
+// 👍 Use early return
 function Component() {
   const count = 0;
 
-  return <div>{count ? <h1>Messages: {count}</h1> : null}</div>;
+  if (!count) {
+    return <></>;
+  }
+
+  return (
+    <div>
+      <h1>Messages: {count}</h1>
+    </div>
+  );
+}
+
+// 👍 or use a ternary instead
+function Component() {
+  const count = 0;
+
+  return <div>{count ? <h1>Messages: {count}</h1> : <></>}</div>;
 }
 ```
 
-### Avoid Nested Ternary Operators
+### Be wary of using nested Ternary Operators
 
-Ternary operators become hard to read after the first level. Even if they seem to save space at the time, it’s better to be explicit and obvious in your intentions.
+- [eslint-plugin-proper-ternary](https://github.com/getify/eslint-plugin-proper-ternary)
+- [elint-no-nested-ternary](https://eslint.org/docs/latest/rules/no-nested-ternary)
+- See [Write Consistent Components](#write-consistent-components)
 
-<!-- TODO ERIC ELLIOT ARTICLE-->
+They seem to save space at the time but it’s always better to be explicit and obvious in your intentions.
+
+Ternary operators simplify assignment logic drastically, but striking a balance is tricky as they become hard to read after the first level.
+
+```jsx
+import { useRouter } from "next/router"
+
+// 👎 Because let allows re-assignment, nav could be redeclared elsewhere in the code
+const Component = () => {
+  const router = useRouter()
+  let nav = router.replace;
+
+  if (typeof window !== "undefined") {
+    nav = (path: string) => (window.location.href = path);
+  }
+
+ ...
+}
+
+// 👍 nav is only assigned once
+const Component = () => {
+  const router = useRouter()
+  const nav = typeof window !== "undefined" ?
+    (path: string) => (window.location.href = path) :
+    router.replace;
+
+ ...
+}
+```
 
 ```jsx
 // 👎 Nested ternaries are hard to read in JSX
@@ -455,10 +534,168 @@ function Component() {
 
 ### Get Functional - Map and Reduce
 
-<!-- TODO MAP -->
-<!-- TODO REDUCE -->
-<!-- TODO AVOID FOR EACH UNLESS ENCAPSULATED -->
-<!-- TODO ESLINT? -->
+[map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map), [reduce](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce), [filter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter), [every](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every), and [some](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some) are all array methods in JavaScript. Each one will iterate over an array and perform a transformation or computation. Each will return a new array based on the result of the function (except in the case of every and some which return boolean values).
+
+They simplify code as they are declarative, as opposed to imperative which is more difficult to understand and reason about.
+
+- figuring out the return and argument types is the first challenge
+
+```ts
+type Person = {
+  name: string;
+  surname: string;
+};
+
+const makeDisplayName = (person: Person): string => {
+  return `${person.name} ${person.surname}`;
+};
+
+// 👎 Note how we're mutating a variable in the scope of another function - this habbit means we need to ba aware of all places listOfNames is being called.
+//   Also are we sure it's iterating through all names without a breakout? Would we realise if the index started at 1 or stopped short of one list item?
+const listOfNames = [];
+
+for (let i = 0; i < listOfPeople.length; i++) {
+  listOfNames.push(makeDisplayName(listOfPeople[i]));
+}
+
+// 👍 Map is doing exactly as expected - we dont have to question if anything else is happening inside the applied iterator as it's declared what it does - `makeDisplayName`
+const listOfNames = listOfPeople.map(makeDisplayName);
+```
+
+```ts
+// 👎 Fully Imperative
+const isEveryNeedleInHaystack = (needles, haystack) => {
+  for (let i = 0; i < needles.length; i++) {
+    if (haystack.indexOf(needles[i]) === -1) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
+// 👍 Fully Declarative
+const isEveryNeedleInHaystack = (needles, haystack) =>
+  needles.every((needle) => haystack.includes(needle));
+```
+
+Example of filtering a list of books with conditions.
+
+```ts
+type Book = {
+  title: string;
+  author;
+  genre: string[];
+};
+
+// 👎 Imperative
+let listOfBooks: Book[] = library;
+
+if (isOver18) {
+  listOfBooks = [...listOfBooks, ...restrictedBooks]; // mutates listOfBooks
+}
+
+if (genreSelected) {
+  const filteredBooks = []; // remember this - but only if `genreSelected` is true
+
+  for (const book of listOfBooks) {
+    if (book.genre.indexOf(genreSelected) > -1) {
+      filteredBooks.push(book);
+    }
+  }
+
+  listOfBooks = filteredBooks;
+}
+
+setDisplayBooks(listOfBooks);
+
+// 👍 Declarative
+const hasGenre = (book: Book, genreSelected: string): boolean =>
+  genreSelected ? book.includes(genreSelected) : true; // pure function that is descriptive and easy to reason about
+
+const listOfBooks = isOver18 ? [...library, ...restrictedBooks] : library;
+const filteredBooks = listOfBooks.filter((book) =>
+  hasGenre(book, genreSelected)
+);
+
+setDisplayBooks(filteredBooks);
+```
+
+The following example takes a list of tasks and displays the duration grouped by `dueWeek` and `priority`. Functional methods allow us to break out of control flow with the use of `return` - something which is not allowed in imperative for-loops. We need to continue reading and understanding the code in case something is mutated later on.
+
+```ts
+type Priority = "low" | "med" | "high";
+type Task = {
+  name: string;
+  priority: Priority;
+  durationMinutes: number;
+  weekDue: number;
+};
+
+type TimeEstimation = { weekDue: number } & Partial<Record<Priority, number>>; // { weekdue, low?, med?, high? }
+
+const getIndex = (timeEstimations: TimeEstimation[], task: Task) =>
+  timeEstimations.findIndex(
+    (timeEstimation) => timeEstimation.weekDue === task.weekDue
+  );
+
+// 👎 Imperative
+const weeklyEstimations = (tasks: Task[]): TimeEstimation[] => {
+  const timeEstimations: TimeEstimation[] = [];
+
+  for (const task of tasks) {
+    const existingIndex = getIndex(timeEstimations, task);
+    const existing = timeEstimations[existingIndex];
+
+    if (existing) {
+      const existingDuration = existing[task.priority];
+
+      if (existingDuration) {
+        existing[task.priority] += task.durationMinutes;
+      } else {
+        existing[task.priority] = task.durationMinutes;
+      }
+    } else {
+      timeEstimations.push({
+        weekDue: task.weekDue,
+        [task.priority]: task.durationMinutes,
+      });
+    }
+  }
+
+  return timeEstimations;
+};
+
+// 👍 Declarative
+const replaceAt = <T>(index: number, data: T, arr: T[]): T[] => {
+  arr.splice(index, 1, data);
+  return arr;
+};
+
+const weeklyEstimations = (tasks: Task[]): TimeEstimation[] =>
+  tasks.reduce<TimeEstimation[]>((timeEstimations, task) => {
+    const existingIndex = getIndex(timeEstimations, task);
+    const existing = timeEstimations[existingIndex];
+
+    if (existing) {
+      const durationMinutes = existing[task.priority] || 0;
+
+      return replaceAt(
+        existingIndex,
+        {
+          ...existing,
+          [task.priority]: durationMinutes + task.durationMinutes,
+        },
+        timeEstimations
+      );
+    }
+
+    return [
+      ...timeEstimations,
+      { weekDue: task.weekDue, [task.priority]: task.durationMinutes },
+    ];
+  }, []);
+```
 
 ### Move Lists in a Separate Component
 
@@ -500,38 +737,44 @@ function Component({ topic, page, articles, onNextPage }) {
 }
 ```
 
+<!--
 ### Understand where your data exists
 
-<!-- TODO STATE? -->
+<!-- TODO STATE? --\>
 
 ### Raise state up
 
-<!-- TODO Set state as high up. Components should expect data to exist - see early return -->
+<!-- TODO Set state as high up. Components should expect data to exist - see early return --\>
+-->
 
-### Assign Default Props When Destructuring
+### Minimise the use of Optional Chaining
 
-<!-- TODO RELEVANT? -->
+In thinking where your data exists, consider where data does, and doesn't exist. eg A user profile page _will always_ contain user details. Limit your use of [optional chaining](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining)
 
-One way to specify default prop values is to attach a `defaultProps` property to the component. This means that the component function and the values for its arguments are not going to sit together.
+```js
+const App: React.FC = () => {
+  if (user) {
+    return <Profile user={user} />;
+  }
 
-Prefer assigning default values directly when you’re destructuring the props. It makes it easier to read the code from top to bottom without jumping and keeps the definitions and values together.
-
-```jsx
-// 👎 Don't define the default props outside of the function
-function Component({ title, tags, subscribed }) {
-  return <div>...</div>;
-}
-
-Component.defaultProps = {
-  title: "",
-  tags: [],
-  subscribed: false,
+  return <LoginPage />;
 };
 
-// 👍 Place them in the arguments list
-function Component({ title = "", tags = [], subscribed = false }) {
-  return <div>...</div>;
-}
+// 👎 optional chaining offers no value here and only makes our testing complex - we need to constantly assert user information
+type User = { name: string };
+
+const Profile: React.FC<{ user?: User }> = ({ user }) => (
+  <div>
+    <h2>Hello {user?.name}</h2>
+  </div>
+);
+
+// 👍 Simpler to test - we wouldn't show this component otherwise.
+const Profile: React.FC<{ user: User }> = ({ user }) => (
+  <div>
+    <h2>Hello {user.name}</h2>
+  </div>
+);
 ```
 
 ### Avoid Nested Render Functions
@@ -625,9 +868,24 @@ function Component() {
 }
 ```
 
-### Use Typescript `as const` over enums
+### Avoid typescript enums
 
-<!-- TODO TS -->
+Enums have a few [documented issues](https://fettblog.eu/tidy-typescript-avoid-enums/) (the [TS team agrees](https://twitter.com/orta/status/1348966323271987201?s=20)). A simpler alternative to enums is just declaring a union type of string literals or using as const to carry the data through to runtime.
+
+```tsx
+type Position = "left" | "right" | "top" | "bottom";
+
+const buttonSizes = {
+  default: "default",
+  small: "small",
+  large: "large",
+} as const;
+
+export const Button: React.FC<{ size: keyof typeof buttonSizes }> = ({
+  size,
+  ...props
+}) => <Button size={size} {...props} />;
+```
 
 ### Prefer Hooks to HOCs and Render Props
 
@@ -696,9 +954,13 @@ It’s even easier if you’re working with a GraphQL client like [Apollo](https
 
 ### State Management Libraries
 
-<!-- TODO LINK TO STATE MANAGEMENT LIBS -->
+1. [MobX](https://mobx.js.org/react-integration.html)
+1. [Tanstack Query](https://tanstack.com/query/v4)
+1. [Zustand](https://github.com/pmndrs/zustand)
+1. [Redux](https://redux.js.org/)
+1. [Recoil](https://recoiljs.org/)
 
-In most cases you don’t need a state management library. They should be used in large applications that require managing complex state. There are plenty of guides on this topic so I’ll just mention the two libraries that I would explore in such a situation - [Recoil](https://recoiljs.org/) and [Redux](https://redux.js.org/).
+In most cases you don’t need a state management library, however above is listed in order of recommendation.
 
 ## Component Mental Models
 
@@ -726,11 +988,22 @@ When faced with questions like this you should become aware that responsibilitie
 
 ## Application Structure
 
+### Maintain a utility function directory
+
+Prefer the directory name `utils` for common utility files as `helpers` can be interpreted as informal. `lib`/`libs` is usually used for transmpiled typescript files. Aim to keep the utilities stateless and functional.
+
+<!--
 ### Follow Casing Conventions
 
-<!-- TODO Casing conventions in react -->
+<!-- TODO Casing conventions in react --\>
+
+ -->
 
 ### Group by Route/Module
+
+<!-- TODO https://github.com/oldboyxx/jira_clone/tree/master/client -->
+
+> The main rule to follow: **Files from one module can only import from ancestor folders within the same module or from `src/shared`.** This makes the codebase easier to understand, and if you're fiddling with code in one module, you will never introduce a bug in another module.
 
 Grouping by containers and components makes applications hard to navigate. To understand what component belongs where you need a good level of familiarity.
 
@@ -777,25 +1050,11 @@ Components like buttons, inputs and cards are used all over the place. Even if y
 
 You can see what common components you have even if you’re not using Storybook. It helps to avoid duplication. You don’t want everyone on the team to make their own version of a button. Unfortunately, this happens way too often because of badly structured projects.
 
+<!--
 ### Button Example
 
-<!-- TODO BUTTON -->
-
-### Consider Absolute Paths
-
-<!-- TODO RELEVANT -->
-
-Making things easier to change is fundamental for your project structure. Absolute paths mean that you will have to change less if you need to move a component. Also it makes it easier to find out where everything is getting pulled from.
-
-```jsx
-// 👎 Don't use relative paths
-import { Input } from "../../../modules/common/components/Input";
-
-// 👍 Absolute ones don't change
-import { Input } from "@modules/common/components/Input";
-```
-
-I use the `@` prefix to signal that it’s an internal module but I’ve seen it done with `~` as well.
+<!-- TODO BUTTON --\>
+-->
 
 ### Wrap External Components
 
@@ -818,9 +1077,9 @@ import { Button, DatePicker } from "@modules/common/components";
 
 <!-- TODO RELEVANT -->
 
-I create a components folder for each module in my React applications. Whenever I need to create a component I create it there first. If it needs extra files like styles or tests, I create its own folder and put them there.
+Create a components folder for each module in my React applications. Whenever you need to create a component, create it there first. If it needs extra files like styles or tests, create its own folder and put them there.
 
-As a general practice it’s good to have an `index.js` file which exports the React component so you don’t have to change import paths or have repetitive ones like `import Form from 'components/UserForm/UserForm'`. Still, keep the component file with its name so you don’t get confused when you have multiple ones open.
+As a general practice it’s good to have an `index.js` file which exports the React component so you don’t have to change import paths or have repetitive ones like `import Form from 'components/UserForm/UserForm'`. Still, keep the component file with its name to avoid confusion when multiple files are open.
 
 ```jsx
     // 👎 Don't keep all component files together
@@ -868,7 +1127,7 @@ Load in the background or when the user shows intent that they’ll need another
 
 ### Rerenders - Callbacks, Arrays and Objects
 
-<!-- TODO WHAT RENEDERED TOOL -->
+- [Using React DevTools to highlight what components rerendered](https://jsramblings.com/how-to-check-if-your-component-rerendered-and-why/)
 
 It’s good to try and reduce the amount of unnecessary rerenders that your app makes. Keep this in mind but also note that unnecessary rerenders will rarely have the greatest impact on your app.
 
@@ -886,14 +1145,18 @@ https://kentcdodds.com/blog/write-tests
 
 <!-- TODO TESTING-LIB -->
 
+<!--
+
 ### Testing Strategy
 
-<!-- TODO KENT C DODDS -->
-<!-- TODO FORGE ARTICLE -->
+<!-- TODO KENT C DODDS --\>
+<!-- TODO FORGE ARTICLE --\>
 
 ### Implementing Testing from nothing
 
-<!-- TODO QUICK VITE, TS JEST, BLINKDIFF, NIGHTWATCH -->
+<!-- TODO QUICK VITE, TS JEST, BLINKDIFF, NIGHTWATCH --\>
+
+-->
 
 ### Don't Rely on Snapshot Tests
 
@@ -959,3 +1222,20 @@ Going that route means that we need to manage loading states and handle http err
 Instead of doing that we should use libraries like [React Query](https://react-query.tanstack.com/) or [SWR](https://swr.vercel.app/). They make communicating with a server a natural part of the component lifecycle in an idiomatic way - a hook.
 
 They come with caching built in and manage loading and error states for us. We just need to handle them. Also, they remove the need to use a state management library to handle that data.
+
+## New React Project
+
+### Typescript?
+
+You're going to be creating proptypes either way, so you may as well get some typesafety included.
+
+### Selection Process - React Frameworks and Libraries
+
+| **Feature**  | CRA | Parcel | Vite | Next.js | Gatsby | Remix | Isles | Astro.js |
+| ------------ | :-: | :----: | :--: | :-----: | :----: | :---: | :---: | :------: |
+| Fast DX      | ❌  |   ✅   |  ✅  |   ✅    |   ❌   |  ✅   |  ✅   |    ✅    |
+| Typescript   | ✅  |   ✅   |  ✅  |   ✅    |   ✅   |  ✅   |  ✅   |    ✅    |
+| Good for SEO | ❌  |   ❌   |  ❌  |   ✅    |   ✅   |  ✅   |  ✅   |    ✅    |
+| SPA          | ✅  |   ✅   |  ✅  |   ✅    |   ✅   |  ❌   |  ✅   |    ✅    |
+| SSR          | ❌  |   ❌   |  ❌  |   ✅    |   ❌   |  ✅   |  ❌   |    ❌    |
+| SSG          | ❌  |   ❌   |  ❌  |   ✅    |   ✅   |  ❌   |  ✅   |    ✅    |
