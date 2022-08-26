@@ -28,6 +28,7 @@ const processFrontMatter = (file) => {
     content: marked.parse(data.content),
     excerpt: marked.parse(data.excerpt),
     filePath: file,
+    lastUpdated: fs.statSync(file).mtime,
   };
 };
 
@@ -56,6 +57,13 @@ const blogList = filesFrom(BLOGS)
   .map(processFrontMatter)
   .filter(noDraftPosts);
 
+const dateBlurb = (created, lastUpdated) =>
+  lastUpdated && formatDate(lastUpdated) !== formatDate(created)
+    ? `<small>Updated ${formatDate(lastUpdated)}<br>Created ${formatDate(
+        created
+      )}</small><br>`
+    : `<small>Created  ${formatDate(created)}</small><br>`;
+
 const writePost = (f) => {
   write(
     f.path
@@ -64,7 +72,7 @@ const writePost = (f) => {
       .replace(/md$/, "html"),
     html({
       TITLE: f.data.title,
-      DATE: `<small>${formatDate(f.data.date)}</small><hr><br>`,
+      DATE: dateBlurb(f.data.date, f.lastUpdated) + "<hr/>",
       BODY: f.content,
     })
   );
@@ -86,7 +94,7 @@ write(
             `<li><a href="${b.filePath
               .replace(/^.\/content\/blog/, "")
               .replace(/index.md$/, "")}">${b.data.title}</a><br/>
-              <small>${formatDate(b.data.date)}</small><br/>
+              ${dateBlurb(b.data.date, b.lastUpdated)}<hr/>
               ${
                 b.data.description !== b.data.title
                   ? `${b.data.description}`
