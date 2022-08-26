@@ -141,7 +141,7 @@ Tools like [Homebrew] for desktop and terminal applications and [asdf] for manag
    find ~/.zshrc -type f -exec sed -i '' -e 's|ZSH_THEME="robbyrussell"|ZSH_THEME="ollyrussell"|g' {} \;
    ```
 
-1. Setup nodejs with [asdf] for runtime management. Also setup [yarn](https://yarnpkg.com/), [ipsum](https://www.npmjs.com/package/ipsum-cli) and [ni](https://github.com/antfu/ni) to auto-install alongside new node installations.
+1. Setup nodejs with [asdf] for runtime management. Also [setup compatibility with nvm](https://github.com/asdf-vm/asdf-nodejs#nvmrc-and-node-version-support) for easy migrations (Note #1), and [yarn](https://yarnpkg.com/), [ipsum](https://www.npmjs.com/package/ipsum-cli) and [ni](https://github.com/antfu/ni) to [auto-install alongside new node installations](https://github.com/asdf-vm/asdf-nodejs#default-npm-packages) (Note #2)
 
    ```bash
    brew install gnupg asdf
@@ -160,10 +160,6 @@ Tools like [Homebrew] for desktop and terminal applications and [asdf] for manag
    ```
 
    If you're on an M1 - take a look at this guide for [working with older versions of node](/2022-04-01-10-28-asdf-nodejs-binaries-m1).
-
-   Note #1: [asdf uses a `.tool-versions` file for auto-switching between software versions. To ease migration, you can have it read an existing `.nvmrc` or `.node-version` file to find out what version of Node.js should be used.](https://github.com/asdf-vm/asdf-nodejs#nvmrc-and-node-version-support)
-
-   Note #2: [`~/.default-npm-packages` is a file which contains npm packages that will be automatically installed alongside a new node version.](https://github.com/asdf-vm/asdf-nodejs#default-npm-packages)
 
 1. Install recommended packages (feel free to delete as required)
 
