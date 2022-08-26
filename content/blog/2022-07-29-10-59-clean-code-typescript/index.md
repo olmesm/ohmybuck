@@ -3,6 +3,7 @@ title: Clean Code TypeScript
 description: Clean Code TypeScript
 date: 2022-07-29 10:59
 tags: [Clean Code, TypeScript]
+draft: true
 ---
 
 Clean Code concepts adapted for TypeScript.

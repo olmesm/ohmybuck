@@ -150,14 +150,20 @@ Tools like [Homebrew] for desktop and terminal applications and [asdf] for manag
    asdf plugin-add nodejs # Add nodejs
 
    echo "\n# Disable asdf nodejs signature check\nNODEJS_CHECK_SIGNATURES=no\n" >> ~/.zshrc
+   # See note #1 below
    echo "legacy_version_file = yes" > ~/.asdfrc
+   # See note #2 below
    echo "yarn\nipsum-cli\n@antfu/ni\n" > ~/.default-npm-packages
 
    asdf install nodejs lts
    asdf global nodejs $(asdf list nodejs | grep -e "\d.*" | tail -1)
    ```
 
-   If you're on an M1 - take a look at this guide for [working with older versions of node](/2022-04-01-10-28-asdf-nodejs-binaries-m1.
+   If you're on an M1 - take a look at this guide for [working with older versions of node](/2022-04-01-10-28-asdf-nodejs-binaries-m1).
+
+   Note #1: [asdf uses a `.tool-versions` file for auto-switching between software versions. To ease migration, you can have it read an existing `.nvmrc` or `.node-version` file to find out what version of Node.js should be used.](https://github.com/asdf-vm/asdf-nodejs#nvmrc-and-node-version-support)
+
+   Note #2: [`~/.default-npm-packages` is a file which contains npm packages that will be automatically installed alongside a new node version.](https://github.com/asdf-vm/asdf-nodejs#default-npm-packages)
 
 1. Install recommended packages (feel free to delete as required)
 
