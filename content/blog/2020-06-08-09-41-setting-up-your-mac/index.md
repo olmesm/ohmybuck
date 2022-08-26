@@ -19,21 +19,25 @@ A guide to mac setup with a focus on enhancing existing/normal workflows. Toolin
 
 Professional engineers need to ensure a consistent system for development and running applications. Running systems often use containers for ensuring consistency, but for local development containers and virtualisation isn't always a desired or efficient option.
 
-> ## The Problem
->
-> It’s likely you’ll have to work on different projects which use different versions of tools. For example you might be working on a Terraform 0.11 project today and a Terraform 0.13 project tomorrow. To make things worse, that Terraform 0.11 project might need Terragrunt 0.21, while the Terraform 0.13 project might need Terragrunt 0.26 (contrived example, I know).
->
-> There are a few ways to handle this. You could version the tools themselves (e.g. terraform0.11.. You can set up symlinks and have a script which flips them around. You can have a env file in each project you source. You could also use something like direnv.
->
-> There are tools like tfenv which set up Terraform on a per directory basis which can partially solve this. There are also tools like rbenv and pyenv which solve for Ruby and Python respectively. One problem is they all require separate set up and configuration, which can get old. Some don’t even have automatic switching mechanisms, and require more tools.
->
-> ## A Solution: asdf
->
-> asdf is a meta version manager, it manages other version managers (tools like pyenv).
->
-> I like it because you install and configure it once and from then on you can use .tool-versions files in your projects to automatically switch (and optionally install) tool versions.
->
-> <footer><cite> - [Two is Too Many](https://www.twoistoomany.com/blog/2020/11/23/how-i-work-asdf/)</cite></footer>
+<blockquote>
+
+## The Problem
+
+It’s likely you’ll have to work on different projects which use different versions of tools. For example you might be working on a Terraform 0.11 project today and a Terraform 0.13 project tomorrow. To make things worse, that Terraform 0.11 project might need Terragrunt 0.21, while the Terraform 0.13 project might need Terragrunt 0.26 (contrived example, I know).
+
+There are a few ways to handle this. You could version the tools themselves (e.g. terraform0.11.. You can set up symlinks and have a script which flips them around. You can have a env file in each project you source. You could also use something like direnv.
+
+There are tools like tfenv which set up Terraform on a per directory basis which can partially solve this. There are also tools like rbenv and pyenv which solve for Ruby and Python respectively. One problem is they all require separate set up and configuration, which can get old. Some don’t even have automatic switching mechanisms, and require more tools.
+
+## A Solution: asdf
+
+asdf is a meta version manager, it manages other version managers (tools like pyenv).
+
+I like it because you install and configure it once and from then on you can use .tool-versions files in your projects to automatically switch (and optionally install) tool versions.
+
+ <footer><cite> - <a href="https://www.twoistoomany.com/blog/2020/11/23/how-i-work-asdf/">Two is Too Many</a></cite></footer>
+
+</blockquote>
 
 Tools like [Homebrew] for desktop and terminal applications and [asdf] for managing runtimes, enables professionals this consistency and reproducibility.
 
