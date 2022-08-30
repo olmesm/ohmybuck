@@ -94,12 +94,12 @@ write(
             `<li><a href="${b.filePath
               .replace(/^.\/content\/blog/, "")
               .replace(/index.md$/, "")}">${b.data.title}</a><br/>
-              ${dateBlurb(b.data.date, b.lastUpdated)}<hr/>
+              ${dateBlurb(b.data.date, b.lastUpdated)}
               ${
                 b.data.description !== b.data.title
                   ? `${b.data.description}`
                   : ""
-              }
+              }<hr/>
             </li>`
         )
         .join("") +
