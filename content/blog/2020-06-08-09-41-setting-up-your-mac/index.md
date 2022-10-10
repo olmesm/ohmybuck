@@ -157,7 +157,7 @@ Tools like [Homebrew] for desktop and terminal applications and [asdf] for manag
    # See note #1 above
    echo "legacy_version_file = yes" > ~/.asdfrc
    # See note #2 above
-   echo "yarn\nipsum-cli\n@antfu/ni" > ~/.default-npm-packages
+   echo "yarn\nipsum-cli\n@antfu/ni\nzx" > ~/.default-npm-packages
 
    asdf install nodejs lts
    asdf global nodejs $(asdf list nodejs | grep -e "\d.*" | tail -1)
