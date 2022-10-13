@@ -72,8 +72,9 @@ Tools like [Homebrew] for desktop and terminal applications and [asdf] for manag
 1. Add to profile
 
    ```bash
-   echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
-   eval "$(/opt/homebrew/bin/brew shellenv)" || echo "Still OK if the brew --version works. If not, restart the your terminal"
+   export BREW_LOC=$(which brew)
+   echo "eval \"\$($BREW_LOC shellenv)\"" >> ~/.zprofile
+   eval "$BREW_LOC shellenv" || echo 'Test if `brew --version` works. If not, restart the your terminal and continue.'
    ```
 
 1. Install git, ZSH tools, and shell completions
@@ -106,7 +107,7 @@ Tools like [Homebrew] for desktop and terminal applications and [asdf] for manag
 
    ```bash
    if [[ `sysctl -n machdep.cpu.brand_string` == *'Apple M1'* ]]; then
-   # Mac M1's different arch workaround.
+   # Mac M1s different arch workaround.
      softwareupdate --install-rosetta
    fi
    ```
