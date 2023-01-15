@@ -80,8 +80,17 @@ Tools like [Homebrew] for desktop and terminal applications and [asdf] for manag
 1. Install git, ZSH tools, and shell completions
 
    ```bash
-   brew install wget zsh-completions git vim \
+   brew install wget zsh-completions git vim direnv \
      && brew install --cask iterm2
+   ```
+
+1. Setup [direnv](https://direnv.net/)
+
+   ```bash
+   mkdir -p ~/.config/direnv
+   echo "[global]
+   load_dotenv = true
+   " > ~/.config/direnv/direnv.toml
    ```
 
 1. Setup git
