@@ -12,7 +12,7 @@ In monorepos with vscode this is a common error:
 
 Fixes usually start with adding:
 
-```js
+```diff
 // <root>\.eslintrc.cjs
 
 module.exports = {
