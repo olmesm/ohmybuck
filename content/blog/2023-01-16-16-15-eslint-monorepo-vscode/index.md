@@ -30,7 +30,7 @@ To no avail.
 
 The fix is actually a vscode issue. 
 
-Make a new file in the root `.vscode/settings.json`
+Make a new file in the root `.vscode/settings.json` abnd follow up with "Command palette" > "Restart Extension Host"
 
 ```json
 {
