@@ -51,3 +51,18 @@ const flatAddress = (obj, path = "$") => {
   return handleSimple(obj, path)
 }
 ```
+
+```
+// devtools quick fetch
+const f = (type, ...args) => (middles = args => Promise.resolve(args)) => 
+    fetch(...args).then(d => {
+        switch(type.toLowerCase()) {
+            case "j":
+                return d.json()
+            case "t":
+                return d.text()
+            default: // still allows text/json
+                return d[type]()
+        }
+    }).then(middles).then(console.log)
+```
