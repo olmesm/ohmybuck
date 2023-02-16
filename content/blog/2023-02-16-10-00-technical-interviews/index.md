@@ -3,7 +3,7 @@ title: Technical Interviews
 description: Technical Interviews
 date: 2023-02-16 10:00
 tags: [technical interviews, hiring]
-draft: true
+# draft: true
 ---
 
 ## Interview sessions
@@ -81,30 +81,32 @@ The point of the interview, and I always stress this prior to starting with a ca
 
 ## Question bank
 
-Client Side
-Accessibility
-A/B Testing
-Analytics
-Design Systems
-UX/UI Considerations
-Metrics and Observability
-API's, Websockets, and GraphQL
-Feature Testing
-State management
-Framework and Tooling Selection
-Dependency Management
-Data Storage
-Asset Management
-CDN's
-Deployments
-Packaging
-Documentation
-Testing - automated
-Testing - user
-Testing - performance
-Developer experience
-Configuration vs code and how to handle
-Scripting
-Authentication vs Authorization
-Security
-Containerization
+![](/images/Engineering%20Diagrams%20-%20engineering-venn.jpg)
+
+- Client Side
+- Accessibility
+- A/B Testing
+- Analytics
+- Design Systems
+- UX/UI Considerations
+- Metrics and Observability
+- API's, Websockets, and GraphQL
+- Feature Testing
+- State management
+- Framework and Tooling Selection
+- Dependency Management
+- Data Storage
+- Asset Management
+- CDN's
+- Deployments
+- Packaging
+- Documentation
+- Testing - automated
+- Testing - user
+- Testing - performance
+- Developer experience
+- Configuration vs code and how to handle
+- Scripting
+- Authentication vs Authorization
+- Security
+- Containerization
