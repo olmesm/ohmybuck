@@ -3,7 +3,7 @@ title: Technical Interviews
 description: Technical Interviews
 date: 2023-02-16 10:00
 tags: [technical interviews, hiring]
-# draft: true
+draft: true
 ---
 
 ## Interview sessions
@@ -81,7 +81,7 @@ The point of the interview, and I always stress this prior to starting with a ca
 
 ## Question bank
 
-![](/images/Engineering%20Diagrams%20-%20engineering-venn.jpg)
+![](/images/Engineering%20Diagrams%20-%20engineering-venn.jpeg)
 
 - Client Side
 - Accessibility
