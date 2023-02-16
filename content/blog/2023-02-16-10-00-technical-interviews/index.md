@@ -78,3 +78,33 @@ The point of the interview, and I always stress this prior to starting with a ca
 ## Resources
 
 - https://thezbook.com/hiring
+
+## Question bank
+
+Client Side
+Accessibility
+A/B Testing
+Analytics
+Design Systems
+UX/UI Considerations
+Metrics and Observability
+API's, Websockets, and GraphQL
+Feature Testing
+State management
+Framework and Tooling Selection
+Dependency Management
+Data Storage
+Asset Management
+CDN's
+Deployments
+Packaging
+Documentation
+Testing - automated
+Testing - user
+Testing - performance
+Developer experience
+Configuration vs code and how to handle
+Scripting
+Authentication vs Authorization
+Security
+Containerization
