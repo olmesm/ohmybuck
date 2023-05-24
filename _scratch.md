@@ -112,3 +112,9 @@ I’m sure there are other criteria that are important, but generally I think th
 - fizzbuzz with APIS
 - queue and limited resource management
 - audio and event handling
+
+---
+
+# Assessing Tech Debt
+
+https://www.npmjs.com/package/jscpd
