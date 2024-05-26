@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Export .env to shell | ohmybuck</title>
+    <link rel="stylesheet" href="/pico.min.css" />
+    <link rel="stylesheet" href="/prismjs.css" />
+  </head>
+  <body>
+    <nav class="container">
+      <ul>
+        <li>
+          <a href="/" style="color: var(--h1-color)">ohmybuck</a>
+        </li>
+      </ul>
+      <ul>
+        <li><a href="/">home</a></li>
+        <li><a href="/whoami">whoami</a></li>
+        <li><a href="https://github.com/olmesm/ohmybuck">github</a></li>
+        <li>
+          <a href="https://www.linkedin.com/in/%F0%9F%A6%86-ol-smit-85141387/"
+            >linkedin</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <main class="container">
+      <h1 style="margin-bottom: 0">Export .env to shell</h1>
+      <small>Updated May 26, 2024<br>Created July 5, 2021</small><br><hr/>
+      <div><p>a bash script that exports a .env file to the shell environment and ignores any lines of code that start with a hash:</p>
+<pre><code class="language-bash">#!/bin/bash
+
+# Define the .env file path
+env_file=&quot;.env&quot;
+
+# Check if the file exists
+if [ ! -f &quot;$env_file&quot; ]; then
+  echo &quot;Error: $env_file does not exist&quot;
+  exit 1
+fi
+
+# Read the file line by line
+while IFS= read -r line; do
+  # Check if the line starts with a hash
+  if [[ ! &quot;$line&quot; =~ ^#.* ]]; then
+    # Export the line to the shell environment
+    export &quot;$line&quot;
+  fi
+done &lt; &quot;$env_file&quot;
+
+echo &quot;Environment variables from $env_file have been exported&quot;
+</code></pre>
+<p>In this script, the variable env_file is set to the path of the .env file, and the script checks if the file exists. If the file does not exist, the script displays an error message and exits.</p>
+<p>The script then uses a while loop to read the file line by line. Inside the loop, the script uses an if statement to check if the current line starts with a hash using the regular expression ^#.*. If the line does not start with a hash, the script uses the export command to export the line to the shell environment.</p>
+<p>Finally, after the end of the file, the script will display a message indicating that the environment variables from the .env file have been exported.</p>
+<p>You can modify the script by changing the path of the env_file variable to the path of your .env file.</p>
+<p>It&#39;s worth noting that this script assumes that the .env file contains only environment variables in the format KEY=VALUE, and that the file does not contain any syntax errors.</p>
+</div>
+      <hr />
+      <div>
+        <a href="https://github.com/olmesm/ohmybuck/issues/new">Comments?</a>
+      </div>
+    </main>
+
+    <script async src="/prismjs.js"></script>
+
+    <script
+      src="https://beamanalytics.b-cdn.net/beam.min.js"
+      data-token="a1492ee0-db67-4533-83e6-3c2352bb0dfc"
+      async
+    ></script>
+  </body>
+</html>

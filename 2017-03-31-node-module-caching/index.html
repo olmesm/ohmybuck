@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Node Module Caching | ohmybuck</title>
+    <link rel="stylesheet" href="/pico.min.css" />
+    <link rel="stylesheet" href="/prismjs.css" />
+  </head>
+  <body>
+    <nav class="container">
+      <ul>
+        <li>
+          <a href="/" style="color: var(--h1-color)">ohmybuck</a>
+        </li>
+      </ul>
+      <ul>
+        <li><a href="/">home</a></li>
+        <li><a href="/whoami">whoami</a></li>
+        <li><a href="https://github.com/olmesm/ohmybuck">github</a></li>
+        <li>
+          <a href="https://www.linkedin.com/in/%F0%9F%A6%86-ol-smit-85141387/"
+            >linkedin</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <main class="container">
+      <h1 style="margin-bottom: 0">Node Module Caching</h1>
+      <small>Updated May 26, 2024<br>Created March 31, 2017</small><br><hr/>
+      <div><p>One of the really powerful features of Node is the ability to naturally separate your code into modules that can be reused throughout your app.</p>
+<p>When you require a file in Node, is it instantiated once and that instance passed around where required, or is the module instantiated each time it&#39;s required?</p>
+<p>I wasn&#39;t sure so, instead of Googling, I wrote out a quick program to find out.</p>
+<h2 id="creating-visually-unique-objects">Creating visually unique objects</h2>
+<p>The first thing we need to do is be able to differentiate instances within JavaScript.</p>
+<pre><code class="language-javascript">var a = {}
+var b = a
+a === b // #=&gt; true
+
+a // #=&gt; {}
+a === {} // #=&gt; false
+
+b // #=&gt; {}
+b === {} // #=&gt; false
+</code></pre>
+<p>This makes sense. We assigned <code>a</code> and <code>b</code> to the same object when we defined them.</p>
+<p>When you call a new object <code>{}</code>, it creates a unique instance, but it&#39;s not visually different or immediately understandable.</p>
+<p>Ruby <code>{}.object_id</code> and Python <code>id({})</code> both return the id&#39;s of the object - however JavaScript objects don&#39;t have an id. So in order to see a visual difference with a quick POC, we&#39;ll need some other way.</p>
+<p><code>Math.random()</code> generates a unique number which is easy to see.</p>
+<p>In the same format as above - replacing the <code>{}</code>&#39;s yields a program we can look at and immediately understand without having to think about it.</p>
+<pre><code class="language-javascript">var a = Math.random()
+var b = a
+a === b // #=&gt; true
+
+a // #=&gt; 0.270583847725012
+a === Math.random() // #=&gt; false
+
+b // #=&gt; 0.270583847725012
+b === Math.random() // #=&gt; false
+</code></pre>
+<p>We can use the above to generate clues about the behaviour of Node.</p>
+<h2 id="predictions">Predictions</h2>
+<ol>
+<li><p>Multiple Instances</p>
+<p>IF node creates a new instance of the module every time we require it</p>
+<p>THEN we would see <code>Math.random()</code> generate a new number every time.</p>
+<p>ANY <code>console.log</code>&#39;s in the module would appear as many times as the file is required.</p>
+</li>
+<li><p>Single Instance</p>
+<p>IF node creates a single instance of the module and passes it into where we require it</p>
+<p>THEN we would see <code>Math.random()</code> generate only one number.</p>
+<p>ANY <code>console.log</code>&#39;s in the module would also only appear once.</p>
+</li>
+</ol>
+<h2 id="testing">Testing</h2>
+<p>Create the folder and file structure.</p>
+<pre><code class="language-bash">mkdir node-module-testing
+cd node-module-testing
+
+touch index.js instance-1.js instance-2.js random-number.js
+</code></pre>
+<p>Write out the testing code.</p>
+<p><code>random-number.js</code></p>
+<pre><code class="language-javascript">var randomNumber = Math.random()
+
+console.log(randomNumber, &quot; =&gt; Random Number in Random&quot;)
+
+module.exports = randomNumber
+</code></pre>
+<p><code>instance-1.js</code></p>
+<pre><code class="language-javascript">var randomNumber = require(&quot;./random-number&quot;)
+
+console.log(randomNumber, &quot; =&gt; Random Number in Instance 1&quot;)
+
+module.exports = randomNumber
+</code></pre>
+<p><code>instance-2.js</code></p>
+<pre><code class="language-javascript">var randomNumber = require(&quot;./random-number&quot;)
+
+console.log(randomNumber, &quot; =&gt; Random Number in Instance 2&quot;)
+
+module.exports = randomNumber
+</code></pre>
+<p><code>index.js</code></p>
+<pre><code class="language-javascript">var randomNumber = require(&quot;./random-number&quot;)
+var instance1 = require(&quot;./instance-1&quot;)
+var instance2 = require(&quot;./instance-2&quot;)
+
+console.log(randomNumber, &quot; =&gt; Random Number&quot;)
+console.log(instance1, &quot; =&gt; Instance 1&quot;)
+console.log(instance2, &quot; =&gt; Instance 2&quot;)
+</code></pre>
+<p>Execute with <code>node .</code></p>
+<pre><code class="language-bash">0.66966035335478 &#39; =&gt; Random Number in Random&#39;
+0.66966035335478 &#39; =&gt; Random Number in Instance 1&#39;
+0.66966035335478 &#39; =&gt; Random Number in Instance 2&#39;
+0.66966035335478 &#39; =&gt; Random Number&#39;
+0.66966035335478 &#39; =&gt; Instance 1&#39;
+0.66966035335478 &#39; =&gt; Instance 2&#39;
+</code></pre>
+<p>From the results we can clearly see that the instance is created and passed around, this shows that the second prediction is correct.</p>
+<h2 id="creating-multiple-instances">Creating Multiple Instances</h2>
+<p>Let&#39;s create the alternative scenario.</p>
+<p><code>random-number.js</code></p>
+<pre><code class="language-javascript">function randomNumber() {
+  console.log(randomNumber, &quot; =&gt; Random Number in Random&quot;)
+  return Math.random()
+}
+
+module.exports = randomNumber
+</code></pre>
+<p><code>randomNumber</code> is now a function that is passed around. We will now need to execute it whenever we call it.</p>
+<p>We can execute it immediately when we require it - <code>require(&#39;...&#39;)()</code></p>
+<p><code>index.js</code>, <code>instance-1.js</code>, and <code>instance-2.js</code>;</p>
+<pre><code class="language-javascript">var randomNumber = require(&quot;./random-number&quot;)()
+</code></pre>
+<p>Execute with <code>node .</code></p>
+<pre><code class="language-bash">[Function: randomNumber] &#39; =&gt; Random Number in Random&#39;
+[Function: randomNumber] &#39; =&gt; Random Number in Random&#39;
+0.8149965855422716 &#39; =&gt; Random Number in Instance 1&#39;
+[Function: randomNumber] &#39; =&gt; Random Number in Random&#39;
+0.7774629927267434 &#39; =&gt; Random Number in Instance 2&#39;
+0.8801659041213183 &#39; =&gt; Random Number&#39;
+0.8149965855422716 &#39; =&gt; Instance 1&#39;
+0.7774629927267434 &#39; =&gt; Instance 2&#39;
+</code></pre>
+<h2 id="final-notes">Final Notes</h2>
+<p>You may be thinking we could probably have gotten away with just</p>
+<pre><code class="language-javascript">var randomNumber = Math.random // NOTE: no execution ()&#39;s
+
+console.log(randomNumber, &quot; =&gt; Random Number in Random&quot;)
+
+module.exports = randomNumber
+</code></pre>
+<p>However the above wouldn&#39;t meet all conditions.</p>
+<p>Not all code contained within the module is executed. This would only execute the <code>console.log</code> once when the module is instantiated, and not every time the module is required.</p>
+<p>This may seem minor, however if the <code>console.log</code> was replaced with something that was required to run every time, it wouldn&#39;t work as expected and could lead to a fun time debugging.</p>
+<p>For example</p>
+<pre><code class="language-javascript">var runOnce = Math.random()
+
+function randomNumber() {
+  console.log(runOnce, &quot; =&gt; Did it change?&quot;)
+  return Math.random()
+}
+
+module.exports = randomNumber
+</code></pre>
+<pre><code class="language-bash">0.6195124356581816 &#39; =&gt; Did it change?&#39;
+0.6195124356581816 &#39; =&gt; Did it change?&#39;
+...
+0.6195124356581816 &#39; =&gt; Did it change?&#39;
+...
+</code></pre>
+<p>No change. If we encapsulate <code>runOnce</code> within the function we see a different result.</p>
+<pre><code class="language-javascript">function randomNumber() {
+  var runOnce = Math.random()
+  console.log(runOnce, &quot; =&gt; Did it change?&quot;)
+  return Math.random()
+}
+
+module.exports = randomNumber
+</code></pre>
+<pre><code class="language-bash">0.5365654376298239 &#39; =&gt; Did it change?&#39;
+0.7857853977341485 &#39; =&gt; Did it change?&#39;
+...
+0.7507162757727521 &#39; =&gt; Did it change?&#39;
+...
+</code></pre>
+<p>The above shows the code is executed each time it&#39;s run.</p>
+</div>
+      <hr />
+      <div>
+        <a href="https://github.com/olmesm/ohmybuck/issues/new">Comments?</a>
+      </div>
+    </main>
+
+    <script async src="/prismjs.js"></script>
+
+    <script
+      src="https://beamanalytics.b-cdn.net/beam.min.js"
+      data-token="a1492ee0-db67-4533-83e6-3c2352bb0dfc"
+      async
+    ></script>
+  </body>
+</html>

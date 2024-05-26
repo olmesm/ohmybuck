@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Asdf Nodejs Mac m1 | ohmybuck</title>
+    <link rel="stylesheet" href="/pico.min.css" />
+    <link rel="stylesheet" href="/prismjs.css" />
+  </head>
+  <body>
+    <nav class="container">
+      <ul>
+        <li>
+          <a href="/" style="color: var(--h1-color)">ohmybuck</a>
+        </li>
+      </ul>
+      <ul>
+        <li><a href="/">home</a></li>
+        <li><a href="/whoami">whoami</a></li>
+        <li><a href="https://github.com/olmesm/ohmybuck">github</a></li>
+        <li>
+          <a href="https://www.linkedin.com/in/%F0%9F%A6%86-ol-smit-85141387/"
+            >linkedin</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <main class="container">
+      <h1 style="margin-bottom: 0">Asdf Nodejs Mac m1</h1>
+      <small>Updated May 26, 2024<br>Created April 1, 2022</small><br><hr/>
+      <div><p>Working in an older version of node where no precompiled binaries for the m1 can be a pain. Here are two methods to ease the pain with asdf.</p>
+<h2 id="patch-with-rosetta">Patch with Rosetta</h2>
+<p>May not be as reliable but quick and easy. This may effect other binaries you use on your system and required the developer to be aware they need to change the shell everytime they enter the directory.</p>
+<pre><code class="language-bash"># Install Rosetta
+softwareupdate --install-rosetta
+
+# Run a shell session in x86
+arch -x86_64 zsh
+
+# Install the node version required
+asdf install nodejs &lt;node-version&gt;
+# ie asdf install nodejs 12.22.11
+</code></pre>
+<h2 id="build-from-source">Build from Source</h2>
+<p>This takes around 10mins but should be more reliable. As there is no emulation occurring via rosetta, it should be more performant.</p>
+<pre><code class="language-sh">#!/usr/bin/env zsh
+
+# $ . ./script.sh &lt;node-version&gt;
+# ie $ . ./script.sh 12.22.11
+
+VERSION=$1
+
+NODEJS_CONFIGURE_OPTIONS=&#39;--with-intl=full-icu --download=all&#39; \
+NODEJS_CHECK_SIGNATURES=&quot;no&quot; \
+asdf install nodejs ref:v$VERSION
+
+mv ~/.asdf/installs/nodejs/{ref-v$VERSION,$VERSION}
+asdf reshim nodejs
+</code></pre>
+</div>
+      <hr />
+      <div>
+        <a href="https://github.com/olmesm/ohmybuck/issues/new">Comments?</a>
+      </div>
+    </main>
+
+    <script async src="/prismjs.js"></script>
+
+    <script
+      src="https://beamanalytics.b-cdn.net/beam.min.js"
+      data-token="a1492ee0-db67-4533-83e6-3c2352bb0dfc"
+      async
+    ></script>
+  </body>
+</html>

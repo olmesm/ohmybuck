@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Immutable Webapp | ohmybuck</title>
+    <link rel="stylesheet" href="/pico.min.css" />
+    <link rel="stylesheet" href="/prismjs.css" />
+  </head>
+  <body>
+    <nav class="container">
+      <ul>
+        <li>
+          <a href="/" style="color: var(--h1-color)">ohmybuck</a>
+        </li>
+      </ul>
+      <ul>
+        <li><a href="/">home</a></li>
+        <li><a href="/whoami">whoami</a></li>
+        <li><a href="https://github.com/olmesm/ohmybuck">github</a></li>
+        <li>
+          <a href="https://www.linkedin.com/in/%F0%9F%A6%86-ol-smit-85141387/"
+            >linkedin</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <main class="container">
+      <h1 style="margin-bottom: 0">The Immutable Webapp</h1>
+      <small>Updated May 26, 2024<br>Created February 4, 2019</small><br><hr/>
+      <div><p>One of the defining features of an <a href="https://immutablewebapps.org/">Immutable Web App</a> is that the configuration of the web app is extracted from the code.</p>
+<p>We&#39;ve achieved this in the past by extracting the configuration to a <code>environments/config.json</code>, then prior to a build or local serve, we require the correct enviroment&#39;s JSON config into a script that appends all the keys to a property on the window object.</p>
+<p>An example script template.</p>
+<pre><code class="language-js">const stringify = require(&quot;json-stringify-pretty-compact&quot;)
+
+module.exports = configObject =&gt; {
+  const safeJsonConfig = stringify(configObject).replace(/&lt;/g, &quot;\\u003c&quot;) // Sanitise the JSON
+
+  return `;(function(window) {\nwindow.__ENV__ = ${safeJsonConfig};\n})(this);`
+}
+</code></pre>
+<p>Loading the <code>config.js</code> script before the body tag ensures the variables are available for when the app loads.</p>
+<pre><code class="language-html">...
+&lt;script src=&quot;./config.js&quot;&gt;&lt;/script&gt;
+&lt;body&gt;
+  &lt;div id=&quot;app-root&quot;&gt;&lt;/div&gt;
+&lt;/body&gt;
+...
+</code></pre>
+<p>In production, to prevent caching the environment variables, we would append a hash to the <code>config.js</code> file and update the <code>index.html</code> as required.</p>
+<p>This allows us to create a deployable static artifact and use the <code>index.html</code> as the application manifest.</p>
+<p>Prior to deploying to the environment one would run a deploy script which would unpackage the application, and update the <code>index.html</code> file for the required environment.</p>
+<p><a href="https://immutablewebapps.org/">Immutable Web App</a>&#39;s does propose a more elegant solution.</p>
+<ul>
+<li><a href="https://github.com/ImmutableWebApps/ng-immutable-example">Angular example</a></li>
+<li><a href="https://github.com/ImmutableWebApps/react-immutable-example">React example</a></li>
+</ul>
+<!-- Markdown References -->
+
+</div>
+      <hr />
+      <div>
+        <a href="https://github.com/olmesm/ohmybuck/issues/new">Comments?</a>
+      </div>
+    </main>
+
+    <script async src="/prismjs.js"></script>
+
+    <script
+      src="https://beamanalytics.b-cdn.net/beam.min.js"
+      data-token="a1492ee0-db67-4533-83e6-3c2352bb0dfc"
+      async
+    ></script>
+  </body>
+</html>

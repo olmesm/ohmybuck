@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Develop in Docker | ohmybuck</title>
+    <link rel="stylesheet" href="/pico.min.css" />
+    <link rel="stylesheet" href="/prismjs.css" />
+  </head>
+  <body>
+    <nav class="container">
+      <ul>
+        <li>
+          <a href="/" style="color: var(--h1-color)">ohmybuck</a>
+        </li>
+      </ul>
+      <ul>
+        <li><a href="/">home</a></li>
+        <li><a href="/whoami">whoami</a></li>
+        <li><a href="https://github.com/olmesm/ohmybuck">github</a></li>
+        <li>
+          <a href="https://www.linkedin.com/in/%F0%9F%A6%86-ol-smit-85141387/"
+            >linkedin</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <main class="container">
+      <h1 style="margin-bottom: 0">Develop in Docker</h1>
+      <small>Updated May 26, 2024<br>Created February 5, 2019</small><br><hr/>
+      <div><p>A common issue when working with multiple OS&#39;s is trying to keep the dependencies stable across all the various development and build environments.</p>
+<p>One solution is to work in the docker container you plan to build or run the application in.</p>
+<pre><code class="language-bash">WORK_DIR=/usr/app; \        # Define container work directory #
+  docker run --rm -it \     # Run the container with interactive terminal and destory on exit #
+  -p 8001:8001 \            # Bind to port #
+  -v $(pwd)/src:&quot;$WORK_DIR&quot;/src \ # Map local to container volume #
+  -w &quot;$WORK_DIR&quot; \          # entry point #
+  node:alpine sh            # type of container and start command
+</code></pre>
+<p>Packages are installed in the container and are the correct ones for the container OS.</p>
+<p>I run this blog locally using the same method - <a href="https://gitlab.com/olmesm/hugo-blog/tree/master/scripts/run-dev.sh">see here</a></p>
+</div>
+      <hr />
+      <div>
+        <a href="https://github.com/olmesm/ohmybuck/issues/new">Comments?</a>
+      </div>
+    </main>
+
+    <script async src="/prismjs.js"></script>
+
+    <script
+      src="https://beamanalytics.b-cdn.net/beam.min.js"
+      data-token="a1492ee0-db67-4533-83e6-3c2352bb0dfc"
+      async
+    ></script>
+  </body>
+</html>

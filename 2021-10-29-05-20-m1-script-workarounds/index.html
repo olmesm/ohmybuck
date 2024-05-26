@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>M1 Script workarounds | ohmybuck</title>
+    <link rel="stylesheet" href="/pico.min.css" />
+    <link rel="stylesheet" href="/prismjs.css" />
+  </head>
+  <body>
+    <nav class="container">
+      <ul>
+        <li>
+          <a href="/" style="color: var(--h1-color)">ohmybuck</a>
+        </li>
+      </ul>
+      <ul>
+        <li><a href="/">home</a></li>
+        <li><a href="/whoami">whoami</a></li>
+        <li><a href="https://github.com/olmesm/ohmybuck">github</a></li>
+        <li>
+          <a href="https://www.linkedin.com/in/%F0%9F%A6%86-ol-smit-85141387/"
+            >linkedin</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <main class="container">
+      <h1 style="margin-bottom: 0">M1 Script workarounds</h1>
+      <small>Updated May 26, 2024<br>Created October 29, 2021</small><br><hr/>
+      <div><pre><code class="language-bash">if [[ `sysctl -n machdep.cpu.brand_string` == *&#39;Apple M1&#39;* ]]; then
+  # Mac M1s different arch workaround.
+  NODE_VERSION=$(perl -lne &#39;print $1 if /^nodejs ([0-9.]*)$/im&#39; .tool-versions)
+  arch -x86_64 asdf install nodejs $NODE_VERSION
+fi
+</code></pre>
+<p>For terraform via asdf</p>
+<p><code>Error: terraform version 0.15.5 not found</code></p>
+<pre><code class="language-bash">if [[ `which sysctl &amp;&amp; sysctl -n machdep.cpu.brand_string` == &#39;Apple M1&#39; ]]; then
+    # Mac M1s different arch workaround.
+  export ASDF_HASHICORP_OVERWRITE_ARCH=amd64
+fi
+
+asdf install terraform 0.15.5
+</code></pre>
+</div>
+      <hr />
+      <div>
+        <a href="https://github.com/olmesm/ohmybuck/issues/new">Comments?</a>
+      </div>
+    </main>
+
+    <script async src="/prismjs.js"></script>
+
+    <script
+      src="https://beamanalytics.b-cdn.net/beam.min.js"
+      data-token="a1492ee0-db67-4533-83e6-3c2352bb0dfc"
+      async
+    ></script>
+  </body>
+</html>

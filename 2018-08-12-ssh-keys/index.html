@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SSH Keys | ohmybuck</title>
+    <link rel="stylesheet" href="/pico.min.css" />
+    <link rel="stylesheet" href="/prismjs.css" />
+  </head>
+  <body>
+    <nav class="container">
+      <ul>
+        <li>
+          <a href="/" style="color: var(--h1-color)">ohmybuck</a>
+        </li>
+      </ul>
+      <ul>
+        <li><a href="/">home</a></li>
+        <li><a href="/whoami">whoami</a></li>
+        <li><a href="https://github.com/olmesm/ohmybuck">github</a></li>
+        <li>
+          <a href="https://www.linkedin.com/in/%F0%9F%A6%86-ol-smit-85141387/"
+            >linkedin</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <main class="container">
+      <h1 style="margin-bottom: 0">SSH Keys</h1>
+      <small>Updated May 26, 2024<br>Created August 12, 2018</small><br><hr/>
+      <div><p><a href="https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/#generating-a-new-ssh-key">Generating a new SSH key</a></p>
+<pre><code class="language-bash">cd ~/.ssh/
+
+ssh-keygen -t rsa -b 4096 -C &quot;your_email@example.com&quot;
+Enter file in which to save the key (~/.ssh/id_rsa):
+  &gt; &lt;client-name&gt;_rsa # eg my-client_rsa
+
+# hit enter twice for no passphrase
+
+cat &lt;client-name&gt;_rsa.pub
+
+# Copy paste the text printed out in
+#   the terminal into your &quot;Add a new SSH Key&quot; window
+#   in Bitbucket, Github, Gitlab, etc
+</code></pre>
+<p><a href="https://www.digitalocean.com/community/tutorials/how-to-configure-custom-connection-options-for-your-ssh-client">Add to your SSH Config</a></p>
+<p>This allows you to have multiple SSH keys configured for multiple clients, and automagically select the correct key when talking to the relevant server.</p>
+<!-- References -->
+
+<p><a href="http://nerderati.com/2011/03/17/simplify-your-life-with-an-ssh-config-file/">http://nerderati.com/2011/03/17/simplify-your-life-with-an-ssh-config-file/</a></p>
+</div>
+      <hr />
+      <div>
+        <a href="https://github.com/olmesm/ohmybuck/issues/new">Comments?</a>
+      </div>
+    </main>
+
+    <script async src="/prismjs.js"></script>
+
+    <script
+      src="https://beamanalytics.b-cdn.net/beam.min.js"
+      data-token="a1492ee0-db67-4533-83e6-3c2352bb0dfc"
+      async
+    ></script>
+  </body>
+</html>

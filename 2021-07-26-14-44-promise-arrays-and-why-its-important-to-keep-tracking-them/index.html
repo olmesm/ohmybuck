@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Promise Arrays and Why It’s Important to Keep Tracking Them | ohmybuck</title>
+    <link rel="stylesheet" href="/pico.min.css" />
+    <link rel="stylesheet" href="/prismjs.css" />
+  </head>
+  <body>
+    <nav class="container">
+      <ul>
+        <li>
+          <a href="/" style="color: var(--h1-color)">ohmybuck</a>
+        </li>
+      </ul>
+      <ul>
+        <li><a href="/">home</a></li>
+        <li><a href="/whoami">whoami</a></li>
+        <li><a href="https://github.com/olmesm/ohmybuck">github</a></li>
+        <li>
+          <a href="https://www.linkedin.com/in/%F0%9F%A6%86-ol-smit-85141387/"
+            >linkedin</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <main class="container">
+      <h1 style="margin-bottom: 0">Promise Arrays and Why It’s Important to Keep Tracking Them</h1>
+      <small>Updated May 26, 2024<br>Created July 26, 2021</small><br><hr/>
+      <div><p>I was battling to explain how difficult error handling can be when inside a promise array - here’s a fun example for either a tech test or workshop.</p>
+<pre><code class="language-js">const someAsyncFunction = () =&gt; {
+  const text = &quot;still running&quot;
+  console.log(text)
+  Promise.reject(text)
+}
+
+Promise.all([someAsyncFunction].map(fn =&gt; fn()))
+  .then(console.log)
+  .catch(console.log)
+</code></pre>
+<p>The solution</p>
+<pre><code class="language-js">const someAsyncFunction = () =&gt; {
+  const text = &quot;still running&quot;
+  console.log(text)
+  return Promise.reject(text) // we&#39;re now returning the promise.
+}
+
+Promise.all([someAsyncFunction].map(fn =&gt; fn()))
+  .then(console.log)
+  .catch(console.log)
+</code></pre>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled#using_promise.allsettled">Promise.allSettled</a> is also worth considering.</p>
+</div>
+      <hr />
+      <div>
+        <a href="https://github.com/olmesm/ohmybuck/issues/new">Comments?</a>
+      </div>
+    </main>
+
+    <script async src="/prismjs.js"></script>
+
+    <script
+      src="https://beamanalytics.b-cdn.net/beam.min.js"
+      data-token="a1492ee0-db67-4533-83e6-3c2352bb0dfc"
+      async
+    ></script>
+  </body>
+</html>

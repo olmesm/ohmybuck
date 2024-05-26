@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Build a React Website with full CI/CD in less than 2 minutes | ohmybuck</title>
+    <link rel="stylesheet" href="/pico.min.css" />
+    <link rel="stylesheet" href="/prismjs.css" />
+  </head>
+  <body>
+    <nav class="container">
+      <ul>
+        <li>
+          <a href="/" style="color: var(--h1-color)">ohmybuck</a>
+        </li>
+      </ul>
+      <ul>
+        <li><a href="/">home</a></li>
+        <li><a href="/whoami">whoami</a></li>
+        <li><a href="https://github.com/olmesm/ohmybuck">github</a></li>
+        <li>
+          <a href="https://www.linkedin.com/in/%F0%9F%A6%86-ol-smit-85141387/"
+            >linkedin</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <main class="container">
+      <h1 style="margin-bottom: 0">Build a React Website with full CI/CD in less than 2 minutes</h1>
+      <small>Updated May 26, 2024<br>Created August 12, 2018</small><br><hr/>
+      <div><p>I&#39;m going to show you how to deploy a static React website in under 2 minutes, with full CI/CD, onto the WWW.</p>
+<p>You&#39;ll be using:</p>
+<ul>
+<li>React</li>
+<li>Gilab pages</li>
+<li>Gitlab CI/CD</li>
+</ul>
+<p>A few assumptions:</p>
+<ul>
+<li>You have git setup</li>
+<li>You have a Gitlab account (with <a href="https://docs.gitlab.com/ee/ssh/">SSH setup for Gitlab</a>)</li>
+<li>You don&#39;t have a repo on gitlab called <code>my-awesome-app</code>. If so, then use a different name below.</li>
+<li>You have Node installed (hopefully via <a href="https://github.com/creationix/nvm">nvm</a>)</li>
+</ul>
+<h2 id="ready">Ready?</h2>
+<p>Start the time!</p>
+<p>Let&#39;s create a new React App using <a href="https://github.com/facebook/create-react-app">Create React App</a></p>
+<pre><code class="language-bash"># Using npx - create a react app!
+npx create-react-app my-awesome-app
+
+# Go into the app directory
+cd my-awesome-app
+
+# Add ci configuration
+touch .gitlab-ci.yml
+
+# Using your favourite editor - mine being vscode
+code .gitlab-ci.yml
+</code></pre>
+<p>Copy the following into the <code>.gitlab-ci.yml</code> file.</p>
+<pre><code class="language-yaml"># Using the node alpine image to build the React app
+image: node:alpine
+
+# Announce the URL as per CRA docs
+# https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#advanced-configuration
+variables:
+  PUBLIC_URL: /my-awesome-app
+# Cache node modules - speeds up future builds
+cache:
+  paths:
+    - node_modules
+
+# Name the stages involved in the pipeline
+stages:
+  - deploy
+
+# Job name for gitlab to recognise this results in assets for Gitlab Pages
+# https://docs.gitlab.com/ee/user/project/pages/introduction.html#gitlab-pages-requirements
+pages:
+  stage: deploy
+  script:
+    - npm install # Install all dependencies
+    - npm run build --prod # Build for prod
+    - mv public _public # CRA and gitlab pages both use the public folder. This is only for the build pipeline.
+    - mv build public # Move build files to public dir for Gitlab Pages
+    - cp public/index.html public/404.html # Helps with https://medium.com/@pshrmn/demystifying-single-page-applications-3068d0555d46
+  artifacts:
+    paths:
+      - public # The built files for Gitlab Pages to serve
+  only:
+    - master # Only run on master branch
+</code></pre>
+<p>All ready - let&#39;s push it up to Gitlab to build and deploy.</p>
+<pre><code class="language-bash"># Initialize the repo
+git init
+
+# Stage all the files for commit
+git add .
+
+# Commit the files
+git commit -m &#39;first commit!&#39;
+
+# Push up to gitlab
+git push --set-upstream git@gitlab.com:&lt;YOUR_GITLAB_USERNAME&gt;/$(git rev-parse --show-toplevel | xargs basename).git $(git rev-parse --abbrev-ref HEAD)
+</code></pre>
+<p>Now visit <a href="https://gitlab.com/YOUR_GITLAB_USERNAME/my-awesome-app/pipelines">https://gitlab.com/YOUR_GITLAB_USERNAME/my-awesome-app/pipelines</a></p>
+<p>Once that passes checkout <a href="https://YOUR_GITLAB_USERNAME.gitlab.io/my-awesome-app">https://YOUR_GITLAB_USERNAME.gitlab.io/my-awesome-app</a>.</p>
+<p>Done!</p>
+<!-- References -->
+
+</div>
+      <hr />
+      <div>
+        <a href="https://github.com/olmesm/ohmybuck/issues/new">Comments?</a>
+      </div>
+    </main>
+
+    <script async src="/prismjs.js"></script>
+
+    <script
+      src="https://beamanalytics.b-cdn.net/beam.min.js"
+      data-token="a1492ee0-db67-4533-83e6-3c2352bb0dfc"
+      async
+    ></script>
+  </body>
+</html>

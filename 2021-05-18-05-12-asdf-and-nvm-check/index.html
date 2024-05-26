@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Asdf and Nvm Check | ohmybuck</title>
+    <link rel="stylesheet" href="/pico.min.css" />
+    <link rel="stylesheet" href="/prismjs.css" />
+  </head>
+  <body>
+    <nav class="container">
+      <ul>
+        <li>
+          <a href="/" style="color: var(--h1-color)">ohmybuck</a>
+        </li>
+      </ul>
+      <ul>
+        <li><a href="/">home</a></li>
+        <li><a href="/whoami">whoami</a></li>
+        <li><a href="https://github.com/olmesm/ohmybuck">github</a></li>
+        <li>
+          <a href="https://www.linkedin.com/in/%F0%9F%A6%86-ol-smit-85141387/"
+            >linkedin</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <main class="container">
+      <h1 style="margin-bottom: 0">Asdf and Nvm Check</h1>
+      <small>Updated May 26, 2024<br>Created May 18, 2021</small><br><hr/>
+      <div><p>Compares the node versions set in both nvm and asdf configs.</p>
+<pre><code class="language-js">#! /usr/bin/env node
+const fs = require(&quot;fs&quot;)
+
+const NVM_FILE = &quot;.nvmrc&quot;
+const ASDF_FILE = &quot;.tool-versions&quot;
+
+const nvmFile = fs.readFileSync(NVM_FILE, &quot;utf-8&quot;)
+const asdfFile = fs.readFileSync(ASDF_FILE, &quot;utf-8&quot;)
+
+const capture = (str, exp, group = 1) =&gt; {
+  exp = typeof exp === &quot;string&quot; ? new RegExp(exp) : exp
+  const res = str.match(exp)
+
+  if (res[group]) {
+    return res[group]
+  }
+
+  return undefined
+}
+
+const main = async () =&gt; {
+  try {
+    const nvmVersion = capture(nvmFile, /([0-9\.]+)/)
+    const asdfVersion = capture(asdfFile, /nodejs ([0-9\.]+)/)
+
+    if (nvmVersion !== asdfVersion) {
+      throw new Error(
+        `${NVM_FILE} version: ${nvmVersion} does not appear to match ${ASDF_FILE} version: ${asdfVersion}`
+      )
+    }
+
+    process.exit(0)
+  } catch (error) {
+    console.trace(error)
+    process.exit(1)
+  }
+}
+
+module.exports = main()
+</code></pre>
+<h2 id="quick-setup">Quick Setup</h2>
+<p>Assumes script location <code>scripts/node-tooling-check.js</code></p>
+<pre><code class="language-bash">npm install -D husky
+
+echo &#39;{
+    &quot;hooks&quot;: {
+      &quot;pre-push&quot;: &quot;node scripts/node-tooling-check.js&quot;
+  }
+}
+&#39; &gt; .huskyrc
+</code></pre>
+</div>
+      <hr />
+      <div>
+        <a href="https://github.com/olmesm/ohmybuck/issues/new">Comments?</a>
+      </div>
+    </main>
+
+    <script async src="/prismjs.js"></script>
+
+    <script
+      src="https://beamanalytics.b-cdn.net/beam.min.js"
+      data-token="a1492ee0-db67-4533-83e6-3c2352bb0dfc"
+      async
+    ></script>
+  </body>
+</html>

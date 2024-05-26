@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quick and not-so-dirty CORS proxy | ohmybuck</title>
+    <link rel="stylesheet" href="/pico.min.css" />
+    <link rel="stylesheet" href="/prismjs.css" />
+  </head>
+  <body>
+    <nav class="container">
+      <ul>
+        <li>
+          <a href="/" style="color: var(--h1-color)">ohmybuck</a>
+        </li>
+      </ul>
+      <ul>
+        <li><a href="/">home</a></li>
+        <li><a href="/whoami">whoami</a></li>
+        <li><a href="https://github.com/olmesm/ohmybuck">github</a></li>
+        <li>
+          <a href="https://www.linkedin.com/in/%F0%9F%A6%86-ol-smit-85141387/"
+            >linkedin</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <main class="container">
+      <h1 style="margin-bottom: 0">Quick and not-so-dirty CORS proxy</h1>
+      <small>Updated May 26, 2024<br>Created August 21, 2018</small><br><hr/>
+      <div><p>Late one night I got a slack message from one of my colleagues:</p>
+<p><img src="/images/2018-08-21-quick-and-not-so-dirty-cors-proxy.png" alt="Message: I need help with a proxy"></p>
+<p>It&#39;s a pretty common issue - you&#39;re trying to integrate with another company or 3rd party API and:</p>
+<ul>
+<li>You have a an API key you can&#39;t buildribute to users as it may be a paid service (Think <a href="https://www.loqate.com/">Loquate/ex-Postcode Anywhere</a>)</li>
+<li>The other service hasn&#39;t whitelisted your domain to make calls to it (<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS">CORS</a>)</li>
+</ul>
+<h2 id="the-main-issue">The main issue</h2>
+<p>Sometimes people are bogged down with other work, sysOps is nervous, or even worse slow. This could be due to company process and governance - so not necessarily their fault, but it&#39;s still a blocker. If we don&#39;t have access to a backend, one option is to spin up our own proxy server.</p>
+<p>I&#39;m not the biggest fan of <a href="https://www.heroku.com/">Heroku</a> for use as a production server, however in this case, I can&#39;t think of a better tool for the job.</p>
+<h2 id="the-code">The code</h2>
+<p>Luckily for us, <a href="https://www.walkscore.com/">Walkscore</a> provided a sample script for <a href="https://www.walkscore.com/professional/api-sample-code.php">Making a Server-Side API Request</a>.</p>
+<p>I&#39;ve adapted it below to use environmental variables for the API key, and if you look at the <a href="https://gitlab.com/olmesm/walkscore-heroku-service">Dirty Proxy Repo</a> you&#39;ll see how I deploy it to <a href="https://www.heroku.com/">Heroku</a></p>
+<pre><code class="language-php">&lt;?
+// Sort out our CORS Issues
+header(&quot;Access-Control-Allow-Origin: *&quot;);
+header(&quot;Access-Control-Allow-Headers: X-Requested-With&quot;);
+
+// Function to make a request to the Walkscore API
+function getWalkScore($lat, $lon, $address) {
+  // Get API Key set in the environment varibles
+  $WALKSCORE_API_KEY = getenv(&#39;WALKSCORE_API_KEY&#39;);
+
+  $address=urlencode($address);
+  $url = &quot;http://api.walkscore.com/score?format=json&amp;address=$address&quot;;
+  $url .= &quot;&amp;lat=$lat&amp;lon=$lon&amp;wsapikey=$WALKSCORE_API_KEY&quot;;
+  $str = @file_get_contents($url);
+
+  return $str;
+}
+
+// Get the URL parameters &quot;lat&quot;, &quot;lon&quot;, and &quot;adress&quot;
+$lat = $_GET[&#39;lat&#39;];
+$lon = $_GET[&#39;lon&#39;];
+$address = stripslashes($_GET[&#39;address&#39;]);
+
+$json = getWalkScore($lat,$lon,$address);
+
+echo $json;
+?&gt;
+</code></pre>
+<p><a href="https://gitlab.com/olmesm/walkscore-heroku-service">Dirty Proxy Repo</a></p>
+<!-- References -->
+
+</div>
+      <hr />
+      <div>
+        <a href="https://github.com/olmesm/ohmybuck/issues/new">Comments?</a>
+      </div>
+    </main>
+
+    <script async src="/prismjs.js"></script>
+
+    <script
+      src="https://beamanalytics.b-cdn.net/beam.min.js"
+      data-token="a1492ee0-db67-4533-83e6-3c2352bb0dfc"
+      async
+    ></script>
+  </body>
+</html>

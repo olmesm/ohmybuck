@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Deep Addressing with Lodash | ohmybuck</title>
+    <link rel="stylesheet" href="/pico.min.css" />
+    <link rel="stylesheet" href="/prismjs.css" />
+  </head>
+  <body>
+    <nav class="container">
+      <ul>
+        <li>
+          <a href="/" style="color: var(--h1-color)">ohmybuck</a>
+        </li>
+      </ul>
+      <ul>
+        <li><a href="/">home</a></li>
+        <li><a href="/whoami">whoami</a></li>
+        <li><a href="https://github.com/olmesm/ohmybuck">github</a></li>
+        <li>
+          <a href="https://www.linkedin.com/in/%F0%9F%A6%86-ol-smit-85141387/"
+            >linkedin</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <main class="container">
+      <h1 style="margin-bottom: 0">Deep Addressing with Lodash</h1>
+      <small>Updated May 26, 2024<br>Created May 23, 2021</small><br><hr/>
+      <div><p>This is not efficient but can be used to address objects deep in data structures.</p>
+<pre><code class="language-js">const get = require(&quot;lodash/get&quot;)
+const cloneDeep = require(&quot;lodash/cloneDeep&quot;)
+const set = require(&quot;lodash/set&quot;)
+
+const setNested = (data, dataPath, cb, shouldCreate = false) =&gt;
+  _setNested(cloneDeep(data), dataPath, cb, shouldCreate)
+
+const _setNested = (data, dataPath, cb, shouldCreate = false) =&gt; {
+  if (dataPath.includes(&quot;+&quot;)) {
+    const [first, ...rest] = dataPath.split(/\.*\+\.*/)
+
+    if (first === &quot;&quot;) {
+      return data.map(item =&gt;
+        setNested(item, rest.join(&quot;.+.&quot;), cb, shouldCreate)
+      )
+    }
+
+    const vals = get(data, first)
+
+    if (!Array.isArray(vals)) {
+      return data
+    }
+
+    return set(
+      data,
+      first,
+      vals.map(item =&gt; setNested(item, rest.join(&quot;.+.&quot;), cb, shouldCreate))
+    )
+  }
+
+  if (dataPath === &quot;&quot;) {
+    if (cb instanceof Function) {
+      return cb(data)
+    }
+
+    return cb
+  }
+
+  const val = get(data, dataPath)
+
+  if (typeof val === &quot;undefined&quot; &amp;&amp; !shouldCreate) {
+    return data
+  }
+
+  if (cb instanceof Function) {
+    return set(data, dataPath, cb(val))
+  }
+
+  return set(data, dataPath, cb)
+}
+
+exports.setNested = setNested
+</code></pre>
+<pre><code class="language-js">const { setNested } = require(&quot;./set-nested&quot;)
+
+const simpleObject = { a: { b: { c: 3 } }, x: 2 }
+const simpleArrayObject = [{ name: &quot;john&quot; }, { name: &quot;tony&quot; }]
+const complexObject = {
+  users: [
+    { name: &quot;barney&quot;, age: 36, active: false },
+    { name: &quot;wilma&quot;, age: 32, active: false, skills: [&quot;math&quot;, &quot;science&quot;] },
+    {
+      name: &quot;betty&quot;,
+      age: 37,
+      active: false,
+      friends: [{ name: &quot;wilma&quot;, age: 32 }],
+    },
+    { name: &quot;fred&quot;, age: 40, active: false },
+  ],
+}
+
+test(&quot;allows an update value&quot;, () =&gt; {
+  const result = setNested(complexObject, &quot;users&quot;, 1)
+  expect(result).toStrictEqual({ users: 1 })
+})
+
+test(&quot;allows a function&quot;, () =&gt; {
+  const result = setNested(complexObject, &quot;users&quot;, () =&gt; 2)
+  expect(result).toStrictEqual({ users: 2 })
+})
+
+test(&quot;updates nested addresses&quot;, () =&gt; {
+  const result = setNested(simpleObject, &quot;a.b.c&quot;, 6)
+  expect(result).toStrictEqual({ a: { b: { c: 6 } }, x: 2 })
+})
+
+test(&quot;allows a function with callback value&quot;, () =&gt; {
+  const result = setNested({ a: { b: { c: 3 } } }, &quot;a.b.c&quot;, val =&gt; 2 * val)
+  expect(result).toStrictEqual({ a: { b: { c: 6 } } })
+})
+
+test(&quot;updates nested array addresses&quot;, () =&gt; {
+  const result = setNested(complexObject, &quot;users.+.name&quot;, &quot;john&quot;)
+  expect(result).toStrictEqual({
+    users: [
+      { name: &quot;john&quot;, age: 36, active: false },
+      { name: &quot;john&quot;, age: 32, active: false, skills: [&quot;math&quot;, &quot;science&quot;] },
+      {
+        name: &quot;john&quot;,
+        age: 37,
+        active: false,
+        friends: [{ name: &quot;wilma&quot;, age: 32 }],
+      },
+      { name: &quot;john&quot;, age: 40, active: false },
+    ],
+  })
+})
+
+test(&quot;doesn&#39;t add if update is not set&quot;, () =&gt; {
+  const result = setNested(simpleObject, &quot;users.userName&quot;, &quot;john&quot;)
+  expect(result).toStrictEqual(simpleObject)
+  expect(result.users).not.toBeTruthy()
+})
+
+test(&quot;doesn&#39;t add if update is not set&quot;, () =&gt; {
+  const result = setNested(complexObject, &quot;users.+.userName&quot;, &quot;john&quot;)
+  expect(result).toStrictEqual(complexObject)
+})
+
+test(&quot;add if update is set&quot;, () =&gt; {
+  const result = setNested(simpleObject, &quot;users.userName&quot;, &quot;john&quot;, true)
+  expect(result).toStrictEqual({
+    ...simpleObject,
+    users: { userName: &quot;john&quot; },
+  })
+})
+
+test(&quot;adds if update is true&quot;, () =&gt; {
+  const result = setNested(complexObject, &quot;users.+.userName&quot;, &quot;john&quot;, true)
+  expect(result).toStrictEqual({
+    users: [
+      { userName: &quot;john&quot;, name: &quot;barney&quot;, age: 36, active: false },
+      {
+        userName: &quot;john&quot;,
+        name: &quot;wilma&quot;,
+        age: 32,
+        active: false,
+        skills: [&quot;math&quot;, &quot;science&quot;],
+      },
+      {
+        userName: &quot;john&quot;,
+        name: &quot;betty&quot;,
+        age: 37,
+        active: false,
+        friends: [{ name: &quot;wilma&quot;, age: 32 }],
+      },
+      { userName: &quot;john&quot;, name: &quot;fred&quot;, age: 40, active: false },
+    ],
+  })
+})
+
+test(&quot;allows addressing of array index&quot;, () =&gt; {
+  const result = setNested(simpleArrayObject, &quot;1.name&quot;, &quot;betty&quot;, true)
+
+  expect(result).toStrictEqual([{ name: &quot;john&quot; }, { name: &quot;betty&quot; }])
+})
+
+test(&quot;allows addressing of array index&quot;, () =&gt; {
+  const result = setNested(simpleArrayObject, &quot;+.name&quot;, &quot;betty&quot;)
+
+  expect(result).toStrictEqual([{ name: &quot;betty&quot; }, { name: &quot;betty&quot; }])
+})
+
+test(&quot;doesn&#39;t mutate&quot;, () =&gt; {
+  const clone = JSON.stringify(complexObject)
+  const result = setNested(complexObject, &quot;users&quot;, 2)
+  expect(complexObject).toStrictEqual(JSON.parse(clone))
+  expect(result).toStrictEqual({ users: 2 })
+})
+
+test(&quot;can perform sanitisation&quot;, () =&gt; {
+  const result = setNested(complexObject, &quot;users.+&quot;, val =&gt; {
+    if (val.age &gt;= 37) {
+      return { ...val, active: true }
+    }
+
+    return val
+  })
+
+  expect(result).toStrictEqual({
+    users: [
+      { name: &quot;barney&quot;, age: 36, active: false },
+      { name: &quot;wilma&quot;, age: 32, active: false, skills: [&quot;math&quot;, &quot;science&quot;] },
+      {
+        name: &quot;betty&quot;,
+        age: 37,
+        active: true,
+        friends: [{ name: &quot;wilma&quot;, age: 32 }],
+      },
+      { name: &quot;fred&quot;, age: 40, active: true },
+    ],
+  })
+})
+</code></pre>
+</div>
+      <hr />
+      <div>
+        <a href="https://github.com/olmesm/ohmybuck/issues/new">Comments?</a>
+      </div>
+    </main>
+
+    <script async src="/prismjs.js"></script>
+
+    <script
+      src="https://beamanalytics.b-cdn.net/beam.min.js"
+      data-token="a1492ee0-db67-4533-83e6-3c2352bb0dfc"
+      async
+    ></script>
+  </body>
+</html>

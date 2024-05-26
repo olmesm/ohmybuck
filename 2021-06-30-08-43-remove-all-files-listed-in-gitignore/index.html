@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Remove All Files Listed in Gitignore | ohmybuck</title>
+    <link rel="stylesheet" href="/pico.min.css" />
+    <link rel="stylesheet" href="/prismjs.css" />
+  </head>
+  <body>
+    <nav class="container">
+      <ul>
+        <li>
+          <a href="/" style="color: var(--h1-color)">ohmybuck</a>
+        </li>
+      </ul>
+      <ul>
+        <li><a href="/">home</a></li>
+        <li><a href="/whoami">whoami</a></li>
+        <li><a href="https://github.com/olmesm/ohmybuck">github</a></li>
+        <li>
+          <a href="https://www.linkedin.com/in/%F0%9F%A6%86-ol-smit-85141387/"
+            >linkedin</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <main class="container">
+      <h1 style="margin-bottom: 0">Remove All Files Listed in Gitignore</h1>
+      <small>Updated May 26, 2024<br>Created June 30, 2021</small><br><hr/>
+      <div><p><a href="https://stackoverflow.com/a/36573710">From Stackoverflow</a></p>
+<p>When working with Git, it&#39;s important to keep your repository clean and organized. One way to do this is by using the .gitignore file to exclude files and directories that you don&#39;t want to track. However, sometimes you may have files that are not under version control that you want to remove from your repository. The git clean command is a useful tool that can help you accomplish this task.</p>
+<p>The git clean command is used to recursively remove files that are not under version control. Before using the command, it is highly recommended to do a dry run to see what files will be removed, this can be accomplished by using the -xdn option.</p>
+<pre><code class="language-bash">git clean -xdn
+</code></pre>
+<p>This command will show you a list of all the files that will be removed and will not actually remove any files from your system.</p>
+<p>Once you have reviewed the list and you are sure that you want to remove the files, you can use the -xdf option to execute the command and remove the files.</p>
+<pre><code class="language-bash">git clean -xdf
+</code></pre>
+<p>It&#39;s worth noting that git clean command is a powerful tool and it can be dangerous if you are not sure about what you are doing. It is recommended to be extra careful when using this command and to always do a dry run before you execute it.</p>
+<p>In summary, the git clean command is a useful tool that can help you keep your repository clean and organized by removing files that are not under version control. It&#39;s important to be careful when using the command and to always do a dry run before you execute it.</p>
+</div>
+      <hr />
+      <div>
+        <a href="https://github.com/olmesm/ohmybuck/issues/new">Comments?</a>
+      </div>
+    </main>
+
+    <script async src="/prismjs.js"></script>
+
+    <script
+      src="https://beamanalytics.b-cdn.net/beam.min.js"
+      data-token="a1492ee0-db67-4533-83e6-3c2352bb0dfc"
+      async
+    ></script>
+  </body>
+</html>

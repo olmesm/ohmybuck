@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Virtual Machines | ohmybuck</title>
+    <link rel="stylesheet" href="/pico.min.css" />
+    <link rel="stylesheet" href="/prismjs.css" />
+  </head>
+  <body>
+    <nav class="container">
+      <ul>
+        <li>
+          <a href="/" style="color: var(--h1-color)">ohmybuck</a>
+        </li>
+      </ul>
+      <ul>
+        <li><a href="/">home</a></li>
+        <li><a href="/whoami">whoami</a></li>
+        <li><a href="https://github.com/olmesm/ohmybuck">github</a></li>
+        <li>
+          <a href="https://www.linkedin.com/in/%F0%9F%A6%86-ol-smit-85141387/"
+            >linkedin</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <main class="container">
+      <h1 style="margin-bottom: 0">Virtual Machines</h1>
+      <small>Updated May 26, 2024<br>Created March 20, 2017</small><br><hr/>
+      <div><p>Virtual Machines are super handy. Whether to test a different OS, isolate an environment, or be able to share a workspace with a client or colleague, I think it&#39;s awesome tool to have in your arsenal.</p>
+<p>Being able to deploy a machine quickly also allows you argue the typical &quot;it must be your machine&quot; excuse - whichever side you fall on.</p>
+<p>I would recommend VMWare on Windows and Virtualbox on Linux/OSX.</p>
+<table>
+<thead>
+<tr>
+<th>OS</th>
+<th>VM App</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Windows</td>
+<td><a href="https://my.vmware.com/en/web/vmware/free#desktop_end_user_computing/vmware_workstation_player/12_0">VMWare Workstation Player</a></td>
+</tr>
+<tr>
+<td>OSX</td>
+<td><code>brew cask install virtualbox</code></td>
+</tr>
+</tbody></table>
+<h3 id="create-a-virtual-machine">Create a Virtual Machine</h3>
+<p>It&#39;s generally pretty straight forward:</p>
+<ol>
+<li>Download an ISO of your VM OS eg: <a href="https://www.ubuntu.com/download/alternative-downloads">Ubuntu</a></li>
+<li>Open your virtualisation software - VMWare or Virtualbox.<ul>
+<li>Linux/Mac: can install via <a href="https://brew.sh">homebrew</a> with <code>brew cask install virtualbox</code></li>
+</ul>
+</li>
+<li>Generally I usually set up the following:<ul>
+<li>Ram about 50% of the host machine.</li>
+<li>CPU about 50% of the host machine.</li>
+<li>CPU cores, 2 if a 64 bit ISO, 1 if 32 bit.</li>
+<li>10 gigs for the virtual hard drive.</li>
+</ul>
+</li>
+<li>Follow the remaining prompts and select your downloaded ISO.</li>
+</ol>
+<h3 id="internet-issues">Internet Issues</h3>
+<p>Generally your VM will share your host&#39;s network connection. If you can&#39;t get internet from your host machine, you may need to change the network settings of your VM between NAT and bridged mode.</p>
+<h3 id="virtual-machiness-corrupt-easily">Virtual Machines&#39;s corrupt easily</h3>
+<p>Don&#39;t let your machine sleep, hibernate, or power down without shutting down the VM. I&#39;ve corrupted about three VM&#39;s on both Windows and Mac, with VMWare and Virtualbox respectively, by allowing the host PC to sleep. I&#39;ve been working with VM&#39;s for around 3 years in a commercial environment and these have been the only major issues I&#39;ve had with VM&#39;s.</p>
+<p>I would also recommend always running the host machine from a fresh boot. A few times I had non-fatal issues with Windows and VMWare not booting the VM properly, which was normally resolved by rebooting.</p>
+</div>
+      <hr />
+      <div>
+        <a href="https://github.com/olmesm/ohmybuck/issues/new">Comments?</a>
+      </div>
+    </main>
+
+    <script async src="/prismjs.js"></script>
+
+    <script
+      src="https://beamanalytics.b-cdn.net/beam.min.js"
+      data-token="a1492ee0-db67-4533-83e6-3c2352bb0dfc"
+      async
+    ></script>
+  </body>
+</html>

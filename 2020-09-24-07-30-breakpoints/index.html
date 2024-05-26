@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Breakpoints | ohmybuck</title>
+    <link rel="stylesheet" href="/pico.min.css" />
+    <link rel="stylesheet" href="/prismjs.css" />
+  </head>
+  <body>
+    <nav class="container">
+      <ul>
+        <li>
+          <a href="/" style="color: var(--h1-color)">ohmybuck</a>
+        </li>
+      </ul>
+      <ul>
+        <li><a href="/">home</a></li>
+        <li><a href="/whoami">whoami</a></li>
+        <li><a href="https://github.com/olmesm/ohmybuck">github</a></li>
+        <li>
+          <a href="https://www.linkedin.com/in/%F0%9F%A6%86-ol-smit-85141387/"
+            >linkedin</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <main class="container">
+      <h1 style="margin-bottom: 0">Breakpoints</h1>
+      <small>Updated May 26, 2024<br>Created September 24, 2020</small><br><hr/>
+      <div><pre><code class="language-js">const size = {
+  mobileS: &quot;320px&quot;,
+  mobileM: &quot;375px&quot;,
+  mobileL: &quot;425px&quot;,
+  mobileXL: &quot;850px&quot;,
+  mobileX: &quot;813px&quot;,
+  tablet: &quot;769px&quot;,
+  laptop: &quot;1025px&quot;,
+  laptopL: &quot;1440px&quot;,
+  desktopS: &quot;1336px&quot;,
+  desktopHd: &quot;1900px&quot;,
+  desktop: &quot;2500px&quot;,
+  width960px: &quot;960px&quot;,
+  width450px: &quot;450px&quot;
+};
+export default {
+  mobileS: `(min-width: ${size.mobileS})`,
+  mobileM: `(min-width: ${size.mobileM})`,
+  mobileL: `(min-width: ${size.mobileL})`,
+  mobileX: `(min-width: ${size.mobileX})`,
+  maxMobile: `(max-width: ${size.mobileM})`,
+  mobileXL: `(min-width: ${size.mobileXL})`,
+  maxMobileXL: `screen and (min-width : ${size.tablet}) and (max-width : ${size.mobileXL})`,
+  tablet: `(min-width: ${size.tablet})`,
+  laptop: `(min-width: ${size.laptop})`,
+  maxLaptop: `(max-width: ${size.laptop})`,
+  laptopL: `(min-width: ${size.laptopL})`,
+  desktop: `(min-width: ${size.desktop})`,
+  desktopS: `(min-width: ${size.desktopS})`,
+  desktopHd: `(min-width: ${size.desktopHd})`,
+  sizeTablet: `${size.tablet}`,
+  minWidth960px: `(min-width: ${size.width960px})`,
+  maxWidth450px: `(max-width: ${size.width450px})`
+};```
+</code></pre>
+</div>
+      <hr />
+      <div>
+        <a href="https://github.com/olmesm/ohmybuck/issues/new">Comments?</a>
+      </div>
+    </main>
+
+    <script async src="/prismjs.js"></script>
+
+    <script
+      src="https://beamanalytics.b-cdn.net/beam.min.js"
+      data-token="a1492ee0-db67-4533-83e6-3c2352bb0dfc"
+      async
+    ></script>
+  </body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Convert Relative to Absolute Paths Nodejs | ohmybuck</title>
+    <link rel="stylesheet" href="/pico.min.css" />
+    <link rel="stylesheet" href="/prismjs.css" />
+  </head>
+  <body>
+    <nav class="container">
+      <ul>
+        <li>
+          <a href="/" style="color: var(--h1-color)">ohmybuck</a>
+        </li>
+      </ul>
+      <ul>
+        <li><a href="/">home</a></li>
+        <li><a href="/whoami">whoami</a></li>
+        <li><a href="https://github.com/olmesm/ohmybuck">github</a></li>
+        <li>
+          <a href="https://www.linkedin.com/in/%F0%9F%A6%86-ol-smit-85141387/"
+            >linkedin</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <main class="container">
+      <h1 style="margin-bottom: 0">Convert Relative to Absolute Paths Nodejs</h1>
+      <small>Updated May 26, 2024<br>Created August 30, 2021</small><br><hr/>
+      <div><pre><code class="language-js">const path = require(&quot;path&quot;)
+const replace = require(&quot;replace-in-file&quot;)
+
+const PREFIX = process.cwd() + path.sep
+
+const optionsFrom = {
+  files: [
+    path.join(process.cwd(), &quot;src/**/*.{ts,js}&quot;),
+    path.join(process.cwd(), &quot;tests/**/*.{ts,js}&quot;),
+  ],
+  from: /(from [&quot;|&#39;])(\..*)([&quot;|&#39;];$)/gm,
+  to: (...args) =&gt; {
+    const actualfilePath = args.slice(-1)[0]
+    const fileDir = args
+      .slice(-1)[0]
+      .replace(path.sep + path.basename(args.slice(-1)[0]), &quot;&quot;)
+    const leadFrom = args[1]
+    const relPath = args[2]
+    const closer = args[3]
+
+    const absolutePath = path.resolve(fileDir, relPath).replace(PREFIX, &quot;&quot;)
+
+    return `${leadFrom}${absolutePath}${closer}`
+  },
+}
+
+const optionsRequire = {
+  files: [
+    path.join(process.cwd(), &quot;src/**/*.{ts,js}&quot;),
+    path.join(process.cwd(), &quot;tests/**/*.{ts,js}&quot;),
+  ],
+  from: /(require\([&quot;|&#39;])(\..*)([&quot;|&#39;]\);$)/gm,
+  to: (...args) =&gt; {
+    const actualfilePath = args.slice(-1)[0]
+    const fileDir = args
+      .slice(-1)[0]
+      .replace(path.sep + path.basename(args.slice(-1)[0]), &quot;&quot;)
+    const leadFrom = args[1]
+    const relPath = args[2]
+    const closer = args[3]
+
+    const absolutePath = path.resolve(fileDir, relPath).replace(PREFIX, &quot;&quot;)
+
+    return `${leadFrom}${absolutePath}${closer}`
+  },
+}
+
+const optionsMock = {
+  files: [
+    path.join(process.cwd(), &quot;src/**/*.{ts,js}&quot;),
+    path.join(process.cwd(), &quot;tests/**/*.{ts,js}&quot;),
+  ],
+  from: /(mock\([&quot;|&#39;])(\..*)([&quot;|&#39;],)/gm,
+  to: (...args) =&gt; {
+    const actualfilePath = args.slice(-1)[0]
+    const fileDir = args
+      .slice(-1)[0]
+      .replace(path.sep + path.basename(args.slice(-1)[0]), &quot;&quot;)
+    const leadFrom = args[1]
+    const relPath = args[2]
+    const closer = args[3]
+
+    const absolutePath = path.resolve(fileDir, relPath).replace(PREFIX, &quot;&quot;)
+
+    return `${leadFrom}${absolutePath}${closer}`
+  },
+}
+
+const main = async () =&gt; {
+  try {
+    const resultsFrom = await replace(optionsFrom)
+    console.log(&quot;Replacement results:&quot;, resultsFrom)
+    const resultsRequire = await replace(optionsRequire)
+    console.log(&quot;Replacement results:&quot;, resultsRequire)
+    const resultsMock = await replace(optionsMock)
+    console.log(&quot;Replacement results:&quot;, resultsMock)
+
+    process.exit(0)
+  } catch (error) {
+    console.trace(error)
+    process.exit(1)
+  }
+}
+
+main()
+</code></pre>
+</div>
+      <hr />
+      <div>
+        <a href="https://github.com/olmesm/ohmybuck/issues/new">Comments?</a>
+      </div>
+    </main>
+
+    <script async src="/prismjs.js"></script>
+
+    <script
+      src="https://beamanalytics.b-cdn.net/beam.min.js"
+      data-token="a1492ee0-db67-4533-83e6-3c2352bb0dfc"
+      async
+    ></script>
+  </body>
+</html>

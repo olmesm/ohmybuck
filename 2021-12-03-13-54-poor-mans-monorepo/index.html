@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Poor Mans Monorepo | ohmybuck</title>
+    <link rel="stylesheet" href="/pico.min.css" />
+    <link rel="stylesheet" href="/prismjs.css" />
+  </head>
+  <body>
+    <nav class="container">
+      <ul>
+        <li>
+          <a href="/" style="color: var(--h1-color)">ohmybuck</a>
+        </li>
+      </ul>
+      <ul>
+        <li><a href="/">home</a></li>
+        <li><a href="/whoami">whoami</a></li>
+        <li><a href="https://github.com/olmesm/ohmybuck">github</a></li>
+        <li>
+          <a href="https://www.linkedin.com/in/%F0%9F%A6%86-ol-smit-85141387/"
+            >linkedin</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <main class="container">
+      <h1 style="margin-bottom: 0">Poor Mans Monorepo</h1>
+      <small>Updated May 26, 2024<br>Created December 3, 2021</small><br><hr/>
+      <div><p>Shared files and utilities can be set in the <a href="components/_common">@org/common</a> package. This will be consumed in the install process and there is no capability to version the package - any breaking changes will require updates in the consuming components.</p>
+<p><strong>Note that any updates to common will require a local re-build.</strong> Build pipelines implement this already.</p>
+<h2 id="example-project-structure">Example Project Structure</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>_common</td>
+<td>libs and types</td>
+<td>Shared utils and types</td>
+</tr>
+<tr>
+<td>cms</td>
+<td>app</td>
+<td>Example CMS which consumes <code>_common</code></td>
+</tr>
+<tr>
+<td>web</td>
+<td>app</td>
+<td>Example website which consumes <code>_common</code></td>
+</tr>
+</tbody></table>
+<pre><code>.
+├── README.md
+└── components
+    ├── _common
+    │   ├── package-lock.json
+    │   ├── package.json
+    │   ├── src
+    │   │   └── models.ts
+    │   └── tsconfig.json
+    ├── cms
+    │   ├── package-lock.json
+    │   ├── package.json
+    │   ├── src
+    │   │   └── index.tsx
+    │   └── tsconfig.json
+    └── web
+        ├── package-lock.json
+        ├── package.json
+        ├── src
+        │   └── index.tsx
+        └── tsconfig.json
+</code></pre>
+<h3 id="suggested-packagejson">Suggested package.json</h3>
+<p>Use postinstall to compile the ts files when dependencies are being installed.</p>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;@org/common&quot;,
+  &quot;private&quot;: true,
+  &quot;version&quot;: &quot;0.0.1&quot;,
+  &quot;main&quot;: &quot;lib&quot;,
+  &quot;types&quot;: &quot;lib&quot;,
+  &quot;files&quot;: [
+    &quot;lib/*&quot;
+  ],
+  &quot;scripts&quot;: {
+    &quot;prepostinstall&quot;: &quot;echo &#39;Uses `--no-save typescript` to prevent bundling typescript as a dependency. Dont use this for published packages.&#39; &amp;&amp; npm install --no-save typescript&quot;,
+    &quot;postinstall&quot;: &quot;npm run build&quot;,
+    &quot;build&quot;: &quot;tsc --project tsconfig.json&quot;
+  }
+}
+</code></pre>
+<h3 id="suggested-tsconfigjson">Suggested tsconfig.json</h3>
+<pre><code class="language-json">{
+  &quot;compilerOptions&quot;: {
+    &quot;target&quot;: &quot;esnext&quot;,
+    &quot;lib&quot;: [&quot;esnext&quot;],
+    &quot;allowJs&quot;: true,
+    &quot;skipLibCheck&quot;: true,
+    &quot;esModuleInterop&quot;: true,
+    &quot;allowSyntheticDefaultImports&quot;: true,
+    &quot;strict&quot;: true,
+    &quot;forceConsistentCasingInFileNames&quot;: true,
+    &quot;noFallthroughCasesInSwitch&quot;: true,
+    &quot;module&quot;: &quot;esnext&quot;,
+    &quot;moduleResolution&quot;: &quot;node&quot;,
+    &quot;resolveJsonModule&quot;: true,
+    &quot;isolatedModules&quot;: true,
+    &quot;declaration&quot;: true,
+    &quot;outDir&quot;: &quot;lib&quot;
+  },
+  &quot;include&quot;: [&quot;src&quot;]
+}
+</code></pre>
+<h2 id="suggested-readme-additions-or-workflow">Suggested Readme additions or Workflow</h2>
+<pre><code class="language-bash"># Rebuild from the root
+npm --prefix components/_common install
+
+# Rebuild from a components directory
+npm --prefix ../_common install
+
+# Installing in a component as `@org/common`
+npm install ../_common
+
+# Run component script
+npm --prefix components/cms &lt;npm-script&gt;
+npm --prefix components/web &lt;npm-script&gt;
+</code></pre>
+</div>
+      <hr />
+      <div>
+        <a href="https://github.com/olmesm/ohmybuck/issues/new">Comments?</a>
+      </div>
+    </main>
+
+    <script async src="/prismjs.js"></script>
+
+    <script
+      src="https://beamanalytics.b-cdn.net/beam.min.js"
+      data-token="a1492ee0-db67-4533-83e6-3c2352bb0dfc"
+      async
+    ></script>
+  </body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Performing a DNS Migration with Reduced Risk | ohmybuck</title>
+    <link rel="stylesheet" href="/pico.min.css" />
+    <link rel="stylesheet" href="/prismjs.css" />
+  </head>
+  <body>
+    <nav class="container">
+      <ul>
+        <li>
+          <a href="/" style="color: var(--h1-color)">ohmybuck</a>
+        </li>
+      </ul>
+      <ul>
+        <li><a href="/">home</a></li>
+        <li><a href="/whoami">whoami</a></li>
+        <li><a href="https://github.com/olmesm/ohmybuck">github</a></li>
+        <li>
+          <a href="https://www.linkedin.com/in/%F0%9F%A6%86-ol-smit-85141387/"
+            >linkedin</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <main class="container">
+      <h1 style="margin-bottom: 0">Performing a DNS Migration with Reduced Risk</h1>
+      <small>Updated May 26, 2024<br>Created March 24, 2022</small><br><hr/>
+      <div><p>Read through this post fully before getting started. Plan 2 days minimum to complete all the steps with the least amount of risk and stress.</p>
+<p>DNS Migrations can be stressful for mulitple services and although careful planning and preparation can mitigate mosts risks, issues do occur and should be planned for.</p>
+<h2 id="pre-migration-testing">Pre-Migration Testing</h2>
+<p>This is to reduce the errors in the DNS migration. Test as much as possible locally.</p>
+<h4 id="tools">Tools</h4>
+<ul>
+<li>Any browser</li>
+<li><a href="https://swh.app/">Switchhosts</a> for easy and consistent hosts file management</li>
+<li><a href="https://linux.die.net/man/8/ping">ping</a> (already installed)</li>
+<li><a href="https://hoppscotch.io">hoppscotch.io</a> / postman</li>
+<li><a href="https://curl.se/docs/manpage.html">curl</a></li>
+</ul>
+<h4 id="steps">Steps</h4>
+<ol>
+<li><p>Setup the new production server. Note any routes or APIs to be tested.</p>
+</li>
+<li><p>Get the IP address of the new server. This can be achieved with <a href="https://linux.die.net/man/8/ping">ping</a>.</p>
+<pre><code class="language-bash">ping example.com
+</code></pre>
+</li>
+<li><p>Optionally, create a backup of your existing hosts file.</p>
+<pre><code class="language-bash">sudo cp /etc/hosts /etc/hosts.backup-$(date &#39;+%Y-%m-%d-%Hh%Mm&#39;)
+</code></pre>
+</li>
+<li><p>Append to your hosts file using either <a href="https://swh.app/">Switchhosts</a> or <a href="https://pagely.com/kb/en/edit-hosts-file-wordpress/">manually</a></p>
+</li>
+<li><p><a href="https://phoenixnap.com/kb/how-to-flush-dns-cache">Flush local DNS cache</a>.</p>
+<pre><code class="language-bash">sudo killall -HUP mDNSResponder &amp;&amp; echo &quot;done&quot;
+</code></pre>
+</li>
+<li><p>Test the site with your browser. If this doesnt work as expected continue with the next step to debug.</p>
+</li>
+<li><p>Test API(s) with <a href="https://hoppscotch.io">hoppscotch.io</a> / postman (Start building up a collection of the endpoints for testing if you havent already). Debugging may need to a <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Host">host header</a> added to the request.</p>
+</li>
+<li><p>Check the SSL certificate being issued covers the expected domain. ie if our final domain is example.com, the SSL certificate needs to specify that (not a default AWS domain)</p>
+<pre><code class="language-bash"># From Stackoverflow https://stackoverflow.com/a/34812039
+curl --insecure -vvI https://www.example.com 2&gt;&amp;1 | awk &#39;BEGIN { cert=0 } /^\* SSL connection/ { cert=1 } /^\*/ { if (cert) print }&#39;
+</code></pre>
+</li>
+</ol>
+<h2 id="pre-day-planning">Pre-Day Planning</h2>
+<ol>
+<li>Look at analytics and advise the client when the best time would be. Plan to experience downtime and you may need to inform users. <a href="https://shortcut.com/blog/dont-deploy-on-frida-3-other-unwritten-rules-of-software-engineering">Prefer early mornings</a> or <a href="https://medium.com/openclassrooms-product-design-and-engineering/do-not-deploy-on-friday-92b1b46ebfe6">early in the week</a>. This is a gateway to the clients system and regardless of planning, changes will carry risk.</li>
+<li>Plan a brief session with the product owner, ideally two technical members who will be performing the DNS migration, and invite the client/stakeholder for transparency.</li>
+<li>Get access to the production DNS host or inform the client that a team member with access will need to attend the briefing call.</li>
+<li><a href="https://answers.netlify.com/t/support-guide-minimal-downtime-for-a-live-site-dns-migration/141">Reduce the DNS TTL</a> for minimal downtime.</li>
+<li>Schedule 3 sessions with the client for the migration day. At least 30mins each, and at least 2hrs apart. The sessions will be for rollout (±5mins) &amp; testing (±10mins - adjust as needed), and if any issues, rollback (±5mins). The planned gaps are for debugging and making appropriate changes to code and systems before the next attempt.</li>
+<li>Discuss and agree with the client the bug triaging process. See this <a href="/2022-03-22-14-06-github-issue-template#triaging-table">triaging table</a> as a starting point.</li>
+</ol>
+<h2 id="rollout-process">Rollout Process</h2>
+<h4 id="tools-1">Tools</h4>
+<ul>
+<li>Read the DNS host documentation and think through the steps.</li>
+<li><a href="https://dnschecker.org/">dnschecker</a></li>
+<li><a href="https://developers.google.com/speed/public-dns/cache">Flush Cache</a></li>
+<li><a href="https://www.opera.com/features/free-vpn">Opera Browser</a> or an equivalent browser and VPN</li>
+<li><a href="https://hoppscotch.io">hoppscotch.io</a> / postman</li>
+</ul>
+<h4 id="steps-1">Steps</h4>
+<ol>
+<li><p>Ensure all host files have been restored from prior testing.</p>
+</li>
+<li><p><a href="https://phoenixnap.com/kb/how-to-flush-dns-cache">Flush local DNS cache</a>.</p>
+<pre><code class="language-bash">sudo killall -HUP mDNSResponder &amp;&amp; echo &quot;done&quot;
+</code></pre>
+</li>
+<li><p>Talk through the steps and the plan. Invite all relevant parties and stakeholders, but set the precedent its for transparency and that not to add pressure. Acknowledge any previously failed attempts, the fixes that have been implemented, and the next steps.</p>
+</li>
+<li><p>Create a backup of the values you plan to change and store then in a shared location. Consider doing an export via the existing provider. Be aware nameserver transfers will require more records to be moved.</p>
+</li>
+<li><p>Update the DNS values in the DNS hosting provider.</p>
+</li>
+<li><p><a href="https://developers.google.com/speed/public-dns/cache">Flush Public Cache</a>.</p>
+</li>
+<li><p>Open the page via VPN in an Opera incognito window.</p>
+</li>
+<li><p>Ensure there are no <a href="https://www.netlify.com/blog/2021/04/06/migrating-dns-for-a-production-site-we-made-you-a-site-migration-checklist/">unexpected SSL issues</a>.</p>
+</li>
+<li><p>Test the routes and APIs previously noted. Run any Hoppscotch collections, e2e test suites, or a smoke tests.</p>
+</li>
+<li><p>If there are any issues note them down. Proceed to gather as much information as possible. Aim to test the whole system - consider other paths around the failiures to see if there are other areas overlooked. ie homepage may not work but API&#39;s do.</p>
+</li>
+<li><p>Assess if the errors experienced are critical, as per <a href="/2022-03-22-14-06-github-issue-template#triaging-table">triage table</a>.</p>
+</li>
+<li><p>Move to <a href="#rollback-process">Rollback Process</a> if needed.</p>
+</li>
+<li><p>Use <a href="https://dnschecker.org/">dnschecker</a> to check if propogation has finished.</p>
+</li>
+<li><p>Write out and send a report with the results, steps followed, errors experienced, and next steps.</p>
+</li>
+<li><p>If successful, increase the <a href="https://answers.netlify.com/t/support-guide-minimal-downtime-for-a-live-site-dns-migration/141">DNS TTL</a>.</p>
+</li>
+</ol>
+<h2 id="rollback-process">Rollback Process</h2>
+<h4 id="tools-2">Tools</h4>
+<p>As per <a href="#rollout-process">rollout process</a>.</p>
+<h4 id="steps-2">Steps</h4>
+<ol>
+<li><strong>Most importantly;</strong> if there are any issues note them down. Proceed to gather as much information as possible. Aim to test the whole system - consider other paths around the failiures to see if there are other areas overlooked. ie homepage may not work but API&#39;s do.</li>
+<li>Update the DNS values in the DNS hosting provider to the original values.</li>
+<li><a href="https://developers.google.com/speed/public-dns/cache">Flush Public Cache</a>.</li>
+<li>Open the page via VPN in an Opera incognito window.</li>
+<li>Ensure there are no <a href="https://www.netlify.com/blog/2021/04/06/migrating-dns-for-a-production-site-we-made-you-a-site-migration-checklist/">unexpected SSL issues</a>.</li>
+<li>Test the routes and APIs previously noted. Run any Hoppscotch collections, e2e test suites, or a smoke tests.</li>
+<li><a href="https://developers.google.com/speed/public-dns/cache">Flush Public Cache</a>.</li>
+<li>Use <a href="https://dnschecker.org/">dnschecker</a> to check if propogation has finished.</li>
+<li>Write out and send a report with the results, steps followed, errors experienced, and next steps.</li>
+</ol>
+<h2 id="further-info">Further Info</h2>
+<ul>
+<li><a href="https://kinsta.com/knowledgebase/what-is-a-nameserver/">What is a Nameserver</a></li>
+<li><a href="https://www.netlify.com/blog/2021/04/06/migrating-dns-for-a-production-site-we-made-you-a-site-migration-checklist/">Netlify site migration checklist</a></li>
+</ul>
+<h2 id="further-tools">Further Tools</h2>
+<ul>
+<li><a href="https://www.cloudflare.com/en-gb/dns/">Cloudflare DNS</a></li>
+<li><a href="https://www.fortinet.com/resources/cyberglossary/traceroutes">Traceroute</a> for figuring out the routing hops data has to go through.</li>
+<li><a href="https://toolbox.googleapps.com/apps/dig/">Google Admin Toolbox - Dig</a> for DNS lookup by querying name servers.</li>
+<li><a href="https://www.hostinger.co.uk/tutorials/how-to-use-the-dig-command-in-linux/">dig</a> as above, but locally run.</li>
+<li><a href="https://www.nginx.com/blog/creating-nginx-rewrite-rules/">Nginx for host rewrite</a></li>
+</ul>
+</div>
+      <hr />
+      <div>
+        <a href="https://github.com/olmesm/ohmybuck/issues/new">Comments?</a>
+      </div>
+    </main>
+
+    <script async src="/prismjs.js"></script>
+
+    <script
+      src="https://beamanalytics.b-cdn.net/beam.min.js"
+      data-token="a1492ee0-db67-4533-83e6-3c2352bb0dfc"
+      async
+    ></script>
+  </body>
+</html>

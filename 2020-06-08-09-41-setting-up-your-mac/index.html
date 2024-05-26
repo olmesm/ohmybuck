@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Setting Up Your Mac | ohmybuck</title>
+    <link rel="stylesheet" href="/pico.min.css" />
+    <link rel="stylesheet" href="/prismjs.css" />
+  </head>
+  <body>
+    <nav class="container">
+      <ul>
+        <li>
+          <a href="/" style="color: var(--h1-color)">ohmybuck</a>
+        </li>
+      </ul>
+      <ul>
+        <li><a href="/">home</a></li>
+        <li><a href="/whoami">whoami</a></li>
+        <li><a href="https://github.com/olmesm/ohmybuck">github</a></li>
+        <li>
+          <a href="https://www.linkedin.com/in/%F0%9F%A6%86-ol-smit-85141387/"
+            >linkedin</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <main class="container">
+      <h1 style="margin-bottom: 0">Setting Up Your Mac</h1>
+      <small>Updated May 26, 2024<br>Created June 8, 2020</small><br><hr/>
+      <div><p>A guide to mac setup with a focus on enhancing existing/normal workflows. Tooling and setup has a focus on ease of setup and keeping an experience that isn&#39;t too far from OS defaults. This could potentially be scripted, but has been left as a set of manual tasks so that engineers can pick, choose, and understand what they&#39;re doing.</p>
+<h2 id="what-this-means">What this means</h2>
+<ul>
+<li><strong>Do not</strong> install Google Chrome or Slack via website installers.</li>
+<li><strong>Do not</strong> install database engines via homebrew or website installers.</li>
+<li><strong>Do not</strong> install Node.js, Python, Ruby, Terraform, Postgres, etc via homebrew or website installers.</li>
+<li><strong>Do</strong> rely on package managers as much as possible (using homebrew and asdf).</li>
+<li><strong>Do</strong> create an environment which is not bound to any runtime (using asdf).</li>
+<li><strong>Do</strong> create an easy, quick, and replicatable setup.</li>
+<li><strong>Do</strong> use mac defaults as much as possible.</li>
+</ul>
+<p>Professional engineers need to ensure a consistent system for development and running applications. Running systems often use containers for ensuring consistency, but for local development containers and virtualisation isn&#39;t always a desired or efficient option.</p>
+<blockquote>
+
+<h2 id="the-problem">The Problem</h2>
+<p>It’s likely you’ll have to work on different projects which use different versions of tools. For example you might be working on a Terraform 0.11 project today and a Terraform 0.13 project tomorrow. To make things worse, that Terraform 0.11 project might need Terragrunt 0.21, while the Terraform 0.13 project might need Terragrunt 0.26 (contrived example, I know).</p>
+<p>There are a few ways to handle this. You could version the tools themselves (e.g. terraform0.11.. You can set up symlinks and have a script which flips them around. You can have a env file in each project you source. You could also use something like direnv.</p>
+<p>There are tools like tfenv which set up Terraform on a per directory basis which can partially solve this. There are also tools like rbenv and pyenv which solve for Ruby and Python respectively. One problem is they all require separate set up and configuration, which can get old. Some don’t even have automatic switching mechanisms, and require more tools.</p>
+<h2 id="a-solution-asdf">A Solution: asdf</h2>
+<p>asdf is a meta version manager, it manages other version managers (tools like pyenv).</p>
+<p>I like it because you install and configure it once and from then on you can use .tool-versions files in your projects to automatically switch (and optionally install) tool versions.</p>
+ <footer><cite> - <a href="https://www.twoistoomany.com/blog/2020/11/23/how-i-work-asdf/">Two is Too Many</a></cite></footer>
+
+</blockquote>
+
+<p>Tools like <a href="https://brew.sh">Homebrew</a> for desktop and terminal applications and <a href="https://asdf-vm.com">asdf</a> for managing runtimes, enables professionals this consistency and reproducibility.</p>
+<h3 id="asdf"><a href="https://asdf-vm.com">asdf</a></h3>
+<blockquote>
+<p>Manage multiple runtime versions with a single CLI tool, extendable via plugins - docs at asdf-vm.com. asdf is a CLI tool that can manage multiple language runtime versions on a per-project basis. It is like gvm, nvm, rbenv &amp; pyenv (and more) all in one! Simply install your language&#39;s plugin!</p>
+</blockquote>
+<ul>
+<li><a href="https://github.com/asdf-vm/asdf-plugins#plugin-list">Available plugins</a></li>
+<li><a href="https://github.com/asdf-vm/asdf#why-use-asdf">Why use asdf?</a></li>
+</ul>
+<h3 id="homebrew"><a href="https://brew.sh">Homebrew</a></h3>
+<blockquote>
+<p>Homebrew is the easiest and most flexible way to install the UNIX tools Apple didn’t include with macOS. It can also install software not packaged for your Linux distribution to your home directory without requiring sudo.</p>
+</blockquote>
+<ul>
+<li><a href="https://formulae.brew.sh/cask/">Available Casks</a></li>
+<li><a href="https://formulae.brew.sh/formula/">Available Formulaes</a></li>
+<li><a href="https://docs.brew.sh/Manpage">Homebrew Documentation</a></li>
+</ul>
+<p><strong>As a general rule of thumb, if available in <a href="https://asdf-vm.com">asdf</a> and <a href="https://brew.sh">homebrew</a> prefer to install package from <a href="https://asdf-vm.com">asdf</a></strong>. Database engines should be run locally via Docker.</p>
+<hr>
+<ol>
+<li><p>Open the terminal app - we&#39;ll install iterm shortly.</p>
+</li>
+<li><p>Install Homebrew</p>
+<p>From <a href="https://brew.sh">Homebrew</a> - make sure to follow any additional instructions in the console.</p>
+<pre><code class="language-bash">/bin/bash -c &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)&quot;
+</code></pre>
+</li>
+<li><p>Add to profile</p>
+<pre><code class="language-bash">export BREW_LOC=$(which brew)
+echo &quot;eval \&quot;\$($BREW_LOC shellenv)\&quot;&quot; &gt;&gt; ~/.zprofile
+eval &quot;$BREW_LOC shellenv&quot; || echo &#39;Test if `brew --version` works. If not, restart the your terminal and continue.&#39;
+</code></pre>
+</li>
+<li><p>Install git, ZSH tools, and shell completions</p>
+<pre><code class="language-bash">brew install wget zsh-completions git vim direnv \
+  &amp;&amp; brew install --cask iterm2
+</code></pre>
+</li>
+<li><p>Setup <a href="https://direnv.net/">direnv</a></p>
+<pre><code class="language-bash">mkdir -p ~/.config/direnv
+echo &quot;[global]
+load_dotenv = true
+&quot; &gt; ~/.config/direnv/direnv.toml
+</code></pre>
+</li>
+<li><p>Setup git</p>
+<p>It is fine to use your personal github, but use your company email and <a href="https://github.com/settings/emails">link it to your account</a>.</p>
+<pre><code class="language-bash">git config --global user.name &quot;... ...&quot;
+git config --global user.email &quot;...@...&quot;
+git config --global pull.rebase false
+git config --global init.defaultBranch main
+</code></pre>
+</li>
+<li><p>Git alias&#39; are setup by default with zsh, but this is a handy graph display of commits <em>you may</em> want to setup</p>
+<pre><code class="language-bash">echo &quot;alias git-graph=\&quot;git log --oneline --graph --decorate\&quot;&quot; &gt;&gt; ~/.zshrc
+</code></pre>
+</li>
+<li><p>Setup Rosetta</p>
+<p>This is for compatibility of existing x86 applications with the M1 chipset.</p>
+<pre><code class="language-bash">if [[ `sysctl -n machdep.cpu.brand_string` == *&#39;Apple M1&#39;* ]]; then
+# Mac M1s different arch workaround.
+  softwareupdate --install-rosetta
+fi
+</code></pre>
+</li>
+<li><p>Install <a href="https://github.com/ohmyzsh/ohmyzsh">oh-my-zsh</a></p>
+<p>Allows installing plugins for zsh terminals such as type completion.</p>
+<pre><code class="language-bash">sh -c &quot;$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&quot;
+</code></pre>
+</li>
+<li><p>Close all all terminals and open iterm</p>
+<p><a href="https://iterm2.com/features.html">Iterm is more feature rich</a> than the standard mac terminal app.</p>
+</li>
+<li><p>Apply keybindings for iterm and increase window memory</p>
+<ul>
+<li><p>Open iTerm2</p>
+</li>
+<li><p>Open iTerm2 &gt; Preferences or &quot;⌘&quot; + &quot;,&quot;</p>
+</li>
+<li><p>Profiles &gt; Terminal &gt; Scrollback Lines: 10,000
+<img src="/images/screenshot_2022_02_21_at_11_13_49.png" alt=""></p>
+</li>
+<li><p>Profiles &gt; Keys &gt; Key Mappings &gt; Presets &gt; Natural Text Editing &gt; &quot;Remove&quot;
+<img src="/images/screenshot_2022_02_21_at_11_14_04.png" alt=""></p>
+</li>
+</ul>
+</li>
+<li><p>Change oh-my-zsh to include full path</p>
+<p>Default oh-my-zsh would show the directory <code>/usr/my-name/projects/client/app</code> path as <code>app</code>. The below will backup the default themeand then setup to show the path as <code>~/projects/client/app</code>.</p>
+<pre><code class="language-bash">ZSH_THEME=~/.oh-my-zsh/themes/ollyrussell.zsh-theme
+
+cp ~/.oh-my-zsh/themes/robbyrussell.zsh-theme $ZSH_THEME
+find $ZSH_THEME -type f -exec sed -i &#39;&#39; -e &#39;s|%c%|%~%|g&#39; {} \;
+find ~/.zshrc -type f -exec sed -i &#39;&#39; -e &#39;s|ZSH_THEME=&quot;robbyrussell&quot;|ZSH_THEME=&quot;ollyrussell&quot;|g&#39; {} \;
+</code></pre>
+</li>
+<li><p>Setup nodejs with <a href="https://asdf-vm.com">asdf</a> for runtime management. Also <a href="https://github.com/asdf-vm/asdf-nodejs#nvmrc-and-node-version-support">setup compatibility with nvm</a> for easy migrations (Note #1), and <a href="https://yarnpkg.com/">yarn</a>, <a href="https://www.npmjs.com/package/ipsum-cli">ipsum</a> and <a href="https://github.com/antfu/ni">ni</a> to <a href="https://github.com/asdf-vm/asdf-nodejs#default-npm-packages">auto-install alongside new node installations</a> (Note #2)</p>
+<pre><code class="language-bash">brew install gnupg asdf
+find ~/.zshrc -type f -exec sed -i &#39;&#39; -e &#39;s|plugins=(|plugins=(asdf |g&#39; {} \; # Add asdf-vm shell completions
+. ~/.zshrc # Source the new additions
+asdf plugin-add nodejs # Add nodejs
+
+echo &quot;\n# Disable asdf nodejs signature check\nNODEJS_CHECK_SIGNATURES=no\n&quot; &gt;&gt; ~/.zshrc
+# See note #1 above
+echo &quot;legacy_version_file = yes&quot; &gt; ~/.asdfrc
+# See note #2 above
+echo &quot;yarn\nipsum-cli\n@antfu/ni\nzx&quot; &gt; ~/.default-npm-packages
+
+asdf install nodejs lts
+asdf global nodejs $(asdf list nodejs | grep -e &quot;\d.*&quot; | tail -1)
+</code></pre>
+<p>If you&#39;re on an M1 - take a look at this guide for <a href="/2022-04-01-10-28-asdf-nodejs-binaries-m1">working with older versions of node</a>.</p>
+</li>
+<li><p>Install recommended packages (feel free to delete as required)</p>
+<table>
+<thead>
+<tr>
+<th>Application</th>
+<th>brew info link</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Chromium</td>
+<td><a href="https://formulae.brew.sh/cask/chromium">https://formulae.brew.sh/cask/chromium</a></td>
+</tr>
+<tr>
+<td>Cyberduck</td>
+<td><a href="https://formulae.brew.sh/cask/cyberduck">https://formulae.brew.sh/cask/cyberduck</a></td>
+</tr>
+<tr>
+<td>Docker</td>
+<td><a href="https://formulae.brew.sh/cask/docker">https://formulae.brew.sh/cask/docker</a></td>
+</tr>
+<tr>
+<td>Firefox</td>
+<td><a href="https://formulae.brew.sh/cask/firefox">https://formulae.brew.sh/cask/firefox</a></td>
+</tr>
+<tr>
+<td>Google-chrome</td>
+<td><a href="https://formulae.brew.sh/cask/google-chrome">https://formulae.brew.sh/cask/google-chrome</a></td>
+</tr>
+<tr>
+<td>Itsycal</td>
+<td><a href="https://formulae.brew.sh/cask/itsycal">https://formulae.brew.sh/cask/itsycal</a></td>
+</tr>
+<tr>
+<td>Libreoffice</td>
+<td><a href="https://formulae.brew.sh/cask/libreoffice">https://formulae.brew.sh/cask/libreoffice</a></td>
+</tr>
+<tr>
+<td>Ngrok</td>
+<td><a href="https://formulae.brew.sh/cask/ngrok">https://formulae.brew.sh/cask/ngrok</a></td>
+</tr>
+<tr>
+<td>Obsidian</td>
+<td><a href="https://formulae.brew.sh/cask/obsidian">https://formulae.brew.sh/cask/obsidian</a></td>
+</tr>
+<tr>
+<td>Opera</td>
+<td><a href="https://formulae.brew.sh/cask/opera">https://formulae.brew.sh/cask/opera</a></td>
+</tr>
+<tr>
+<td>insomnia</td>
+<td><a href="https://formulae.brew.sh/cask/insomnia">https://formulae.brew.sh/cask/insomnia</a></td>
+</tr>
+<tr>
+<td>Rectangle</td>
+<td><a href="https://formulae.brew.sh/cask/rectangle">https://formulae.brew.sh/cask/rectangle</a></td>
+</tr>
+<tr>
+<td>Slack</td>
+<td><a href="https://formulae.brew.sh/cask/slack">https://formulae.brew.sh/cask/slack</a></td>
+</tr>
+<tr>
+<td>Switchhosts</td>
+<td><a href="https://formulae.brew.sh/cask/switchhosts">https://formulae.brew.sh/cask/switchhosts</a></td>
+</tr>
+<tr>
+<td>Transmission</td>
+<td><a href="https://formulae.brew.sh/cask/transmission">https://formulae.brew.sh/cask/transmission</a></td>
+</tr>
+<tr>
+<td>Visual Studio Code</td>
+<td><a href="https://formulae.brew.sh/cask/visual-studio-code">https://formulae.brew.sh/cask/visual-studio-code</a></td>
+</tr>
+<tr>
+<td>VLC</td>
+<td><a href="https://formulae.brew.sh/cask/vlc">https://formulae.brew.sh/cask/vlc</a></td>
+</tr>
+</tbody></table>
+<pre><code class="language-bash"> brew install --cask \
+   chromium \
+   cyberduck \
+   docker \
+   firefox \
+   google-chrome \
+   itsycal \
+   libreoffice \
+   ngrok \
+   obsidian \
+   opera \
+   insomnia \
+   rectangle \
+   slack \
+   switchhosts \
+   transmission \
+   visual-studio-code \
+   vlc
+</code></pre>
+<p>Note you&#39;ll need to <a href="https://support.apple.com/en-gb/guide/mac-help/mh40616/mac">approve most of the above apps from unidentified developers</a></p>
+</li>
+<li><p>Create a <code>projects</code> and <code>personal</code> directory</p>
+<p>This allows us to pair and reason about each others systems easily.</p>
+<pre><code class="language-bash">mkdir \
+ -p ~/projects/prototypes \
+ ~/personal
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Directory</th>
+<th>Description</th>
+<th>Structure</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>projects</td>
+<td>Client work and prototypes</td>
+<td>projects/&lt;github organisation/client name&gt;/&lt;code-repo&gt;</td>
+</tr>
+<tr>
+<td>personal</td>
+<td>Personal and non-company work.</td>
+<td>personal/&lt;code-repo&gt;</td>
+</tr>
+</tbody></table>
+<p>The repo <a href="https://github.com/radically-digital/prismic-circleci-webhook">radically-digital/prismic-circleci-webhook</a> would be <code>~/projects/radically-digital/prismic-circleci-webhook</code> in all employee systems.</p>
+<p>The repo <a href="https://github.com/olmesm/ohmybuck">olmesm/ohmybuck</a> would be <code>~/personal/ohmybuck</code> in my system.</p>
+</li>
+<li><p>Add <code>projects</code> and <code>personal</code> to your favourites</p>
+<pre><code class="language-bash">open ~
+</code></pre>
+<ul>
+<li>Drag and drop the <code>projects</code> and <code>personal</code> directories into the left hand favourites pane of the finder window.</li>
+</ul>
+</li>
+<li><p>For a quickly accessible calendar and clock, setup itsycal (depends on <code>itsycal</code> being installed as above)</p>
+<ul>
+<li>Open itsycal</li>
+<li>Open Preferences or &quot;⌘&quot; + &quot;,&quot;</li>
+<li>General &gt; Launch at login</li>
+<li>Preferences &gt; Appearance &gt; <code>E d MMM</code></li>
+<li>Hide icon</li>
+<li>Hide the system date
+<img src="/images/screenshot_2022_02_21_at_11_39_25.png" alt=""></li>
+</ul>
+</li>
+<li><p>Install <a href="https://lastpass.com/misc_download2.php">Lastpass in the browser</a></p>
+</li>
+<li><p>Setup <a href="https://apps.apple.com/us/app/authy/id494168017">Authy</a> on your mobile device for MFA - do not install this on your laptop.</p>
+</li>
+<li><p>Setup <a href="https://apps.apple.com/gb/app/lastpass-password-manager/id324613447">Lastpass</a> on your mobile device.</p>
+</li>
+<li><p>Setup <a href="https://apps.apple.com/gb/app/slack/id618783545">Slack</a> on your mobile device.</p>
+</li>
+</ol>
+<!-- MARKDOWN REFS -->
+
+</div>
+      <hr />
+      <div>
+        <a href="https://github.com/olmesm/ohmybuck/issues/new">Comments?</a>
+      </div>
+    </main>
+
+    <script async src="/prismjs.js"></script>
+
+    <script
+      src="https://beamanalytics.b-cdn.net/beam.min.js"
+      data-token="a1492ee0-db67-4533-83e6-3c2352bb0dfc"
+      async
+    ></script>
+  </body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slack Notifications from Circle CI | ohmybuck</title>
+    <link rel="stylesheet" href="/pico.min.css" />
+    <link rel="stylesheet" href="/prismjs.css" />
+  </head>
+  <body>
+    <nav class="container">
+      <ul>
+        <li>
+          <a href="/" style="color: var(--h1-color)">ohmybuck</a>
+        </li>
+      </ul>
+      <ul>
+        <li><a href="/">home</a></li>
+        <li><a href="/whoami">whoami</a></li>
+        <li><a href="https://github.com/olmesm/ohmybuck">github</a></li>
+        <li>
+          <a href="https://www.linkedin.com/in/%F0%9F%A6%86-ol-smit-85141387/"
+            >linkedin</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <main class="container">
+      <h1 style="margin-bottom: 0">Slack Notifications from Circle CI</h1>
+      <small>Updated May 26, 2024<br>Created April 15, 2020</small><br><hr/>
+      <div><p>Slack notifications from Circleci.</p>
+<p>In <code>.circleci/config.yml</code></p>
+<pre><code class="language-yaml">version: 2.1
+...
+
+jobs:
+  test:
+  ...
+    steps:
+      - run:
+          name: Notify the team
+          when: on_success
+          command: . scripts/slack-notify.sh REGRESSION_PASS
+      - run:
+          name: Notify the team
+          when: on_fail
+          command: . scripts/slack-notify.sh REGRESSION_FAIL
+  deploy:
+  ...
+    steps:
+      - run:
+          name: Notify the team
+          when: on_fail
+          command: . scripts/slack-notify.sh DEPLOY_FAIL
+...
+</code></pre>
+<p>In <code>scripts/slack-notify.sh</code></p>
+<pre><code class="language-bash">#! /usr/bin/env sh
+SLACK_URL=&quot;https://hooks.slack.com/services/&lt;WORKSPACE_ID&gt;/&lt;WEBHOOK_STRING&gt;&quot;
+SLACK_CHANNEL=&quot;#&lt;TEAM_CHANNEL&gt;&quot;
+SLACK_REGRESSION_BOT_NAME=&quot;The Ghost of Regression&quot;
+SLACK_DEPLOY_BOT_NAME=&quot;The Ghost of Regression&quot;
+ARTIFACTS_URL=&quot;https://app.circleci.com/jobs/github/&lt;GITHUB_ORG&gt;/&lt;GITHUB_REPO&gt;/$CIRCLE_BUILD_NUM/artifacts&quot;
+
+function func_regression_pass() {
+  curl -X POST \
+    --data-urlencode &quot;payload={\&quot;channel\&quot;: \&quot;$SLACK_CHANNEL\&quot;, \&quot;username\&quot;: \&quot;$SLACK_REGRESSION_BOT_NAME\&quot;, \&quot;text\&quot;: \&quot;No regressions last night!\n\nView the pipeline here: $CIRCLE_BUILD_URL\&quot;, \&quot;icon_emoji\&quot;: \&quot;:ghost:\&quot;}&quot; \
+    &quot;$SLACK_URL&quot;
+}
+
+function func_regression_fail() {
+  curl -X POST \
+    --data-urlencode &quot;payload={\&quot;channel\&quot;: \&quot;$SLACK_CHANNEL\&quot;, \&quot;username\&quot;: \&quot;$SLACK_REGRESSION_BOT_NAME\&quot;, \&quot;text\&quot;: \&quot;*BOO!*\nSome regressions were found in the night.\n\nView the pipeline here: $CIRCLE_BUILD_URL\nThere may be also be immediate clues as to why the process failed here: $ARTIFACTS_URL\n\n*Please list the findings of this failure in a :thread: below*\&quot;, \&quot;icon_emoji\&quot;: \&quot;:ghost:\&quot;}&quot; \
+    &quot;$SLACK_URL&quot;
+}
+
+function func_deploy_fail() {
+  curl -X POST \
+    --data-urlencode &quot;payload={\&quot;channel\&quot;: \&quot;$SLACK_CHANNEL\&quot;, \&quot;username\&quot;: \&quot;$SLACK_DEPLOY_BOT_NAME\&quot;, \&quot;text\&quot;: \&quot;Looks like something got in the way of shipping it\n\nView the pipeline here: $CIRCLE_BUILD_URL\n\n*Please list the findings of this failure in a :thread: below*\&quot;, \&quot;icon_emoji\&quot;: \&quot;:mount_fuji:\&quot;}&quot; \
+    &quot;$SLACK_URL&quot;
+}
+
+if [ &quot;$1&quot; = &quot;REGRESSION_PASS&quot; ]; then
+  func_regression_pass
+fi
+
+if [ &quot;$1&quot; = &quot;REGRESSION_FAIL&quot; ]; then
+  func_regression_fail
+fi
+
+if [ &quot;$1&quot; = &quot;DEPLOY_FAIL&quot; ]; then
+  func_deploy_fail
+fi
+
+if [ -z &quot;$1&quot; ]; then
+  echo &quot;You&#39;ll need to specify a PASS or FAIL argument&quot;
+  exit 1
+fi
+</code></pre>
+</div>
+      <hr />
+      <div>
+        <a href="https://github.com/olmesm/ohmybuck/issues/new">Comments?</a>
+      </div>
+    </main>
+
+    <script async src="/prismjs.js"></script>
+
+    <script
+      src="https://beamanalytics.b-cdn.net/beam.min.js"
+      data-token="a1492ee0-db67-4533-83e6-3c2352bb0dfc"
+      async
+    ></script>
+  </body>
+</html>

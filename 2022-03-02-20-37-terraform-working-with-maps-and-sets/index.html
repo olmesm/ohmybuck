@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Terraform working with Maps and Sets | ohmybuck</title>
+    <link rel="stylesheet" href="/pico.min.css" />
+    <link rel="stylesheet" href="/prismjs.css" />
+  </head>
+  <body>
+    <nav class="container">
+      <ul>
+        <li>
+          <a href="/" style="color: var(--h1-color)">ohmybuck</a>
+        </li>
+      </ul>
+      <ul>
+        <li><a href="/">home</a></li>
+        <li><a href="/whoami">whoami</a></li>
+        <li><a href="https://github.com/olmesm/ohmybuck">github</a></li>
+        <li>
+          <a href="https://www.linkedin.com/in/%F0%9F%A6%86-ol-smit-85141387/"
+            >linkedin</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <main class="container">
+      <h1 style="margin-bottom: 0">Terraform working with Maps and Sets</h1>
+      <small>Updated May 26, 2024<br>Created March 2, 2022</small><br><hr/>
+      <div><p>This is just sample code and doesn&#39;t actually work due to &quot;Elastic IPs are not supported for load balancers with type &#39;application&#39;&quot;</p>
+<pre><code class="language-hcl">locals {
+  subnet_azs = [
+    &quot;eu-west-2a&quot;,
+    &quot;eu-west-2b&quot;,
+    &quot;eu-west-2c&quot;,
+  ]
+
+  eip_count = var.env == &quot;prod&quot; ? length(local.subnet_azs) : 0
+}
+
+resource &quot;aws_eip&quot; &quot;cms&quot; {
+  count = local.eip_count
+
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+
+resource &quot;aws_default_subnet&quot; &quot;default&quot; {
+  for_each = toset(local.subnet_azs)
+
+  availability_zone = each.key
+}
+
+resource &quot;aws_lb&quot; &quot;default&quot; {
+  name               = &quot;default&quot;
+  internal           = false
+  load_balancer_type = &quot;application&quot;
+  security_groups    = [aws_security_group.lb.id]
+
+  dynamic &quot;subnet_mapping&quot; {
+    for_each = aws_default_subnet.default
+
+    content {
+      subnet_id     = subnet_mapping.value.id
+      allocation_id = var.env == &quot;prod&quot; ? aws_eip.cms[index(local.subnet_azs, subnet_mapping.value.availability_zone)].id : null
+    }
+  }
+}
+
+output &quot;fixed_ip_addresses&quot; {
+  description = &quot;For A Record setting&quot;
+  value = aws_eip.cms.*.public_ip
+}
+</code></pre>
+</div>
+      <hr />
+      <div>
+        <a href="https://github.com/olmesm/ohmybuck/issues/new">Comments?</a>
+      </div>
+    </main>
+
+    <script async src="/prismjs.js"></script>
+
+    <script
+      src="https://beamanalytics.b-cdn.net/beam.min.js"
+      data-token="a1492ee0-db67-4533-83e6-3c2352bb0dfc"
+      async
+    ></script>
+  </body>
+</html>

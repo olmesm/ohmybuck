@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>What I want from the next big framework | ohmybuck</title>
+    <link rel="stylesheet" href="/pico.min.css" />
+    <link rel="stylesheet" href="/prismjs.css" />
+  </head>
+  <body>
+    <nav class="container">
+      <ul>
+        <li>
+          <a href="/" style="color: var(--h1-color)">ohmybuck</a>
+        </li>
+      </ul>
+      <ul>
+        <li><a href="/">home</a></li>
+        <li><a href="/whoami">whoami</a></li>
+        <li><a href="https://github.com/olmesm/ohmybuck">github</a></li>
+        <li>
+          <a href="https://www.linkedin.com/in/%F0%9F%A6%86-ol-smit-85141387/"
+            >linkedin</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <main class="container">
+      <h1 style="margin-bottom: 0">What I want from the next big framework</h1>
+      <small>Created  May 26, 2024</small><br><hr/>
+      <div><p>How could we write an application that has all the benefits of JSX components, none of the work of having to wire clients and servers, and maintain simplicity with all (or as much) state on the server.</p>
+<p>I really hope this is the future of react server components, but if we didnt require a &quot;web app&quot; with rich interactivity is this possible now?</p>
+<p>Keep in mind that this does not exist and although the following is inspired by react, it is jsx/html.</p>
+<pre><code class="language-jsx">export const main = () =&gt; {
+  const handleOnSubmit = swap(&quot;todo-list&quot;, (event) =&gt; (
+    &lt;Post newTodo={event.currentTarget.value} /&gt;
+  ))
+
+  return (
+    &lt;div&gt;
+      &lt;List id=&quot;todo-list&quot; /&gt;
+      &lt;NewTodo onSubmit={handleOnSubmit} /&gt;
+    &lt;/div&gt;
+  )
+}
+
+const List = async ({ request: { headers } }) =&gt; {
+  const todos = await db.list()
+
+  return (
+    &lt;ul&gt;
+      {todos.map((todo) =&gt; (
+        &lt;li key={todo.id}&gt;{todo.name}&lt;/li&gt;
+      ))}
+    &lt;/ul&gt;
+  )
+}
+
+const Post = async ({ newTodo }: { newTodo: string }) =&gt; {
+  await db.create({ data: newTodo })
+
+  return &lt;List /&gt;
+}
+</code></pre>
+<h2 id="challenge-async-components">Challenge: Async components</h2>
+<p>As this runs on the server, we can await the components inside the parent but let&#39;s look past this for now and assume the server can handle this automatically.</p>
+<h2 id="challenge-client-server-referencing">Challenge: Client-Server Referencing</h2>
+<p>How do we tranfer a reference to the client that once the form is submitted, we need it to swap out with a component on our server. This crosses the boundary and ultimately arent the same function.</p>
+<p>Static Analysis would work and may be ideal but is complex and beyond my drive. A simpler way could be to create a registration function that would create a link for both systems to refer to.</p>
+<pre><code class="language-jsx">import { register, swap } from &quot;next-big-framework&quot;
+
+export const main = () =&gt; {
+  const handleOnSubmit = register(
+    swap(&quot;todo-list&quot;, (event) =&gt; &lt;Post newTodo={event.currentTarget.value} /&gt;)
+  )
+
+  return (
+    &lt;div&gt;
+      &lt;List id=&quot;todo-list&quot; /&gt;
+      &lt;NewTodo onSubmit={handleOnSubmit} /&gt;
+    &lt;/div&gt;
+  )
+}
+</code></pre>
+<p>What if we wat to know who posted the todo item?</p>
+<pre><code class="language-jsx">import { register, swap } from &quot;next-big-framework&quot;
+
+export const main = ({ session }) =&gt; {
+  const handleOnSubmit = register(
+    swap(&quot;todo-list&quot;, (event) =&gt; (
+      &lt;Post newTodo={event.currentTarget.value} user={session.userId} /&gt;
+    ))
+  )
+
+  return (
+    &lt;div&gt;
+      &lt;List id=&quot;todo-list&quot; /&gt;
+      &lt;NewTodo onSubmit={handleOnSubmit} /&gt;
+    &lt;/div&gt;
+  )
+}
+</code></pre>
+<p>This would register a new function for each user session and this would be tricky to keep the application performing.</p>
+<h2 id="challenge-purity">Challenge: Purity</h2>
+<p>Leading on from above, we would need to ensure that handler functions are pure and JS currently doesnt have a way to enforce this.</p>
+<pre><code class="language-jsx">import { register, swap } from &quot;next-big-framework&quot;
+
+export const main = ({ session }) =&gt; {
+  const handleOnSubmit = register(
+    swap(&quot;todo-list&quot;, (event) =&gt; (
+      &lt;Post user={session.userId} newTodo={event.currentTarget.value} /&gt;
+    ))
+  )
+
+  return (
+    &lt;div&gt;
+      &lt;List id=&quot;todo-list&quot; /&gt;
+      &lt;NewTodo onSubmit={handleOnSubmit} /&gt;
+    &lt;/div&gt;
+  )
+}
+</code></pre>
+<p>The above would require registration of the component to occur for each session. Session is just an example and this, and the amount of registered components end up being a product of all the combined possibility of variables. With things like strings and numbers this is an infinite number of results and it becomes near impossible to manage their lifecycles.</p>
+<p>A dependencies array (like react hooks hooks require) could be one solution and would allow us to register a &quot;sub-handler&quot; of the main function.[^1]</p>
+<p>[^1]: We havent acknowledged that we need to develop a method of creating a good DX around including all dependencies in the array. Plus we may have issues with React developers thinking they can optimise the function&#39;s &quot;rendering&quot; like they would with react hooks. We may be able to accomplish this by hacking react-hooks&#39; eslint rules, but ideally we want this in compile time or runtime.</p>
+<p>We also get an added benefit of keeping our state on the server - all that needs to be sent to the client here is a reference to the handler function.</p>
+<pre><code class="language-jsx">import { register, swap } from &quot;next-big-framework&quot;
+
+export const main = ({ session }) =&gt; {
+  const handleOnSubmit = register(
+    swap(&quot;todo-list&quot;, (event) =&gt; (
+      &lt;Post user={session.userId} newTodo={event.currentTarget.value} /&gt;
+    )),
+    [session]
+  )
+
+  return (
+    &lt;div&gt;
+      &lt;List id=&quot;todo-list&quot; /&gt;
+      &lt;NewTodo onSubmit={handleOnSubmit} /&gt;
+    &lt;/div&gt;
+  )
+}
+</code></pre>
+<p>On to the next challenge; all is eagerly evaluated - when the client only intends to send a request to main#handleOnSubmit, everything in return would still be run... unless we lazily handled that.</p>
+<h2 id="challenge-lazy-evaluation-to-allow-for-registration">Challenge: Lazy Evaluation to allow for registration</h2>
+<p>Lets delay the rendering...</p>
+<pre><code class="language-jsx">import { register, swap } from &quot;next-big-framework&quot;
+
+export const main = ({ session }) =&gt; {
+  const handleOnSubmit = register(
+    swap(&quot;todo-list&quot;, (event) =&gt; (
+      &lt;Post user={session.userId} newTodo={event.currentTarget.value} /&gt;
+    )),
+    [session]
+  )
+
+  return {
+    handleOnSubmit,
+    render: () =&gt; (
+      &lt;div&gt;
+        &lt;List id=&quot;todo-list&quot; /&gt;
+        &lt;NewTodo onSubmit={handleOnSubmit} /&gt;
+      &lt;/div&gt;
+    ),
+  }
+}
+</code></pre>
+<p>While I&#39;m not the biggest fan of classes in JS, the builder pattern can give us nice typesafety, and function isolation.</p>
+<pre><code class="language-jsx">import { Nbf, swap } from &quot;next-big-framework&quot;
+
+export default new Nbf()
+  .register(&quot;handleOnSubmit&quot;, ({ session }) =&gt;
+    swap(&quot;todo-list&quot;, (event) =&gt; (
+      &lt;Post user={session.userId} newTodo={event.currentTarget.value} /&gt;
+    ))
+  )
+  .render(({ session, handleOnSubmit }) =&gt; (
+    &lt;div&gt;
+      &lt;List id=&quot;todo-list&quot; /&gt;
+      &lt;NewTodo onSubmit={handleOnSubmit} /&gt;
+    &lt;/div&gt;
+  ))
+</code></pre>
+<h3 id="enter-elysiajs">Enter Elysia.js</h3>
+<p>The above looks quite similar to elysia.js</p>
+<pre><code class="language-jsx">import { swap, register } from &quot;next-big-framework&quot;
+import { Elysia } from &quot;elysia&quot;
+
+export default new Elysia()
+  .use(
+    register(&quot;handleOnSubmit&quot;, ({ session }) =&gt;
+      swap(&quot;todo-list&quot;, (event) =&gt; (
+        &lt;Post user={session.userId} newTodo={event.currentTarget.value} /&gt;
+      ))
+    )
+  )
+  .get(&quot;/&quot;, ({ session, handleOnSubmit }) =&gt; (
+    &lt;div&gt;
+      &lt;List id=&quot;todo-list&quot; /&gt;
+      &lt;NewTodo onSubmit={handleOnSubmit} /&gt;
+    &lt;/div&gt;
+  ))
+</code></pre>
+<p>Could our swap function do more?</p>
+<pre><code class="language-jsx">import { swap } from &quot;next-big-framework&quot;
+import { Elysia } from &quot;elysia&quot;
+
+export default new Elysia()
+  .use(
+    swap(&quot;handleOnSubmit&quot;, ({ session }, event) =&gt; (
+      &lt;Post user={session.userId} newTodo={event.currentTarget.value} /&gt;
+    ))
+  )
+  .get(&quot;/&quot;, ({ session, handleOnSubmit }) =&gt; (
+    &lt;div&gt;
+      &lt;List {...handleOnSubmit.target} /&gt;
+      &lt;NewTodo onSubmit={handleOnSubmit.fn} /&gt;
+    &lt;/div&gt;
+  ))
+</code></pre>
+<p>Could we extend the register with a loader while we wait for the server to respond?</p>
+<pre><code class="language-jsx">import { swap } from &quot;next-big-framework&quot;
+import { Elysia } from &quot;elysia&quot;
+
+export default new Elysia()
+  .use(
+    swap(
+      &quot;handleOnSubmit&quot;,
+      ({ session }, event) =&gt; (
+        &lt;Post user={session.userId} newTodo={event.currentTarget.value} /&gt;
+      ),
+      ({ session }) =&gt; &lt;&gt;Please wait {session.firstName}...&lt;/&gt;
+    )
+  )
+  .get(&quot;/&quot;, ({ session, handleOnSubmit }) =&gt; (
+    &lt;div&gt;
+      &lt;List {...handleOnSubmit.target} /&gt;
+      &lt;NewTodo onSubmit={handleOnSubmit.fn} /&gt;
+    &lt;/div&gt;
+  ))
+</code></pre>
+<h3 id="update---rscs-useactionstate">[Update] - RSC&#39;s <code>useActionState</code></h3>
+<p>RSC may actually take us this direction, but with the stack outlined above - what about <code>useActionState</code> with Elysia&#39;s API?</p>
+<pre><code class="language-jsx">import { action } from &quot;next-big-framework&quot;
+import { Elysia } from &quot;elysia&quot;
+
+export default new Elysia()
+  .use(
+    action(
+      async ({ session, body }) =&gt; {
+        await db.create({ data: body })
+
+        return &lt;List /&gt;
+      },
+      ({ session }) =&gt; &lt;&gt;Adding {session.firstName}&#39;s todo...&lt;/&gt;
+    )
+  )
+  .get(&quot;/&quot;, ({ session, action }) =&gt; (
+    &lt;div&gt;
+      {action.render}
+      &lt;NewTodo onSubmit={action.fn} /&gt;
+    &lt;/div&gt;
+  ))
+</code></pre>
+<h2 id="other-challenges-to-solve">Other challenges to solve</h2>
+<ul>
+<li>handler event ≠ client side event</li>
+<li>still need to declare a handler route</li>
+<li>register, swap, ...what else?</li>
+</ul>
+<p>Hope this rambling gets somewhere</p>
+</div>
+      <hr />
+      <div>
+        <a href="https://github.com/olmesm/ohmybuck/issues/new">Comments?</a>
+      </div>
+    </main>
+
+    <script async src="/prismjs.js"></script>
+
+    <script
+      src="https://beamanalytics.b-cdn.net/beam.min.js"
+      data-token="a1492ee0-db67-4533-83e6-3c2352bb0dfc"
+      async
+    ></script>
+  </body>
+</html>

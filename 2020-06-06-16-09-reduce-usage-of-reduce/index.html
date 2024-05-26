@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reduce Usage Of Reduce | ohmybuck</title>
+    <link rel="stylesheet" href="/pico.min.css" />
+    <link rel="stylesheet" href="/prismjs.css" />
+  </head>
+  <body>
+    <nav class="container">
+      <ul>
+        <li>
+          <a href="/" style="color: var(--h1-color)">ohmybuck</a>
+        </li>
+      </ul>
+      <ul>
+        <li><a href="/">home</a></li>
+        <li><a href="/whoami">whoami</a></li>
+        <li><a href="https://github.com/olmesm/ohmybuck">github</a></li>
+        <li>
+          <a href="https://www.linkedin.com/in/%F0%9F%A6%86-ol-smit-85141387/"
+            >linkedin</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <main class="container">
+      <h1 style="margin-bottom: 0">Reduce Usage Of Reduce</h1>
+      <small>Updated May 26, 2024<br>Created June 6, 2020</small><br><hr/>
+      <div><p>When it comes to concatenating strings, the reduce method is a common choice. However, I recently came across a <a href="https://twitter.com/jaffathecake/status/1213077702300852224">Twitter thread</a> discussing an <a href="https://github.com/sindresorhus/eslint-plugin-unicorn/issues/623">ESLint error</a> that flagged up when using reduce in this way.</p>
+<p>After considering the points made in the thread, I decided to refactor a piece of code that I had been using reduce for string concatenation. The refactored version is arguably more readable and understandable for others.</p>
+<p>Here is an example of the original code:</p>
+<pre><code class="language-js">const stringMessageFromObject = (object) =&gt; {
+  const reducer = (acc, curr) =&gt; acc + `${curr}: ${object[curr]}\n`;
+  return Object.keys(object).reduce(reducer, &quot;&quot;);
+};
+</code></pre>
+<p>And here is the refactored version:</p>
+<pre><code class="language-js">const stringMessageFromObject = (object) =&gt;
+  Object.keys(object)
+    .map((curr) =&gt; `${curr}: ${object[curr]}\n`)
+    .join(&quot;&quot;);
+</code></pre>
+<p>By using map and join methods, we can achieve the same concatenation of strings in a more clear and concise way.</p>
+</div>
+      <hr />
+      <div>
+        <a href="https://github.com/olmesm/ohmybuck/issues/new">Comments?</a>
+      </div>
+    </main>
+
+    <script async src="/prismjs.js"></script>
+
+    <script
+      src="https://beamanalytics.b-cdn.net/beam.min.js"
+      data-token="a1492ee0-db67-4533-83e6-3c2352bb0dfc"
+      async
+    ></script>
+  </body>
+</html>

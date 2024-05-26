@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Env File Checker | ohmybuck</title>
+    <link rel="stylesheet" href="/pico.min.css" />
+    <link rel="stylesheet" href="/prismjs.css" />
+  </head>
+  <body>
+    <nav class="container">
+      <ul>
+        <li>
+          <a href="/" style="color: var(--h1-color)">ohmybuck</a>
+        </li>
+      </ul>
+      <ul>
+        <li><a href="/">home</a></li>
+        <li><a href="/whoami">whoami</a></li>
+        <li><a href="https://github.com/olmesm/ohmybuck">github</a></li>
+        <li>
+          <a href="https://www.linkedin.com/in/%F0%9F%A6%86-ol-smit-85141387/"
+            >linkedin</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <main class="container">
+      <h1 style="margin-bottom: 0">Env File Checker</h1>
+      <small>Updated May 26, 2024<br>Created May 23, 2020</small><br><hr/>
+      <div><p>Ideally used as part of a pre-commit hook. This ensures your project&#39;s <code>.env.example</code> file contains the same vars as your local <code>.env</code> file.</p>
+<p>The <code>.env.example</code> is a list of required environment variables for working in the project. We correspond to a value that we use in a <code>.env</code> file, however in a <code>.env.example</code> we should either set a non-secret value, or a comment on how to obtain the required key.</p>
+<pre><code class="language-bash">#! /usr/bin/env sh
+
+VAR_ENV_FILE=${1:-&quot;.env&quot;}
+VAR_ENV_EXAMPLE_FILE=${2:-&quot;.env.example&quot;}
+IS_STRICT=true
+
+# Set file separator
+IFS=$&#39;\n&#39;
+
+# To use:
+#   sh scripts/check-env.sh [&lt;VAR_ENV_FILE&gt; &lt;VAR_ENV_EXAMPLE_FILE&gt;]
+
+# EXAMPLE
+#   sh ./scripts/check-env.sh [$VAR_ENV_FILE $VAR_ENV_EXAMPLE_FILE]
+
+# Ensure `.gitignore` contains the following
+
+# ```
+# .env*
+# !.env.example
+# ```
+
+if [ ! -f &quot;$VAR_ENV_FILE&quot; ]; then
+  echo &quot;Failed to find \`$VAR_ENV_FILE\`&quot;
+  echo &quot;Please create it or specify a different file&quot;
+  echo &quot;sh ./scripts/check-env.sh [$VAR_ENV_FILE $VAR_ENV_EXAMPLE_FILE]&quot;
+
+  exit 1
+fi
+
+if [ ! -f &quot;$VAR_ENV_EXAMPLE_FILE&quot; ]; then
+  echo &quot;Failed to find \`$VAR_ENV_EXAMPLE_FILE\`&quot;
+  echo &quot;Please create it or specify a different file&quot;
+  echo &quot;sh ./scripts/check-env.sh [$VAR_ENV_FILE $VAR_ENV_EXAMPLE_FILE]&quot;
+
+  exit 1
+fi
+
+echo &quot;\n[CHECKING \`$VAR_ENV_FILE\` AND \`$VAR_ENV_EXAMPLE_FILE\`]&quot;
+
+for LINE_ENV_VAR in $(grep -v &#39;^#&#39; &quot;$VAR_ENV_FILE&quot;); do
+  VARIABLE=$(echo $LINE_ENV_VAR | sed &quot;s/=.*//&quot;)
+
+  REF_COUNT=$(awk &quot;/^$VARIABLE[=| ]/&quot; &quot;$VAR_ENV_EXAMPLE_FILE&quot; | wc -l)
+
+  if [[ &quot;$REF_COUNT&quot; -ne &quot;1&quot; ]]; then
+    HAS_FOUND_MISMATCH=true
+    echo &quot;[MISSING VAR]: $VARIABLE&quot;
+  fi
+done
+
+echo &quot;\n[CHECKING COMPLETED]&quot;
+
+if { [ &quot;$IS_STRICT&quot; = true ] &amp;&amp; [ &quot;$HAS_FOUND_MISMATCH&quot; = true ]; }; then
+
+  echo &quot;\n[NOTE] Loads of errors?
+There should be no spaces between the variable declaration and value in your $VAR_ENV_FILE file.
+
+\`\`\`
+# $(pwd)/$VAR_ENV_FILE
+
+ENVIRONMENT_VARIABLE=VALUE
+\`\`\`
+&quot;
+  exit 1
+fi
+
+exit 0
+</code></pre>
+<h2 id="setup">Setup</h2>
+<p>Development dependencies are packages that you only need when developing your application. Development dependencies are useful, but are not mission critical: the application will still run without them.</p>
+<p>Git hook tooling should be committed to your project to ensure consistent automation on all development machines.</p>
+<ul>
+<li><a href="https://pre-commit.com/#installation">For Python setup</a></li>
+<li><a href="#quick-setup">See below for node specific</a></li>
+</ul>
+<h2 id="quick-setup">Quick Setup</h2>
+<p>Assumes node and script location <code>scripts/check-env.sh</code></p>
+<pre><code class="language-bash">echo &quot;
+####################
+# \`.env.example\` is a list of required env vars for working in the project.
+#
+# Normally a variable is set to a value for use in the application.
+# However in a \`.env.example\` you should either
+#     - set a non-secret value (safe for publishing or publicly accessible)
+#     - comment on how to obtain the required key
+#
+# For debugging variables, default to values that help the developer.
+####################
+
+ENVIRONMENT_VARIABLE=VALUE
+&quot; &gt; .env.example
+
+touch .env
+
+npm install -D husky npm-run-all prettier
+
+sed -i &#39;&#39; &quot;s|\&quot;scripts\&quot;: {|\&quot;scripts\&quot;: {\&quot;format-prettier\&quot;: \&quot;prettier --write \\\\\&quot;**/*.{ts,tsx,js,jsx,json,md,html,css,scss,less,sass}\\\\\&quot;\&quot;,|&quot; package.json
+
+npx prettier --write package.json --ignore-path /dev/null
+
+echo &#39;{
+    &quot;hooks&quot;: {
+      &quot;pre-commit&quot;: &quot;sh scripts/check-env.sh &amp;&amp; npm-run-all format*&quot;,
+      &quot;post-commit&quot;: &quot;git update-index --again&quot;
+  }
+}
+&#39; &gt; .huskyrc
+</code></pre>
+</div>
+      <hr />
+      <div>
+        <a href="https://github.com/olmesm/ohmybuck/issues/new">Comments?</a>
+      </div>
+    </main>
+
+    <script async src="/prismjs.js"></script>
+
+    <script
+      src="https://beamanalytics.b-cdn.net/beam.min.js"
+      data-token="a1492ee0-db67-4533-83e6-3c2352bb0dfc"
+      async
+    ></script>
+  </body>
+</html>

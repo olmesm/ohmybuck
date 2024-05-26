@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JavaScript Event Loop Problem | ohmybuck</title>
+    <link rel="stylesheet" href="/pico.min.css" />
+    <link rel="stylesheet" href="/prismjs.css" />
+  </head>
+  <body>
+    <nav class="container">
+      <ul>
+        <li>
+          <a href="/" style="color: var(--h1-color)">ohmybuck</a>
+        </li>
+      </ul>
+      <ul>
+        <li><a href="/">home</a></li>
+        <li><a href="/whoami">whoami</a></li>
+        <li><a href="https://github.com/olmesm/ohmybuck">github</a></li>
+        <li>
+          <a href="https://www.linkedin.com/in/%F0%9F%A6%86-ol-smit-85141387/"
+            >linkedin</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <main class="container">
+      <h1 style="margin-bottom: 0">JavaScript Event Loop Problem</h1>
+      <small>Updated May 26, 2024<br>Created March 17, 2022</small><br><hr/>
+      <div><p>Sample question for async tech testing.</p>
+<h2 id="problem">Problem</h2>
+<pre><code class="language-js">function sleep(cb, timeout = 0) {
+  return setTimeout(cb, timeout);
+}
+
+(function main() {
+  try {
+    console.log(&quot;wait&quot;, 1);
+    sleep(() =&gt; console.log(&quot;ok&quot;, 1), 1000);
+    console.log(&quot;wait&quot;, 2);
+    sleep(() =&gt; console.log(&quot;ok&quot;, 2), 1000);
+    console.log(&quot;wait&quot;, 3);
+    sleep(() =&gt; console.log(&quot;ok&quot;, 3), 1000);
+    console.log(&quot;wait&quot;, 4);
+    sleep(() =&gt; console.log(&quot;ok&quot;, 4), 1000);
+  } catch (e) {
+    console.error(e);
+  }
+})();
+
+// T:+0 &gt;&gt; &quot;wait&quot;, 1
+// T:+0 &gt;&gt; &quot;wait&quot;, 2
+// T:+0 &gt;&gt; &quot;wait&quot;, 3
+// T:+0 &gt;&gt; &quot;wait&quot;, 4
+// T:+1 &gt;&gt; &quot;ok&quot;, 1
+// T:+1 &gt;&gt; &quot;ok&quot;, 2
+// T:+1 &gt;&gt; &quot;ok&quot;, 3
+// T:+1 &gt;&gt; &quot;ok&quot;, 4
+</code></pre>
+<h2 id="solution">Solution</h2>
+<pre><code class="language-js">function sleep(cb, timeout = 0) {
+  return new Promise((res) =&gt;
+    setTimeout(() =&gt; {
+      res(cb());
+    }, timeout)
+  );
+}
+
+(async function main() {
+  try {
+    console.log(&quot;wait&quot;, 1);
+    await sleep(() =&gt; console.log(&quot;ok&quot;, 1), 1000);
+    console.log(&quot;wait&quot;, 2);
+    await sleep(() =&gt; console.log(&quot;ok&quot;, 2), 1000);
+    console.log(&quot;wait&quot;, 3);
+    await sleep(() =&gt; console.log(&quot;ok&quot;, 3), 1000);
+    console.log(&quot;wait&quot;, 4);
+    await sleep(() =&gt; console.log(&quot;ok&quot;, 4), 1000);
+  } catch (e) {
+    console.error(e);
+  }
+})();
+
+// T:+0 &gt;&gt; &quot;wait&quot;, 1
+// T:+1 &gt;&gt; &quot;ok&quot;, 1
+// T:+1 &gt;&gt; &quot;wait&quot;, 2
+// T:+2 &gt;&gt; &quot;ok&quot;, 2
+// T:+2 &gt;&gt; &quot;wait&quot;, 3
+// T:+3 &gt;&gt; &quot;ok&quot;, 3
+// T:+3 &gt;&gt; &quot;wait&quot;, 4
+// T:+4 &gt;&gt; &quot;ok&quot;, 4
+</code></pre>
+<h2 id="additional">Additional</h2>
+<iframe width="1190" height="669" src="https://www.youtube.com/embed/8aGhZQkoFbQ?t=365" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+      <hr />
+      <div>
+        <a href="https://github.com/olmesm/ohmybuck/issues/new">Comments?</a>
+      </div>
+    </main>
+
+    <script async src="/prismjs.js"></script>
+
+    <script
+      src="https://beamanalytics.b-cdn.net/beam.min.js"
+      data-token="a1492ee0-db67-4533-83e6-3c2352bb0dfc"
+      async
+    ></script>
+  </body>
+</html>

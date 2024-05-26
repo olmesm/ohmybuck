@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>data fetching with hybrids | ohmybuck</title>
+    <link rel="stylesheet" href="/pico.min.css" />
+    <link rel="stylesheet" href="/prismjs.css" />
+  </head>
+  <body>
+    <nav class="container">
+      <ul>
+        <li>
+          <a href="/" style="color: var(--h1-color)">ohmybuck</a>
+        </li>
+      </ul>
+      <ul>
+        <li><a href="/">home</a></li>
+        <li><a href="/whoami">whoami</a></li>
+        <li><a href="https://github.com/olmesm/ohmybuck">github</a></li>
+        <li>
+          <a href="https://www.linkedin.com/in/%F0%9F%A6%86-ol-smit-85141387/"
+            >linkedin</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <main class="container">
+      <h1 style="margin-bottom: 0">data fetching with hybrids</h1>
+      <small>Updated May 26, 2024<br>Created November 10, 2022</small><br><hr/>
+      <div><pre><code class="language-ts">import { html, define, store, Model } from &quot;hybrids&quot;;
+
+interface WithoutStore {
+  url: string;
+  data: Promise&lt;Record&lt;string, string&gt;&gt;;
+}
+
+export const withoutStore = define&lt;WithoutStore&gt;({
+  tag: &quot;without-store&quot;,
+  url: &quot;&quot;,
+  data: ({ url }) =&gt; fetch(url).then((r) =&gt; r.json()),
+  render: ({ data }) =&gt; html`
+    &lt;div&gt;
+      ${html.resolve(data.then(({ name }) =&gt; html`&lt;span&gt;${name}&lt;/span&gt;`))}
+    &lt;/div&gt;
+  `,
+});
+
+html`&lt;without-store
+  url=&quot;https://raw.githubusercontent.com/hybridsjs/hybrids/main/package.json&quot;
+&gt;&lt;/without-store&gt;`;
+
+interface ImplicitModel {
+  id: string;
+  name: string;
+  scripts: Record&lt;string, string&gt;;
+}
+
+const ImplicitStore: Model&lt;ImplicitModel&gt; = {
+  id: true,
+  name: &quot;&quot;,
+  scripts: {},
+  [store.connect]: (url) =&gt; fetch(url as string).then((res) =&gt; res.json()),
+};
+
+interface ImplicitComponent {
+  packageJson: ImplicitModel;
+}
+
+export const implicit = define&lt;ImplicitComponent&gt;({
+  tag: &quot;implicit-package-json-viewer&quot;,
+  packageJson: store(ImplicitStore), // implicitly passes the `package-json` attribute as a string to the store for instantialtion.
+  render: ({ packageJson }) =&gt;
+    html` ${store.ready(packageJson) &amp;&amp; packageJson.name} `,
+});
+
+html`&lt;implicit-package-json-viewer
+  package-json=&quot;https://raw.githubusercontent.com/hybridsjs/hybrids/main/package.json&quot;
+&gt;&lt;/implicit-package-json-viewer&gt;`;
+
+interface ExplicitModel {
+  id: string;
+  name: string;
+  url: string;
+  scripts: Record&lt;string, string&gt;;
+}
+
+const ExplicitStore: Model&lt;ExplicitModel&gt; = {
+  id: true,
+  url: &quot;&quot;,
+  name: &quot;&quot;,
+  scripts: {},
+  [store.connect]: (url) =&gt; fetch(url as string).then((res) =&gt; res.json()),
+};
+
+interface ExplicitComponent {
+  url: string;
+  packageJson: ExplicitModel;
+}
+
+export const explicit = define&lt;ExplicitComponent&gt;({
+  tag: &quot;explicit-package-json-viewer&quot;,
+  url: &quot;&quot;,
+  packageJson: store(ExplicitStore, { id: &quot;url&quot; }), // id is the identifier of the model and passed to [store.connect] as a string.
+  render: ({ packageJson }) =&gt;
+    html` ${store.ready(packageJson) &amp;&amp; packageJson.name} `,
+});
+
+html`&lt;explicit-package-json-viewer
+  url=&quot;https://raw.githubusercontent.com/hybridsjs/hybrids/main/package.json&quot;
+&gt;&lt;/explicit-package-json-viewer&gt;`;
+</code></pre>
+</div>
+      <hr />
+      <div>
+        <a href="https://github.com/olmesm/ohmybuck/issues/new">Comments?</a>
+      </div>
+    </main>
+
+    <script async src="/prismjs.js"></script>
+
+    <script
+      src="https://beamanalytics.b-cdn.net/beam.min.js"
+      data-token="a1492ee0-db67-4533-83e6-3c2352bb0dfc"
+      async
+    ></script>
+  </body>
+</html>

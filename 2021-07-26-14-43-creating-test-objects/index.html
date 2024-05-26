@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Creating Test Objects | ohmybuck</title>
+    <link rel="stylesheet" href="/pico.min.css" />
+    <link rel="stylesheet" href="/prismjs.css" />
+  </head>
+  <body>
+    <nav class="container">
+      <ul>
+        <li>
+          <a href="/" style="color: var(--h1-color)">ohmybuck</a>
+        </li>
+      </ul>
+      <ul>
+        <li><a href="/">home</a></li>
+        <li><a href="/whoami">whoami</a></li>
+        <li><a href="https://github.com/olmesm/ohmybuck">github</a></li>
+        <li>
+          <a href="https://www.linkedin.com/in/%F0%9F%A6%86-ol-smit-85141387/"
+            >linkedin</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <main class="container">
+      <h1 style="margin-bottom: 0">Creating Test Objects</h1>
+      <small>Updated May 26, 2024<br>Created July 26, 2021</small><br><hr/>
+      <div><pre><code class="language-js">const { set, cloneDeep } = require(&quot;lodash&quot;)
+
+const exampleObject = { a: { b: 1 }, c: [{ x: 2 }, { y: 3 }] }
+
+const objForTest1 = set(cloneDeep(exampleObject), &quot;c[0].x&quot;, 4) // { a: { b: 1 }, c: [{ x: 4 }, { y: 3 }] }
+
+const objForTest2 = [
+  { address: &quot;c[0].x&quot;, value: 4 },
+  { address: &quot;a&quot;, value: 5 },
+].reduce(
+  (currentObject, setObject) =&gt;
+    set(currentObject, setObject.address, setObject.value),
+  cloneDeep(exampleObject)
+) // { a: 5, c: [{ x: 4 }, { y: 3 }] }
+
+let x = {}
+
+const objForTest3 = set(x, &quot;c[0].x&quot;, 4) // { c: [{ x: 4 }] }
+
+console.log(JSON.stringify({ objForTest1, objForTest2, objForTest3 }))
+</code></pre>
+</div>
+      <hr />
+      <div>
+        <a href="https://github.com/olmesm/ohmybuck/issues/new">Comments?</a>
+      </div>
+    </main>
+
+    <script async src="/prismjs.js"></script>
+
+    <script
+      src="https://beamanalytics.b-cdn.net/beam.min.js"
+      data-token="a1492ee0-db67-4533-83e6-3c2352bb0dfc"
+      async
+    ></script>
+  </body>
+</html>

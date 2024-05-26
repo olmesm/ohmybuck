@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Can We Replace Cookiecutter with Bash | ohmybuck</title>
+    <link rel="stylesheet" href="/pico.min.css" />
+    <link rel="stylesheet" href="/prismjs.css" />
+  </head>
+  <body>
+    <nav class="container">
+      <ul>
+        <li>
+          <a href="/" style="color: var(--h1-color)">ohmybuck</a>
+        </li>
+      </ul>
+      <ul>
+        <li><a href="/">home</a></li>
+        <li><a href="/whoami">whoami</a></li>
+        <li><a href="https://github.com/olmesm/ohmybuck">github</a></li>
+        <li>
+          <a href="https://www.linkedin.com/in/%F0%9F%A6%86-ol-smit-85141387/"
+            >linkedin</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <main class="container">
+      <h1 style="margin-bottom: 0">Can We Replace Cookiecutter with Bash</h1>
+      <small>Updated May 26, 2024<br>Created January 15, 2023</small><br><hr/>
+      <div><p>If you&#39;re a developer, you&#39;ve likely heard of Cookiecutter - a popular tool that helps create projects from templates. But, did you know that you can accomplish the same tasks using bash? In this blog post, we&#39;ll explore how to use bash to recursively replace filenames, directories, and file content with specific strings, just like Cookiecutter. We&#39;ll also discuss the advantages and disadvantages of using bash versus a dedicated tool like Cookiecutter. Whether you&#39;re a seasoned developer or just starting out, this post will give you a new perspective on automating project setup. So, let&#39;s dive in and see if we can replace Cookiecutter with bash!</p>
+<pre><code class="language-bash">#!/bin/bash
+
+# Define the directory to be searched
+dir=&quot;./&quot;
+
+# Find all files and directories with the name &quot;foo&quot;
+find $dir -name &quot;foo&quot; -print0 | while IFS= read -r -d $&#39;\0&#39; file; do
+    # Replace the name &quot;foo&quot; with &quot;bar&quot; in the filename
+    new_file=&quot;${file/foo/bar}&quot;
+    # Rename the file or directory
+    mv &quot;$file&quot; &quot;$new_file&quot;
+
+    # If the file is a regular file, replace the content &quot;foo&quot; with &quot;bar&quot;
+    if [ -f &quot;$new_file&quot; ]; then
+        sed -i &#39;s/foo/bar/g&#39; &quot;$new_file&quot;
+    fi
+done
+</code></pre>
+<p>This script will recursively search for files and directories named &quot;foo&quot; starting in the current directory (.). For each file or directory it finds, it will replace the name &quot;foo&quot; with &quot;bar&quot; and if the file is a regular file, it will also replace any instances of &quot;foo&quot; in the file&#39;s content with &quot;bar&quot; using the sed command.</p>
+</div>
+      <hr />
+      <div>
+        <a href="https://github.com/olmesm/ohmybuck/issues/new">Comments?</a>
+      </div>
+    </main>
+
+    <script async src="/prismjs.js"></script>
+
+    <script
+      src="https://beamanalytics.b-cdn.net/beam.min.js"
+      data-token="a1492ee0-db67-4533-83e6-3c2352bb0dfc"
+      async
+    ></script>
+  </body>
+</html>

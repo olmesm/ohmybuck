@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shell aliases | ohmybuck</title>
+    <link rel="stylesheet" href="/pico.min.css" />
+    <link rel="stylesheet" href="/prismjs.css" />
+  </head>
+  <body>
+    <nav class="container">
+      <ul>
+        <li>
+          <a href="/" style="color: var(--h1-color)">ohmybuck</a>
+        </li>
+      </ul>
+      <ul>
+        <li><a href="/">home</a></li>
+        <li><a href="/whoami">whoami</a></li>
+        <li><a href="https://github.com/olmesm/ohmybuck">github</a></li>
+        <li>
+          <a href="https://www.linkedin.com/in/%F0%9F%A6%86-ol-smit-85141387/"
+            >linkedin</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <main class="container">
+      <h1 style="margin-bottom: 0">Shell aliases</h1>
+      <small>Updated May 26, 2024<br>Created August 19, 2021</small><br><hr/>
+      <div><pre><code class="language-bash">function gitcp(){
+    echo &quot;Running...
+
+    git add . &amp;&amp; git commit -m &#39;$1&#39; &amp;&amp; git push
+&quot;
+
+    sleep 1.5
+
+    git add . &amp;&amp; git commit -m &quot;$1&quot; &amp;&amp; git push
+}
+
+# Make a directory and cd straight into it
+# https://unix.stackexchange.com/questions/125385/combined-mkdir-and-cd
+mkcd ()
+{
+    mkdir -p -- &quot;$1&quot; &amp;&amp;
+      cd -P -- &quot;$1&quot; &amp;&amp; clear
+}
+
+touchfile () {
+    local file=&quot;$1&quot;
+    mkdir -p -- &quot;$(dirname -- &quot;$file&quot;)&quot; &amp;&amp;
+        touch -- &quot;$file&quot;
+}
+
+# Start writing a note in the terminal
+alias no=&#39;cd ~/notes/; vim &quot;$(date +&quot;%Y-%m-%d@%H-%M-%S-%A&quot;).md&quot;&#39;
+
+# Generate random string
+alias randstr=&quot;cat /dev/urandom | env LC_ALL=C tr -dc &#39;a-zA-Z0-9&#39; | fold -w 32 | head -n 1&quot;
+</code></pre>
+</div>
+      <hr />
+      <div>
+        <a href="https://github.com/olmesm/ohmybuck/issues/new">Comments?</a>
+      </div>
+    </main>
+
+    <script async src="/prismjs.js"></script>
+
+    <script
+      src="https://beamanalytics.b-cdn.net/beam.min.js"
+      data-token="a1492ee0-db67-4533-83e6-3c2352bb0dfc"
+      async
+    ></script>
+  </body>
+</html>

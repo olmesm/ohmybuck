@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payload Authenticity | ohmybuck</title>
+    <link rel="stylesheet" href="/pico.min.css" />
+    <link rel="stylesheet" href="/prismjs.css" />
+  </head>
+  <body>
+    <nav class="container">
+      <ul>
+        <li>
+          <a href="/" style="color: var(--h1-color)">ohmybuck</a>
+        </li>
+      </ul>
+      <ul>
+        <li><a href="/">home</a></li>
+        <li><a href="/whoami">whoami</a></li>
+        <li><a href="https://github.com/olmesm/ohmybuck">github</a></li>
+        <li>
+          <a href="https://www.linkedin.com/in/%F0%9F%A6%86-ol-smit-85141387/"
+            >linkedin</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <main class="container">
+      <h1 style="margin-bottom: 0">Payload Authenticity</h1>
+      <small>Updated May 26, 2024<br>Created June 10, 2021</small><br><hr/>
+      <div><p>Encrypting a payload with a private key, to be decrpted with a public key.</p>
+<pre><code class="language-js">const crypto = require(&quot;crypto&quot;)
+
+const PASSPHRASE = &quot;top secret&quot;
+const SECRET_MESSAGE = &quot;Hello World&quot;
+
+const { privateKey, publicKey } = crypto.generateKeyPairSync(&quot;rsa&quot;, {
+  modulusLength: 4096,
+  publicKeyEncoding: {
+    type: &quot;spki&quot;,
+    format: &quot;pem&quot;,
+  },
+  privateKeyEncoding: {
+    type: &quot;pkcs8&quot;,
+    format: &quot;pem&quot;,
+    cipher: &quot;aes-256-cbc&quot;,
+    passphrase: PASSPHRASE,
+  },
+})
+
+const main = async () =&gt; {
+  try {
+    const encrypted = crypto.privateEncrypt(
+      { key: privateKey, passphrase: PASSPHRASE },
+      SECRET_MESSAGE
+    )
+
+    const decrypted = crypto.publicDecrypt(publicKey, encrypted)
+
+    console.log({
+      privateKey,
+      publicKey,
+      encrypted: encrypted.toString(&quot;base64&quot;),
+      decrypted: decrypted.toString(),
+    })
+
+    process.exit(0)
+  } catch (error) {
+    console.log(error)
+    process.exit(1)
+  }
+}
+module.exports = main()
+</code></pre>
+<p>Using files:</p>
+<pre><code class="language-js">// Prior to running this script, run the following in terminal
+//     openssl genrsa -out key.pem 2048 &amp;&amp; openssl rsa -in key.pem -outform PEM -pubout -out public.pem
+const crypto = require(&quot;crypto&quot;)
+const fs = require(&quot;fs&quot;)
+const path = require(&quot;path&quot;)
+
+const SECRET_MESSAGE = &quot;Hello World&quot;
+
+const privateKey = fs.readFileSync(path.join(__dirname, &quot;key.pem&quot;), &quot;utf-8&quot;)
+const publicKey = fs.readFileSync(path.join(__dirname, &quot;public.pem&quot;), &quot;utf-8&quot;)
+
+const main = async () =&gt; {
+  try {
+    const encrypted = crypto.privateEncrypt({ key: privateKey }, SECRET_MESSAGE)
+
+    const decrypted = crypto.publicDecrypt(publicKey, encrypted)
+
+    console.log({
+      privateKey,
+      publicKey,
+      encrypted: encrypted.toString(&quot;base64&quot;),
+      decrypted: decrypted.toString(),
+    })
+
+    process.exit(0)
+  } catch (error) {
+    console.log(error)
+    process.exit(1)
+  }
+}
+module.exports = main()
+</code></pre>
+</div>
+      <hr />
+      <div>
+        <a href="https://github.com/olmesm/ohmybuck/issues/new">Comments?</a>
+      </div>
+    </main>
+
+    <script async src="/prismjs.js"></script>
+
+    <script
+      src="https://beamanalytics.b-cdn.net/beam.min.js"
+      data-token="a1492ee0-db67-4533-83e6-3c2352bb0dfc"
+      async
+    ></script>
+  </body>
+</html>

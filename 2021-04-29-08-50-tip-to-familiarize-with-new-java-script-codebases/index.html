@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tip to Familiarize with New JavaScript Codebases | ohmybuck</title>
+    <link rel="stylesheet" href="/pico.min.css" />
+    <link rel="stylesheet" href="/prismjs.css" />
+  </head>
+  <body>
+    <nav class="container">
+      <ul>
+        <li>
+          <a href="/" style="color: var(--h1-color)">ohmybuck</a>
+        </li>
+      </ul>
+      <ul>
+        <li><a href="/">home</a></li>
+        <li><a href="/whoami">whoami</a></li>
+        <li><a href="https://github.com/olmesm/ohmybuck">github</a></li>
+        <li>
+          <a href="https://www.linkedin.com/in/%F0%9F%A6%86-ol-smit-85141387/"
+            >linkedin</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <main class="container">
+      <h1 style="margin-bottom: 0">Tip to Familiarize with New JavaScript Codebases</h1>
+      <small>Updated May 26, 2024<br>Created April 29, 2021</small><br><hr/>
+      <div><p>Please read the origninal post on <a href="https://www.kevinpeters.net/the-fastest-way-to-understand-new-code-bases">https://www.kevinpeters.net/the-fastest-way-to-understand-new-code-bases</a>.</p>
+<p>The following are direct snippets from the above link.</p>
+<hr>
+<h3 id="reactjs">React.js</h3>
+<p>React.js is a frontend framework that almost every web developer knows by now. What most people do not know is how the codebase is structured and what are the core parts. So let us have a look at it.</p>
+<pre><code class="language-bash">npx code-complexity . --limit 20 --sort ratio
+</code></pre>
+<p>Running the command will lead to the following result:</p>
+<table>
+<thead>
+<tr>
+<th>file</th>
+<th>complexity</th>
+<th>churn</th>
+<th>ratio</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>packages/eslint-plugin-react-hooks/**tests**/ESLintRuleExhaustiveDeps-test.js</td>
+<td>7742</td>
+<td>51</td>
+<td>394842</td>
+</tr>
+<tr>
+<td>packages/react/src/**tests**/ReactProfiler-test.internal.js</td>
+<td>4002</td>
+<td>95</td>
+<td>380190</td>
+</tr>
+<tr>
+<td>packages/react-reconciler/src/ReactFiberWorkLoop.new.js</td>
+<td>2373</td>
+<td>139</td>
+<td>329847</td>
+</tr>
+<tr>
+<td>packages/react-reconciler/src/ReactFiberWorkLoop.old.js</td>
+<td>2373</td>
+<td>114</td>
+<td>270522</td>
+</tr>
+<tr>
+<td>packages/react-dom/src/server/ReactPartialRenderer.js</td>
+<td>1379</td>
+<td>122</td>
+<td>168238</td>
+</tr>
+<tr>
+<td>packages/react-reconciler/src/ReactFiberCommitWork.new.js</td>
+<td>2262</td>
+<td>71</td>
+<td>160602</td>
+</tr>
+<tr>
+<td>packages/react-devtools-shared/src/backend/renderer.js</td>
+<td>2952</td>
+<td>54</td>
+<td>159408</td>
+</tr>
+<tr>
+<td>packages/react-reconciler/src/ReactFiberBeginWork.new.js</td>
+<td>2903</td>
+<td>53</td>
+<td>153859</td>
+</tr>
+<tr>
+<td>scripts/rollup/bundles.js</td>
+<td>760</td>
+<td>199</td>
+<td>151240</td>
+</tr>
+<tr>
+<td>packages/react-reconciler/src/ReactFiberHooks.new.js</td>
+<td>2622</td>
+<td>56</td>
+<td>146832</td>
+</tr>
+<tr>
+<td>packages/react-dom/src/client/ReactDOMHostConfig.js</td>
+<td>1018</td>
+<td>140</td>
+<td>142520</td>
+</tr>
+<tr>
+<td>packages/react-reconciler/src/ReactFiberHooks.old.js</td>
+<td>2622</td>
+<td>50</td>
+<td>131100</td>
+</tr>
+<tr>
+<td>packages/react-reconciler/src/**tests**/ReactHooks-test.internal.js</td>
+<td>1641</td>
+<td>74</td>
+<td>121434</td>
+</tr>
+<tr>
+<td>packages/react-dom/src/**tests**/ReactDOMComponent-test.js</td>
+<td>2346</td>
+<td>51</td>
+<td>119646</td>
+</tr>
+<tr>
+<td>packages/react-dom/src/**tests**/ReactDOMServerPartialHydration-test.internal.js</td>
+<td>2150</td>
+<td>49</td>
+<td>105350</td>
+</tr>
+<tr>
+<td>packages/react-noop-renderer/src/createReactNoop.js</td>
+<td>966</td>
+<td>109</td>
+<td>105294</td>
+</tr>
+<tr>
+<td>packages/react-reconciler/src/ReactFiberCommitWork.old.js</td>
+<td>2262</td>
+<td>46</td>
+<td>104052</td>
+</tr>
+<tr>
+<td>packages/react-reconciler/src/ReactFiberBeginWork.old.js</td>
+<td>2903</td>
+<td>35</td>
+<td>101605</td>
+</tr>
+<tr>
+<td>packages/react-reconciler/src/**tests**/ReactIncrementalErrorHandling-test.internal.js</td>
+<td>1532</td>
+<td>62</td>
+<td>94984</td>
+</tr>
+<tr>
+<td>packages/react-refresh/src/**tests**/ReactFresh-test.js</td>
+<td>3165</td>
+<td>29</td>
+<td>91785</td>
+</tr>
+</tbody></table>
+<p>What we can see here is that two sub-packages are probably the most interesting to understand:</p>
+<ul>
+<li>packages/react-dom</li>
+<li>packages/react-reconciler</li>
+</ul>
+<p>Understanding React Fiber and how react-dom&#39;s partial renderer is working will give you a good idea about React&#39;s architecture. A good thing about the code within React is that it is well documented with comments even though it is complex at first.</p>
+<h2 id="where-does-this-technique-come-from">Where does this technique come from?</h2>
+<p>This technique of analyzing a codebase originally came from a book that handles refactoring large codebases via a process: <a href="https://www.amazon.de/Software-Design-X-Rays-Technical-Behavioral/dp/1680502727?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&dchild=1&keywords=Software+Design+X-Rays&qid=1615637678&sr=8-1&linkCode=ll1&tag=kevinpeters38-21&linkId=e90c90e5869a073cebb13f2fe26e865e&language=de_DE&ref_=as_li_ss_tl">Software Design X-Rays</a> by Adam Tornhill. It is a great book and teaches you a lot of ways to structure your code and what parts are worth refactoring. A great book. I think every software engineer should have read it at some point because it will help them to understand a codebase differently. With working on a project, people will get familiar with different parts of the software and of course, they will have their special &quot;area&quot; of code where they are super comfortable. If this code is good and understandable is another question though, that this book tries to answer.</p>
+</div>
+      <hr />
+      <div>
+        <a href="https://github.com/olmesm/ohmybuck/issues/new">Comments?</a>
+      </div>
+    </main>
+
+    <script async src="/prismjs.js"></script>
+
+    <script
+      src="https://beamanalytics.b-cdn.net/beam.min.js"
+      data-token="a1492ee0-db67-4533-83e6-3c2352bb0dfc"
+      async
+    ></script>
+  </body>
+</html>

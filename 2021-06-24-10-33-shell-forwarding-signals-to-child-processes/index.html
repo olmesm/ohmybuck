@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Container shell Forwarding Signals to Child Processes | ohmybuck</title>
+    <link rel="stylesheet" href="/pico.min.css" />
+    <link rel="stylesheet" href="/prismjs.css" />
+  </head>
+  <body>
+    <nav class="container">
+      <ul>
+        <li>
+          <a href="/" style="color: var(--h1-color)">ohmybuck</a>
+        </li>
+      </ul>
+      <ul>
+        <li><a href="/">home</a></li>
+        <li><a href="/whoami">whoami</a></li>
+        <li><a href="https://github.com/olmesm/ohmybuck">github</a></li>
+        <li>
+          <a href="https://www.linkedin.com/in/%F0%9F%A6%86-ol-smit-85141387/"
+            >linkedin</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <main class="container">
+      <h1 style="margin-bottom: 0">Container shell Forwarding Signals to Child Processes</h1>
+      <small>Updated May 26, 2024<br>Created June 24, 2021</small><br><hr/>
+      <div><p>If your application does not receive the termination signal on Cloud Run, the most prominent reason for this might be because your application is not running as the init process (PID 1) and its parent process is not forwarding the signal appropriately.</p>
+<p>The leading reason why this happens is that the ENTRYPOINT statement in your container image’s Dockerfile is not set directly to your application process. For example, the Dockerfile statement:</p>
+<pre><code class="language-yaml">ENTRYPOINT node server.js
+</code></pre>
+<p>internally is translated to:</p>
+<pre><code class="language-yaml">ENTRYPOINT [&quot;/bin/sh&quot;, &quot;-c&quot;, &quot;node server.js&quot;]
+</code></pre>
+<p>when your Dockerfile is executed to build a container image.</p>
+<p>Most notably, the GNU /bin/sh and other shells like bash do not forward signals to child processes by default. Therefore, you should write your entrypoint statements in the vector form, like the following, to prevent your app to be executed as the sub-process of a shell:</p>
+<pre><code class="language-yaml">ENTRYPOINT [&quot;node&quot;, &quot;server.js&quot;]
+</code></pre>
+<p><a href="https://cloud.google.com/blog/topics/developers-practitioners/graceful-shutdowns-cloud-run-deep-dive">Resource: Graceful shutdowns on Cloud Run</a></p>
+</div>
+      <hr />
+      <div>
+        <a href="https://github.com/olmesm/ohmybuck/issues/new">Comments?</a>
+      </div>
+    </main>
+
+    <script async src="/prismjs.js"></script>
+
+    <script
+      src="https://beamanalytics.b-cdn.net/beam.min.js"
+      data-token="a1492ee0-db67-4533-83e6-3c2352bb0dfc"
+      async
+    ></script>
+  </body>
+</html>

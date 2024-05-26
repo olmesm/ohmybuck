@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Export vars to SSM | ohmybuck</title>
+    <link rel="stylesheet" href="/pico.min.css" />
+    <link rel="stylesheet" href="/prismjs.css" />
+  </head>
+  <body>
+    <nav class="container">
+      <ul>
+        <li>
+          <a href="/" style="color: var(--h1-color)">ohmybuck</a>
+        </li>
+      </ul>
+      <ul>
+        <li><a href="/">home</a></li>
+        <li><a href="/whoami">whoami</a></li>
+        <li><a href="https://github.com/olmesm/ohmybuck">github</a></li>
+        <li>
+          <a href="https://www.linkedin.com/in/%F0%9F%A6%86-ol-smit-85141387/"
+            >linkedin</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <main class="container">
+      <h1 style="margin-bottom: 0">Export vars to SSM</h1>
+      <small>Updated May 26, 2024<br>Created March 29, 2020</small><br><hr/>
+      <div><p>This gets any params in a <code>.env</code> file sent up to AWS SSM ready for the script in <a href="/2020-03-29-export-ssm-to-shell">Export SSM to shell</a> to consume.</p>
+<pre><code class="language-bash">#!/bin/bash
+VAR_ENV_FILE=&quot;$1&quot;
+VAR_SSM_PREFIX=&quot;$2&quot;
+OVERWRITE=&quot;$3&quot;
+
+# To use:
+#   sh ./export-to-ssm.sh &lt;VAR_ENV_FILE&gt; &lt;SSM_PREFIX&gt;
+
+# EXAMPLE
+#   sh ./export-to-ssm.sh .env.example /application/project/environment/
+
+if [ -z &quot;$VAR_ENV_FILE&quot; ]; then
+  echo &quot;It appears you did not specify a file with the list of variables to fetch&quot;
+  echo &quot;sh ./export-to-ssm.sh .env.example /application/project/environment/&quot;
+
+  exit 1
+fi
+
+if [ -z &quot;$VAR_SSM_PREFIX&quot; ]; then
+  echo &quot;It appears you did not specify an SSM prefix&quot;
+  echo &quot;sh ./export-to-ssm.sh .env.example /application/project/environment/&quot;
+
+  exit 1
+fi
+
+if [ &quot;$OVERWRITE&quot; = &quot;overwrite&quot; ]; then
+  echo &quot;[EXPORT TO SSM]: Overwriting of params enabled&quot;
+  OVERWRITE=&quot;--overwrite&quot;
+else
+  echo &quot;
+[EXPORT TO SSM]: Overwriting of params is not enabled
+                  Use the \&quot;overwrite\&quot; arg if needed&quot;
+  OVERWRITE=&quot;&quot;
+fi
+
+echo &quot;\n[EXPORT TO SSM STARTING]&quot;
+
+grep -v &#39;^#&#39; &quot;$VAR_ENV_FILE&quot; | while read LINE_ENV_VAR; do
+  VARIABLE=$(echo $LINE_ENV_VAR | sed &quot;s/=.*//&quot; |
+    xargs -I {} echo &quot;$VAR_SSM_PREFIX{}&quot;)
+
+  VALUE=$(echo $LINE_ENV_VAR | sed &quot;s/.*=//&quot;)
+
+  aws ssm put-parameter --name &quot;$VARIABLE&quot; --value &quot;$VALUE&quot; --type &quot;String&quot; $OVERWRITE &gt;/dev/null &amp;&amp;
+    echo &quot;[SSM ADDED]: $VARIABLE&quot; || echo &quot;[SSM FAILED TO ADD]: $VARIABLE&quot;
+done
+
+echo &quot;\n[EXPORT TO SSM COMPLETED]&quot;
+</code></pre>
+</div>
+      <hr />
+      <div>
+        <a href="https://github.com/olmesm/ohmybuck/issues/new">Comments?</a>
+      </div>
+    </main>
+
+    <script async src="/prismjs.js"></script>
+
+    <script
+      src="https://beamanalytics.b-cdn.net/beam.min.js"
+      data-token="a1492ee0-db67-4533-83e6-3c2352bb0dfc"
+      async
+    ></script>
+  </body>
+</html>
