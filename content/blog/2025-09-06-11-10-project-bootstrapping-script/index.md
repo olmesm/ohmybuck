@@ -56,3 +56,11 @@ fi
 
 echo "Created: $path"
 ```
+
+Note you may need to add
+
+```
+export PATH="$HOME/bin:$PATH"
+```
+
+to your .bashrc / .zshrc file
