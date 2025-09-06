@@ -8,12 +8,17 @@ tags: [add]
 Accepts either a snippet with filepath comment, or filepath and snippet to create a file.
 
 ```bash
-cat <<'EOF' | add
+add <<'EOF'
 # ./src/hello.py
 #!/usr/bin/env python3
 print("hi")
 EOF
 
+cat <<'EOF' | add
+# ./src/hello.py
+#!/usr/bin/env python3
+print("hi")
+EOF
 
 # or
 
